@@ -17,7 +17,7 @@ export default function SignUpScreen() {
         <TextInput placeholder="Password" style={styles.signupInput} secureTextEntry />
         <TextInput placeholder="Confirm Password" style={styles.signupInput} secureTextEntry />
 
-        <TouchableOpacity style={styles.signupButton} onPress={() => router.replace('/')}>
+        <TouchableOpacity style={styles.signupButton} onPress={() => router.back()}>
           <Text style={styles.signupButtonText}>Sign Up</Text>
         </TouchableOpacity>
 

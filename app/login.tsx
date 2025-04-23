@@ -6,20 +6,24 @@ export default function LoginScreen() {
   const router = useRouter();
 
   return (
-    <ImageBackground source={require('../assets/images/starterImage.jpeg')} style={styles.background}>
-      <View style={styles.signupContainer}>
-        <Text style={styles.loginTitle}>Sign Up</Text>
-        <TextInput placeholder="Name" style={styles.signupInput} />
-        <TextInput placeholder="Email" style={styles.signupInput} keyboardType="email-address" />
-        <TextInput placeholder="Password" style={styles.signupInput} secureTextEntry />
-        <TextInput placeholder="Confirm Password" style={styles.signupInput} secureTextEntry />
+    <ImageBackground
+      source={require('../assets/images/starterImage.jpeg')}
+      style={styles.background}
+    >
+      <View style={styles.loginContainer}>
+        <Text style={styles.loginTitle}>Login</Text>
 
-        <TouchableOpacity style={styles.signupButton}>
-          <Text style={styles.signupButtonText}>Sign Up</Text>
+        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" />
+        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry />
+
+        <Text style={styles.loginSubLink}>Forgot password?</Text>
+
+        <TouchableOpacity style={styles.loginButton}>
+          <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => router.back()}>
-          <Text style={styles.signupLink}>Already have an account? Login</Text>
+        <TouchableOpacity onPress={() => router.push('/signup')}>
+          <Text style={styles.loginLink}>Don't have an account? Sign Up</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>

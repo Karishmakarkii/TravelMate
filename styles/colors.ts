@@ -8,5 +8,6 @@ export const Colors = {
     dustyPurple: '#8F7684',
     mauveBrown: '#7B5A59',
     deepBrown: '#3C2D30',
+    ExpoDefault: '#A0A0A0',
   };
   
