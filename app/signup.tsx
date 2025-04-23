@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 
@@ -6,19 +6,25 @@ export default function SignUpScreen() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <TextInput placeholder="Name" style={styles.input} />
-      <TextInput placeholder="Email" style={styles.input} keyboardType="email-address" />
-      <TextInput placeholder="Password" style={styles.input} secureTextEntry />
+    <ImageBackground
+      source={require('../assets/images/starterImage.jpeg')}
+      style={styles.background}
+    >
+      <View style={styles.signupContainer}>
+        <Text style={styles.loginTitle}>Sign Up</Text>
+        <TextInput placeholder="Name" style={styles.signupInput} />
+        <TextInput placeholder="Email" style={styles.signupInput} keyboardType="email-address" />
+        <TextInput placeholder="Password" style={styles.signupInput} secureTextEntry />
+        <TextInput placeholder="Confirm Password" style={styles.signupInput} secureTextEntry />
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.signupButton} onPress={() => router.replace('/')}>
+          <Text style={styles.signupButtonText}>Sign Up</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.back()}>
-        <Text style={styles.link}>Already have an account? Login</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity onPress={() => router.back()}>
+          <Text style={styles.signupLink}>Already have an account? Login</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 }
