@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Colors } from './colors';
 
 const styles = StyleSheet.create({
-  // 🌄 Splash Screen Styles
+  //Splash Screen Styles
   background: {
     flex: 1,
     resizeMode: 'cover',
@@ -45,17 +45,23 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_500Medium',
   },
 
-  // 🔐 Login Screen Styles
+  // Login Screen Styles
   loginContainer: {
     margin: 20,
     backgroundColor: Colors.lightCream,
     borderRadius: 30,
-    padding: 24,
+    padding: 35,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 5,
+
+    // border styles
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
   },
   loginTitle: {
     fontSize: 26,
@@ -93,18 +99,24 @@ const styles = StyleSheet.create({
   },
   loginSubLink: {
     textAlign: 'right',
-    color: Colors.paleGrey,
+    color: Colors.skyBlue,
     marginBottom: 16,
     fontSize: 12,
-    fontFamily: 'Roboto_400Regular',
+    fontFamily: 'Roboto_500Medium',
   },
 
-  // 📝 Sign-Up Screen Styles
+  // Sign-Up Screen Styles
   signupContainer: {
     margin: 20,
     backgroundColor: Colors.lightCream,
     borderRadius: 30,
-    padding: 24,
+    padding: 35,
+
+    // border styles
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
   },
   signupInput: {
     height: 48,
