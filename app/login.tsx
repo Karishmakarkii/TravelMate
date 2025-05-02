@@ -1,6 +1,14 @@
 import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
+// 
+// Firebase functions needed from the SDKs
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+
+import '../../firebase.js';
+
+const {firebaseConfig} = require('../../firebase.js');
 
 export default function LoginScreen() {
   const router = useRouter();
