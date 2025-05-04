@@ -48,7 +48,9 @@ export default function LoginScreen() {
         <Text style={styles.loginInputLabel}>Password</Text>
         <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry onChangeText = {setPword} value={pword} />
 
-        <Text style={styles.loginSubLink}>Forgot password?</Text>
+        <TouchableOpacity onPress={() => router.push('/forgotPassword')}>
+          <Text style={styles.loginSubLink}>Forgot password?</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity style={styles.loginButton} onPress={() => login()}>
           <Text style={styles.loginButtonText}>Login</Text>
