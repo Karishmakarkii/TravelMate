@@ -12,9 +12,14 @@ export default function SignUpScreen() {
     >
       <View style={styles.signupContainer}>
         <Text style={styles.loginTitle}>Sign Up</Text>
+
+        <Text style={styles.signUpInputLabel}>Name</Text>
         <TextInput placeholder="Name" style={styles.signupInput} />
+        <Text style={styles.signUpInputLabel}>Email Address</Text>
         <TextInput placeholder="Email" style={styles.signupInput} keyboardType="email-address" />
+        <Text style={styles.signUpInputLabel}>Password</Text>
         <TextInput placeholder="Password" style={styles.signupInput} secureTextEntry />
+        <Text style={styles.signUpInputLabel}>Confirm Password</Text>
         <TextInput placeholder="Confirm Password" style={styles.signupInput} secureTextEntry />
 
         <TouchableOpacity style={styles.signupButton} onPress={() => router.back()}>
