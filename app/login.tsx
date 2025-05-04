@@ -1,17 +1,38 @@
 import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
-// 
+import { useState } from 'react';
 // Firebase functions needed from the SDKs
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-import '../../firebase.js';
+import '../firebase.js';
 
-const {firebaseConfig} = require('../../firebase.js');
+const {firebaseConfig} = require('../firebase.js');
 
 export default function LoginScreen() {
   const router = useRouter();
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const [loginout, setloginout] = useState('');
+  const [pword, setPword] = useState('');
+  const [email, setEmail] = useState('');
+
+  function login() {
+    signInWithEmailAndPassword(auth, email, pword)
+    .then((userCredential) => {
+      // signed in
+      const user = userCredential.user;
+      setloginout("Success!");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      setloginout("Login Unsuccessful!");
+    }); 
+  }
 
   return (
     <ImageBackground
@@ -20,13 +41,13 @@ export default function LoginScreen() {
     >
       <View style={styles.loginContainer}>
         <Text style={styles.loginTitle}>Login</Text>
-
-        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" />
-        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry />
+        <Text>{loginout}</Text>
+        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" onChangeText = {setEmail} value={email} />
+        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry onChangeText = {setPword} value={pword} />
 
         <Text style={styles.loginSubLink}>Forgot password?</Text>
 
-        <TouchableOpacity style={styles.loginButton}>
+        <TouchableOpacity style={styles.loginButton} onPress={()=>login()}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
 
