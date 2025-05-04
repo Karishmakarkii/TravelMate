@@ -69,6 +69,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: Colors.deepBrown,
   },
+
+  loginInputLabel: {
+    fontSize: 14,
+    marginBottom: 6,
+    marginTop: 12,
+    color: Colors.deepBrown,
+    fontFamily: 'Roboto_500Medium',
+  },
+  
   loginInput: {
     height: 48,
     borderColor: Colors.paleGrey,
@@ -117,6 +126,14 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 40,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
+  },
+
+  signUpInputLabel: {
+    fontSize: 14,
+    marginBottom: 6,
+    marginTop: 12,
+    color: Colors.deepBrown,
+    fontFamily: 'Roboto_500Medium',
   },
   signupInput: {
     height: 48,
