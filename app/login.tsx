@@ -41,9 +41,12 @@ export default function LoginScreen() {
     >
       <View style={styles.loginContainer}>
         <Text style={styles.loginTitle}>Login</Text>
-        <Text>{loginout}</Text>
-        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" onChangeText = {setEmail} value={email} />
-        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry onChangeText = {setPword} value={pword} />
+
+
+        <Text style={styles.loginInputLabel}>Email</Text>
+        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" />
+        <Text style={styles.loginInputLabel}>Password</Text>
+        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry />
 
         <Text style={styles.loginSubLink}>Forgot password?</Text>
 

@@ -63,11 +63,15 @@ export default function SignUpScreen() {
     >
       <View style={styles.signupContainer}>
         <Text style={styles.loginTitle}>Sign Up</Text>
-        <Text>{created}</Text>
-        <TextInput placeholder="Name" style={styles.signupInput} onChangeText = {setName} value={name} />
-        <TextInput placeholder="Email" style={styles.signupInput} keyboardType="email-address" onChangeText = {setEmail} value={email} />
-        <TextInput placeholder="Password" style={styles.signupInput} secureTextEntry onChangeText = {setPword} value={pword} />
-        <TextInput placeholder="Confirm Password" style={styles.signupInput} secureTextEntry onChangeText = {setCPword} value={cpword} />
+
+        <Text style={styles.signUpInputLabel}>Name</Text>
+        <TextInput placeholder="Name" style={styles.signupInput} />
+        <Text style={styles.signUpInputLabel}>Email Address</Text>
+        <TextInput placeholder="Email" style={styles.signupInput} keyboardType="email-address" />
+        <Text style={styles.signUpInputLabel}>Password</Text>
+        <TextInput placeholder="Password" style={styles.signupInput} secureTextEntry />
+        <Text style={styles.signUpInputLabel}>Confirm Password</Text>
+        <TextInput placeholder="Confirm Password" style={styles.signupInput} secureTextEntry />
 
         <TouchableOpacity style={styles.signupButton} onPress={() => create()}>
           <Text style={styles.signupButtonText}>Sign Up</Text>
