@@ -24,8 +24,8 @@ export default function LoginScreen() {
     signInWithEmailAndPassword(auth, email, pword)
     .then((userCredential) => {
       // signed in
-      const user = userCredential.user;
       setloginout("Success!");
+      router.push('/signup');
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -44,13 +44,13 @@ export default function LoginScreen() {
 
 
         <Text style={styles.loginInputLabel}>Email</Text>
-        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" />
+        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" onChangeText = {setEmail} value={email} />
         <Text style={styles.loginInputLabel}>Password</Text>
-        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry />
+        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry onChangeText = {setPword} value={pword} />
 
         <Text style={styles.loginSubLink}>Forgot password?</Text>
 
-        <TouchableOpacity style={styles.loginButton} onPress={()=>login()}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => login()}>
           <Text style={styles.loginButtonText}>Login</Text>
         </TouchableOpacity>
 
