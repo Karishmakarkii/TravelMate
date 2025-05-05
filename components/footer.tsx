@@ -25,7 +25,7 @@ export default function Footer({ showBack = false }: Props) {
         </TouchableOpacity>
       )}
       {navItems.map(item => (
-        <TouchableOpacity key={item.name} style={styles.button} onPress={() => router.push(item.route)}>
+        <TouchableOpacity key={item.name} style={styles.button} onPress={() => router.push('/home')}>
           <Ionicons name={item.icon as any} size={24} color={pathname === item.route ? Colors.dustyPurple : '#888'} />
           <Text style={[styles.label, pathname === item.route && styles.activeLabel]}>{item.name}</Text>
         </TouchableOpacity>

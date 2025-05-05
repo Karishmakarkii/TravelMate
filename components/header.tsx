@@ -19,7 +19,7 @@ export default function Header({ title, showMenu = true }: Props) {
                 resizeMode="contain"
             />
             <Text style={styles.title}>{title}</Text>
-            <Text style={styles.menuIcon}>⋮</Text> {/* Placeholder for future actions */}
+            <Text style={styles.menuIcon}>⋮</Text> 
         </View>
     );
 }

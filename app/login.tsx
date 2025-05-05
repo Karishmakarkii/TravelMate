@@ -23,8 +23,10 @@ export default function LoginScreen() {
     signInWithEmailAndPassword(auth, email, pword)
     .then((userCredential) => {
       // signed in
-      alert("Success!");
-      router.push('/signup');
+
+      setloginout("Success!");
+      router.push('/home');
+
     })
     .catch((error) => {
       alert("Login Unsuccessful!");
