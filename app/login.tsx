@@ -16,7 +16,6 @@ export default function LoginScreen() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  const [loginout, setloginout] = useState('');
   const [pword, setPword] = useState('');
   const [email, setEmail] = useState('');
 
@@ -24,13 +23,13 @@ export default function LoginScreen() {
     signInWithEmailAndPassword(auth, email, pword)
     .then((userCredential) => {
       // signed in
+
       setloginout("Success!");
       router.push('/home');
+
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      setloginout("Login Unsuccessful!");
+      alert("Login Unsuccessful!");
     }); 
   }
 
@@ -41,8 +40,7 @@ export default function LoginScreen() {
     >
       <View style={styles.loginContainer}>
         <Text style={styles.loginTitle}>Login</Text>
-
-
+        
         <Text style={styles.loginInputLabel}>Email</Text>
         <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" onChangeText = {setEmail} value={email} />
         <Text style={styles.loginInputLabel}>Password</Text>
