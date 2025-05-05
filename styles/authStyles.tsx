@@ -234,116 +234,115 @@ const styles = StyleSheet.create({
   },
 
   // Attractionlist screen
-  attractionBackground: {
-    flex: 1,
-    resizeMode: 'cover',
-  },
   attractionContainer: {
-    margin: wp('5%'),
+    flex: 1,
+    backgroundColor: '#f8f1f1',
     padding: moderateScale(20),
-    borderRadius: moderateScale(20),
-    backgroundColor: Colors.lightCream,
-    elevation: 5,
     borderTopLeftRadius: 60,
     borderBottomRightRadius: 60,
-    borderTopRightRadius: 0,
-    borderBottomLeftRadius: 0,
   },
+
   attractionTitle: {
     fontSize: scale(20),
-    fontFamily: 'Roboto_700Bold',
-    color: Colors.deepBrown,
-    marginBottom: verticalScale(8),
+    fontWeight: '700',
+    color: '#3b2e2e',
+    marginBottom: verticalScale(6),
   },
+
   attractionSubtitle: {
     fontSize: scale(14),
-    fontFamily: 'Roboto_400Regular',
-    color: Colors.deepBrown,
-    marginBottom: verticalScale(16),
+    color: '#3b2e2e',
+    marginBottom: verticalScale(20),
   },
-  attractionList: {
+
+  attractionListContainer: {
     paddingBottom: verticalScale(20),
   },
+
   attractionCard: {
-    backgroundColor: '#fff',
-    borderRadius: moderateScale(12),
-    padding: moderateScale(12),
-    marginBottom: verticalScale(10),
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: moderateScale(20),
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: scale(16),
+    marginBottom: verticalScale(12),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
     elevation: 2,
   },
-  attractionCardUnselected: {
-    opacity: 0.4,
+
+  attractionInfo: {
+    flex: 1,
   },
-  attractionLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  attractionIcon: {
-    width: scale(30),
-    height: scale(30),
-    borderRadius: scale(15),
-    backgroundColor: Colors.skyBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: scale(10),
-  },
-  attractionInitial: {
-    color: '#fff',
-    fontFamily: 'Roboto_700Bold',
-  },
+
   attractionName: {
-    fontSize: scale(14),
-    fontFamily: 'Roboto_500Medium',
-    color: Colors.deepBrown,
+    fontSize: scale(15),
+    fontWeight: '600',
+    color: '#3b2e2e',
   },
+
   attractionDetails: {
     fontSize: scale(12),
-    color: Colors.deepBrown,
-    fontFamily: 'Roboto_400Regular',
+    color: '#777',
+    marginTop: verticalScale(2),
   },
-  attractionRight: {
+
+  attractionRating: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: scale(6),
+    marginRight: scale(12),
   },
-  attractionRating: {
+
+  attractionRatingText: {
     fontSize: scale(14),
-    color: Colors.deepBrown,
-    fontFamily: 'Roboto_500Medium',
+    marginRight: scale(4),
+    color: '#333',
   },
-  attractionButtonRow: {
+
+  attractionCheckbox: {
+    height: moderateScale(20),
+    width: moderateScale(20),
+    borderRadius: 4,
+  },
+
+  attractionButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: verticalScale(20),
   },
-  attractionPrimaryButton: {
-    flex: 1,
-    backgroundColor: Colors.dustyPurple,
+
+  attractionCreateButton: {
+    backgroundColor: '#6e4b63',
     paddingVertical: verticalScale(12),
-    borderRadius: moderateScale(10),
+    paddingHorizontal: scale(25),
+    borderRadius: moderateScale(12),
+    flex: 1,
+    marginRight: scale(10),
     alignItems: 'center',
-    marginRight: scale(8),
   },
+
   attractionCancelButton: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingVertical: verticalScale(12),
-    borderRadius: moderateScale(10),
-    alignItems: 'center',
-    marginLeft: scale(8),
     borderWidth: 1,
-    borderColor: Colors.dustyPurple,
+    borderColor: '#6e4b63',
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: scale(25),
+    borderRadius: moderateScale(12),
+    flex: 1,
+    marginLeft: scale(10),
+    alignItems: 'center',
   },
+
   attractionButtonText: {
     color: '#fff',
-    fontFamily: 'Roboto_700Bold',
+    fontWeight: '600',
   },
+
   attractionCancelText: {
-    color: Colors.dustyPurple,
-    fontFamily: 'Roboto_700Bold',
+    color: '#6e4b63',
+    fontWeight: '600',
   },
   
 });
