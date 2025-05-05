@@ -25,7 +25,7 @@ export default function LoginScreen() {
     .then((userCredential) => {
       // signed in
       setloginout("Success!");
-      router.push('/signup');
+      router.push('/home');
     })
     .catch((error) => {
       const errorCode = error.code;

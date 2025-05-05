@@ -57,10 +57,8 @@ export default function SignUpScreen() {
   }
 
   return (
-    <ImageBackground
-      source={require('../assets/images/starterImage.jpeg')}
-      style={styles.background}
-    >
+    <ImageBackground source={require('../assets/images/starterImage.jpeg')} style={styles.background}>
+      
       <View style={styles.signupContainer}>
         <Text style={styles.loginTitle}>Sign Up</Text>
         <Text>{created}</Text>

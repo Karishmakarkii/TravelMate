@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     justifyContent: 'center',
-    borderTopLeftRadius: 40,
-    borderBottomRightRadius: 40,
+    borderTopLeftRadius: 60,
+    borderBottomRightRadius: 60,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
   },
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   loginInputLabel: {
     fontSize: scale(14),
     marginBottom: verticalScale(6),
-    marginTop: verticalScale(12),
+    marginTop: verticalScale(3),
     color: Colors.deepBrown,
     fontFamily: 'Roboto_500Medium',
   },
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.paleGrey,
     borderWidth: 1,
     borderRadius: moderateScale(10),
-    marginBottom: verticalScale(16),
+    marginBottom: verticalScale(10),
     paddingHorizontal: scale(12),
     backgroundColor: '#fff',
     fontFamily: 'Roboto_400Regular',
@@ -110,9 +110,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_500Medium',
   },
   signupContainer: {
-    margin: wp('5%'),
+    margin: wp('3%'),
     backgroundColor: Colors.lightCream,
-    borderRadius: moderateScale(30),
+    borderRadius: moderateScale(25),
     padding: moderateScale(35),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -120,15 +120,15 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     justifyContent: 'center',
-    borderTopLeftRadius: 40,
-    borderBottomRightRadius: 40,
+    borderTopLeftRadius: 60,
+    borderBottomRightRadius: 60,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
   },
   signUpInputLabel: {
     fontSize: scale(14),
-    marginBottom: verticalScale(6),
-    marginTop: verticalScale(12),
+    marginBottom: verticalScale(3),
+    marginTop: verticalScale(2),
     color: Colors.deepBrown,
     fontFamily: 'Roboto_500Medium',
   },
@@ -137,17 +137,19 @@ const styles = StyleSheet.create({
     borderColor: Colors.paleGrey,
     borderWidth: 1,
     borderRadius: moderateScale(10),
-    marginBottom: verticalScale(16),
+    marginBottom: verticalScale(5),
     paddingHorizontal: scale(12),
     backgroundColor: '#fff',
     fontFamily: 'Roboto_400Regular',
+    
   },
   signupButton: {
     backgroundColor: Colors.dustyPurple,
     paddingVertical: verticalScale(14),
-    borderRadius: moderateScale(10),
+    borderRadius: moderateScale(6),
     alignItems: 'center',
     marginBottom: verticalScale(12),
+    marginTop: verticalScale(10),
   },
   signupButtonText: {
     color: '#fff',
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
   signupLink: {
     color: Colors.skyBlue,
     textAlign: 'center',
-    marginTop: verticalScale(10),
+    marginTop: verticalScale(12),
     fontFamily: 'Roboto_500Medium',
   },
   homeContainer: {
@@ -204,23 +206,31 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_700Bold',
     fontSize: scale(16),
   },
-  modalBackdrop: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.4)',
+  dropdown: {
+    backgroundColor: Colors.dustyPurple,
+    borderWidth: 0,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    marginTop: 8,
   },
-  modalBox: {
-    backgroundColor: '#fff',
-    padding: moderateScale(20),
-    borderRadius: moderateScale(10),
-    width: '80%',
+  
+  dropdownContainer: {
+    backgroundColor: Colors.lightCream,
+    borderWidth: 0,
+    elevation: 3,
+    zIndex: 1000,
   },
-  modalItem: {
-    paddingVertical: verticalScale(12),
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-  },
+  
+  dropdownText: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    fontFamily: 'Roboto_400Regular',
+  }, 
+  
+  dropdownTitle:{
+    color: '#fff',
+  }
+  
 });
 
 export default styles;
