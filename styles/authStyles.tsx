@@ -206,6 +206,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_700Bold',
     fontSize: scale(16),
   },
+
+  // two dropdown list in home screen
   dropdown: {
     backgroundColor: Colors.dustyPurple,
     borderWidth: 0,
@@ -229,7 +231,120 @@ const styles = StyleSheet.create({
   
   dropdownTitle:{
     color: '#fff',
-  }
+  },
+
+  // Attractionlist screen
+  attractionBackground: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+  attractionContainer: {
+    margin: wp('5%'),
+    padding: moderateScale(20),
+    borderRadius: moderateScale(20),
+    backgroundColor: Colors.lightCream,
+    elevation: 5,
+    borderTopLeftRadius: 60,
+    borderBottomRightRadius: 60,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+  },
+  attractionTitle: {
+    fontSize: scale(20),
+    fontFamily: 'Roboto_700Bold',
+    color: Colors.deepBrown,
+    marginBottom: verticalScale(8),
+  },
+  attractionSubtitle: {
+    fontSize: scale(14),
+    fontFamily: 'Roboto_400Regular',
+    color: Colors.deepBrown,
+    marginBottom: verticalScale(16),
+  },
+  attractionList: {
+    paddingBottom: verticalScale(20),
+  },
+  attractionCard: {
+    backgroundColor: '#fff',
+    borderRadius: moderateScale(12),
+    padding: moderateScale(12),
+    marginBottom: verticalScale(10),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    elevation: 2,
+  },
+  attractionCardUnselected: {
+    opacity: 0.4,
+  },
+  attractionLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  attractionIcon: {
+    width: scale(30),
+    height: scale(30),
+    borderRadius: scale(15),
+    backgroundColor: Colors.skyBlue,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: scale(10),
+  },
+  attractionInitial: {
+    color: '#fff',
+    fontFamily: 'Roboto_700Bold',
+  },
+  attractionName: {
+    fontSize: scale(14),
+    fontFamily: 'Roboto_500Medium',
+    color: Colors.deepBrown,
+  },
+  attractionDetails: {
+    fontSize: scale(12),
+    color: Colors.deepBrown,
+    fontFamily: 'Roboto_400Regular',
+  },
+  attractionRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: scale(6),
+  },
+  attractionRating: {
+    fontSize: scale(14),
+    color: Colors.deepBrown,
+    fontFamily: 'Roboto_500Medium',
+  },
+  attractionButtonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: verticalScale(20),
+  },
+  attractionPrimaryButton: {
+    flex: 1,
+    backgroundColor: Colors.dustyPurple,
+    paddingVertical: verticalScale(12),
+    borderRadius: moderateScale(10),
+    alignItems: 'center',
+    marginRight: scale(8),
+  },
+  attractionCancelButton: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingVertical: verticalScale(12),
+    borderRadius: moderateScale(10),
+    alignItems: 'center',
+    marginLeft: scale(8),
+    borderWidth: 1,
+    borderColor: Colors.dustyPurple,
+  },
+  attractionButtonText: {
+    color: '#fff',
+    fontFamily: 'Roboto_700Bold',
+  },
+  attractionCancelText: {
+    color: Colors.dustyPurple,
+    fontFamily: 'Roboto_700Bold',
+  },
   
 });
 
