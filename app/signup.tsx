@@ -17,7 +17,6 @@ export default function SignUpScreen() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  const [created, setCreate] = useState('');
   const [pword, setPword] = useState('');
   const [cpword, setCPword] = useState('');
   const [email, setEmail] = useState('');
@@ -43,16 +42,16 @@ export default function SignUpScreen() {
       .then((userCredential) => {
         // created
         writeToDB(email, name);
-        setCreate("User successfully created!");
+        alert("User successfully created!");
         router.push('/login')
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        setCreate("User not created!");
+        alert("User not created!");
       });
     } else {
-      setCreate("Passwords do not match!");
+      alert("Passwords do not match!");
     }
   }
 
@@ -61,7 +60,7 @@ export default function SignUpScreen() {
       
       <View style={styles.signupContainer}>
         <Text style={styles.loginTitle}>Sign Up</Text>
-        <Text>{created}</Text>
+        
         <Text style={styles.signUpInputLabel}>Name</Text>
         <TextInput placeholder="Name" style={styles.signupInput} onChangeText = {setName} value={name} />
         <Text style={styles.signUpInputLabel}>Email Address</Text>
