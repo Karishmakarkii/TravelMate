@@ -37,7 +37,7 @@ export default function AttractionListScreen() {
 
       <View style={styles.attractionRating}>
         <Text style={styles.attractionRatingText}>{item.rating}</Text>
-        <Ionicons name="star" size={18} color="#f5c518" />
+        <Ionicons name="star" size={18} color="#FFB733" />
       </View>
 
       <Checkbox
@@ -51,38 +51,33 @@ export default function AttractionListScreen() {
 
   return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-    <Header title="TravelMate" />
-    <View style={styles.attractionContainer}>
-      <Text style={styles.attractionTitle}>Nearby Attractions in Location</Text>
-      <Text style={styles.attractionSubtitle}>
-        Hey you are in luck!{'\n'}
-        There are {mockAttractions.length} tourist places near you. Check from list to add to itinerary.
-      </Text>
+      <Header title="TravelMate" />
+      <View style={styles.attractionContainer}>
+        <Text style={styles.attractionTitle}>Nearby Attractions in Location</Text>
+        <Text style={styles.attractionSubtitle}>
+          Hey you are in luck!{'\n'}
+          There are {mockAttractions.length} tourist places near you. Check from list to add to itinerary.
+        </Text>
 
-      <FlatList
-        data={mockAttractions}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.attractionListContainer}
-        showsVerticalScrollIndicator={false}
-      />
+        <FlatList
+          data={mockAttractions}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          contentContainerStyle={styles.attractionListContainer}
+          showsVerticalScrollIndicator={false}
+        />
 
-      <View style={styles.attractionButtonContainer}>
-        <TouchableOpacity
-          style={styles.attractionCreateButton}
-          onPress={() => router.push('/itinerary')}
-        >
-          <Text style={styles.attractionButtonText}>Create Itinerary</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.attractionCancelButton}
-          onPress={() => router.back()}
-        >
-          <Text style={styles.attractionCancelText}>Cancel</Text>
-        </TouchableOpacity>
+        <View style={styles.attractionButtonContainer}>
+          <TouchableOpacity onPress={() => router.push('/itinerary')}>
+            <Text style={styles.createItineraryButtonText}>Create Itinerary</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => router.back()} >
+            <Text style={styles.attractionCancelText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
-       <Footer showBack />
-    </View>
+      <Footer showBack />
     </ImageBackground>
   );
 }

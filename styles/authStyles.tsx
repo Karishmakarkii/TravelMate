@@ -235,24 +235,35 @@ const styles = StyleSheet.create({
 
   // Attractionlist screen
   attractionContainer: {
-    flex: 1,
-    backgroundColor: '#f8f1f1',
-    padding: moderateScale(20),
-    borderTopLeftRadius: 60,
-    borderBottomRightRadius: 60,
+    margin: 20,
+    padding: 20,
+    backgroundColor: Colors.lightCreamTransparent,
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    maxHeight: '70%', //prevent it from stretching to full screen
   },
+  
 
   attractionTitle: {
     fontSize: scale(20),
     fontWeight: '700',
     color: '#3b2e2e',
-    marginBottom: verticalScale(6),
+    marginBottom: verticalScale(10),
+    marginTop: scale(8),
   },
 
   attractionSubtitle: {
-    fontSize: scale(14),
+    fontSize: scale(12),
     color: '#3b2e2e',
     marginBottom: verticalScale(20),
+    
   },
 
   attractionListContainer: {
@@ -310,39 +321,22 @@ const styles = StyleSheet.create({
 
   attractionButtonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     marginTop: verticalScale(20),
   },
 
-  attractionCreateButton: {
-    backgroundColor: '#6e4b63',
-    paddingVertical: verticalScale(12),
-    paddingHorizontal: scale(25),
-    borderRadius: moderateScale(12),
-    flex: 1,
-    marginRight: scale(10),
-    alignItems: 'center',
-  },
-
-  attractionCancelButton: {
-    borderWidth: 1,
-    borderColor: '#6e4b63',
-    paddingVertical: verticalScale(12),
-    paddingHorizontal: scale(25),
-    borderRadius: moderateScale(12),
-    flex: 1,
-    marginLeft: scale(10),
-    alignItems: 'center',
-  },
-
-  attractionButtonText: {
-    color: '#fff',
+  createItineraryButtonText: {
+    color: Colors.Lavender,
     fontWeight: '600',
+    marginRight: scale(20)
+
   },
 
   attractionCancelText: {
-    color: '#6e4b63',
+    color: Colors.Lavender,
     fontWeight: '600',
+    marginRight: scale(20),
+    marginBottom: scale(10),
   },
   
 });
