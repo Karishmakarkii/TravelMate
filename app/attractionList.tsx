@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { BlurView } from 'expo-blur';
 
 
 
