@@ -17,7 +17,7 @@ export const Colors = {
 
   // Semi-transparent background variants (85% opacity)
   skyBlueTransparent: 'rgba(140, 157, 182, 0.5)',
-  lightCreamTransparent: 'rgba(245, 238, 237, 0.5)',
+  lightCreamTransparent: 'rgba(245, 238, 237, 0.4)',
   paleGreyTransparent: 'rgba(225, 218, 217, 0.5)',
   sandBeigeTransparent: 'rgba(228, 195, 167, 0.5)',
   sandyTanTransparent: 'rgba(199, 157, 124, 0.5)',
