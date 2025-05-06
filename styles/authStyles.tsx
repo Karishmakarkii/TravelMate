@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   },
   
   homeButton: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.lightCream,
     paddingVertical: verticalScale(14),
     borderRadius: moderateScale(30),
     alignItems: 'center',
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
   attractionContainer: {
     margin: 20,
     padding: 20,
-    backgroundColor: Colors.lightCreamTransparent,
+    backgroundColor: Colors.lightCream,
     borderTopLeftRadius: 40,
     borderBottomRightRadius: 40,
     borderTopRightRadius: 0,
@@ -337,7 +337,69 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginRight: scale(20),
     marginBottom: scale(10),
+    textAlign: 'center',
   },
+  itineraryContainer: {
+    margin: 5,
+    padding: 10,
+    backgroundColor: 'transparent',
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+   
+    elevation: 3,
+    maxHeight: '50%', //prevent it from stretching to full screen
+  },
+  itineraryInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: verticalScale(10),
+    marginTop:verticalScale(20),
+    backgroundColor: Colors.lightCreamTransparent,
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: scale(16),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+
+  itinerarySaveButton: {
+    backgroundColor: Colors.lightCream,
+    paddingVertical: verticalScale(14),
+    borderRadius: moderateScale(30),
+    alignItems: 'center',
+    marginBottom: verticalScale(15),
+    width: wp('50%'),
+    
+  },
+  saveText:{
+    color: Colors.deepBrown,
+    fontWeight: '500',
+  },
+
+  itineraryInfoText: {
+    fontSize: scale(13),
+    color: '#3b2e2e',
+    fontWeight: '500',
+    marginBottom: verticalScale(2),
+  },
+  
+  itineraryMapButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
+  itineraryMapText: {
+    fontSize: scale(12),
+    color: '#6e4b63',
+    fontWeight: '600',
+    marginTop: 2,
+  },
+
   
 });
 
