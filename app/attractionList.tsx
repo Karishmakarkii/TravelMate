@@ -37,7 +37,17 @@ export default function AttractionListScreen() {
 
       <View style={styles.attractionRating}>
         <Text style={styles.attractionRatingText}>{item.rating}</Text>
-        <Ionicons name="star" size={18} color="#FFB733" />
+        <Ionicons // Adding dynamic star for ratings
+          name={
+            item.rating >= 4.5
+              ? 'star'
+              : item.rating > 2.5
+                ? 'star-half'
+                : 'star-outline'
+          }
+          size={18}
+          color="#FFB733"
+        />
       </View>
 
       <Checkbox
