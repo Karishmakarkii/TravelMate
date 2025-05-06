@@ -37,7 +37,7 @@ export default function AttractionListScreen() {
 
       <View style={styles.attractionRating}>
         <Text style={styles.attractionRatingText}>{item.rating}</Text>
-        <Ionicons
+        <Ionicons // Adding dynamic star for ratings
           name={
             item.rating >= 4.5
               ? 'star'
