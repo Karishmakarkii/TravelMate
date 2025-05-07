@@ -418,7 +418,43 @@ const styles = StyleSheet.create({
     paddingBottom: 100, // Leave space above Footer
   },
   
-
+  dialogOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dialogBox: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 20,
+    width: '80%',
+    alignItems: 'center',
+  },
+  dialogTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: Colors.deepBrown,
+  },
+  dialogMessage: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  dialogActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    margin: 10,
+  },
+  dialogLink: {
+    color: Colors.Lavender,
+    fontWeight: 'bold',
+    marginHorizontal: 20,
+  },
+  
   
 });
 
