@@ -494,7 +494,24 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 13,
   },
-  
+  // No result screen
+  noResultContainer:{
+    margin: 15,
+    padding: 20,
+    backgroundColor: Colors.lightCreamTransparent,
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    maxHeight: '60%', //prevent it from stretching to full screen
+    maxWidth: '90%',
+  },
+
   
 });
 
