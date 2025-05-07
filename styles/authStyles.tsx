@@ -351,6 +351,8 @@ const styles = StyleSheet.create({
     marginBottom: scale(10),
     textAlign: 'center',
   },
+
+  //itinerary screen
   itineraryContainer: {
     margin: 5,
     padding: 10,
@@ -418,7 +420,81 @@ const styles = StyleSheet.create({
     paddingBottom: 100, // Leave space above Footer
   },
   
-
+  dialogOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dialogBox: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 20,
+    width: '80%',
+    alignItems: 'center',
+  },
+  dialogTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: Colors.deepBrown,
+  },
+  dialogMessage: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  dialogActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    margin: 10,
+  },
+  dialogLink: {
+    color: Colors.Lavender,
+    fontWeight: 'bold',
+    marginHorizontal: 20,
+  },
+  
+  //saved trips
+  tripCard: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  
+  tripTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#3C2D30',
+  },
+  
+  tripMeta: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 4,
+  },
+  
+  tripActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
+  },
+  
+  tripLink: {
+    color: '#6e4b63',
+    fontWeight: '600',
+    fontSize: 13,
+  },
+  
   
 });
 
