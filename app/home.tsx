@@ -67,7 +67,16 @@ export default function HomeScreen() {
             zIndexInverse={2000}
           />
 
-          <TouchableOpacity style={styles.homeButton} onPress={() => router.push('/attractionList')}>
+          <TouchableOpacity 
+            style={styles.homeButton} 
+            onPress={() => router.push({
+              pathname: '/attractionList',
+              params: {
+                radius: radiusValue,
+                transportMode: transportValue
+              }
+            })}
+          >
             <Text style={styles.homeButtonText}>Find Places</Text>
           </TouchableOpacity>
         </ScrollView>
