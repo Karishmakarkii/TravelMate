@@ -32,9 +32,9 @@ export default function SavedTripScreen() {
             <Text style={styles.tripMeta}>Location: {item.location}</Text>
 
             <View style={styles.tripActions}>
-                <TouchableOpacity><Text style={styles.tripLink}>Open trip</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={styles.tripLink}>Map</Text></TouchableOpacity>
-                <TouchableOpacity><Text style={styles.tripLink}>Remove</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push('/itinerary')}><Text style={styles.tripLink}>Open trip</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push('/home')}><Text style={styles.tripLink}>Map</Text></TouchableOpacity>
+                <TouchableOpacity ><Text style={styles.tripLink}>Remove</Text></TouchableOpacity>
             </View>
         </View>
     );
