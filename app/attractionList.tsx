@@ -10,6 +10,7 @@ import { ScrollView } from 'react-native';
 
 
 
+
 const mockAttractions = [
   { id: '1', name: 'Aorena beach', distance: '1.5 km', time: '5 mins', rating: 4.2 },
   { id: '2', name: 'Balencia view', distance: '3 km', time: '10 mins', rating: 3.8 },

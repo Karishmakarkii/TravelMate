@@ -512,6 +512,80 @@ const styles = StyleSheet.create({
     maxWidth: '90%',
   },
 
+  //setting screen
+  settingContainer:{
+    margin: 15,
+    marginTop: 15,
+    marginBottom: 0,
+    padding: 20,
+    backgroundColor: Colors.lightCream,
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 0,
+    borderTopRightRadius: 40,
+    borderBottomLeftRadius: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    maxHeight: '60%', //prevent it from stretching to full screen
+    maxWidth: '90%',
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  profileSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  profileCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: Colors.dustyPurple,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  profileInitial: {
+    color: '#fff',
+    fontWeight: '700',
+  },
+  profileEmail: {
+    fontWeight: '600',
+    color: Colors.deepBrown,
+  },
+  editProfileText: {
+    color: Colors.skyBlue,
+    fontSize: 12,
+  },
+  sectionTitle: {
+    marginTop: 20,
+    marginBottom: 10,
+    fontWeight: '600',
+    color: Colors.mauveBrown,
+  },
+  preferenceLabel: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    marginBottom: 5,
+  },
+  toggleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  linkText: {
+    color: Colors.dustyPurple,
+    textDecorationLine: 'underline',
+    fontWeight: '600',
+    marginBottom: 10,
+  }
+  
+
   
 });
 

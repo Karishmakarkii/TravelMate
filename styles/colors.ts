@@ -25,7 +25,7 @@ export const Colors = {
   paleGreyTransparent: 'rgba(225, 218, 217, 0.5)',
   sandBeigeTransparent: 'rgba(228, 195, 167, 0.5)',
   sandyTanTransparent: 'rgba(199, 157, 124, 0.5)',
-  dustyPurpleTransparent: 'rgba(143, 118, 132, 0.5)',
+  dustyPurpleTransparent: 'rgba(143, 118, 132, 0.7)',
   mauveBrownTransparent: 'rgba(123, 90, 89, 0.5)',
   deepBrownTransparent: 'rgba(60, 45, 48, 0.5)',
   ExpoDefaultTransparent: 'rgba(160, 160, 160, 0.5)',
