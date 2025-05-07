@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     margin: wp('5%'),
-    backgroundColor: Colors.lightCream,
+    backgroundColor: Colors.lightCreamTransparent,
     borderRadius: moderateScale(30),
     padding: moderateScale(35),
     shadowColor: '#000',
@@ -97,21 +97,21 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_700Bold',
   },
   loginLink: {
-    color: Colors.skyBlue,
+    color: Colors.darkskyBlue,
     textAlign: 'center',
     marginTop: verticalScale(10),
     fontFamily: 'Roboto_500Medium',
   },
   loginSubLink: {
     textAlign: 'right',
-    color: Colors.skyBlue,
+    color: Colors.darkskyBlue,
     marginBottom: verticalScale(16),
     fontSize: scale(12),
     fontFamily: 'Roboto_500Medium',
   },
   signupContainer: {
     margin: wp('3%'),
-    backgroundColor: Colors.lightCream,
+    backgroundColor: Colors.lightCreamTransparent,
     borderRadius: moderateScale(25),
     padding: moderateScale(35),
     shadowColor: '#000',
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 60,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
+    maxHeight: '70%',
   },
   signUpInputLabel: {
     fontSize: scale(14),
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_700Bold',
   },
   signupLink: {
-    color: Colors.skyBlue,
+    color: Colors.darkskyBlue,
     textAlign: 'center',
     marginTop: verticalScale(12),
     fontFamily: 'Roboto_500Medium',
@@ -235,9 +236,9 @@ const styles = StyleSheet.create({
 
   // Attractionlist screen
   attractionContainer: {
-    margin: 20,
+    margin: 15,
     padding: 20,
-    backgroundColor: Colors.lightCream,
+    backgroundColor: Colors.lightCreamTransparent,
     borderTopLeftRadius: 40,
     borderBottomRightRadius: 40,
     borderTopRightRadius: 0,
@@ -247,7 +248,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    maxHeight: '70%', //prevent it from stretching to full screen
+    maxHeight: '90%', //prevent it from stretching to full screen
+    maxWidth: '100%',
   },
   
 
@@ -326,14 +328,24 @@ const styles = StyleSheet.create({
   },
 
   createItineraryButtonText: {
-    color: Colors.Lavender,
+    color: Colors.deepBrown,
     fontWeight: '600',
     marginRight: scale(20)
 
   },
+  createItineraryButton: {
+    backgroundColor: Colors.lightCream,
+    paddingVertical: verticalScale(14),
+    borderRadius: moderateScale(30),
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: verticalScale(15),
+    width: wp('50%'),
+  },
+  
 
   attractionCancelText: {
-    color: Colors.Lavender,
+    color: Colors.deepBrown,
     fontWeight: '600',
     marginRight: scale(20),
     marginBottom: scale(10),
@@ -347,9 +359,8 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 40,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
-   
     elevation: 3,
-    maxHeight: '50%', //prevent it from stretching to full screen
+    maxHeight: '80%', //prevent it from stretching to full screen
   },
   itineraryInfoContainer: {
     flexDirection: 'row',
@@ -399,6 +410,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 2,
   },
+  scrollWrapper: {
+    flex: 1,
+  },
+  
+  scrollContent: {
+    paddingBottom: 100, // Leave space above Footer
+  },
+  
 
   
 });
