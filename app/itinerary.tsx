@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { ScrollView } from 'react-native';
 
 
 
@@ -15,6 +16,9 @@ const mockAttractions = [
     { id: '3', name: 'Botanic garden', distance: '4.5 km', time: '15 mins', rating: 4.5 },
     { id: '4', name: 'Papola garden', distance: '5.5 km', time: '20 mins', rating: 2.5 },
     { id: '5', name: 'Romani garden', distance: '6.5 km', time: '30 mins', rating: 2.5 },
+    { id: '6', name: 'Zeerba garden', distance: '7.5 km', time: '60 mins', rating: 5.0 },
+    { id: '6', name: 'Zeerba garden', distance: '7.5 km', time: '60 mins', rating: 5.0 },
+    { id: '6', name: 'Zeerba garden', distance: '7.5 km', time: '60 mins', rating: 5.0 },
     { id: '6', name: 'Zeerba garden', distance: '7.5 km', time: '60 mins', rating: 5.0 },
 ];
 
@@ -48,6 +52,8 @@ export default function ItineraryScreen() {
     return (
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
             <Header title="Your Itinerary" />
+            <View style={styles.scrollWrapper}>
+            <ScrollView contentContainerStyle={styles.scrollContent}>
             <View style={styles.itineraryInfoContainer}>
                 <View>
                     <Text style={styles.itineraryInfoText}>Total stops : {selected.length}</Text>
@@ -69,11 +75,13 @@ export default function ItineraryScreen() {
                 />
             </View>
             <View style={{ alignItems: 'center', marginTop: 20 }}>
-                <TouchableOpacity onPress={() => router.push('/save')}
+                <TouchableOpacity onPress={() => router.push('/savePopup')}
                     style={styles.itinerarySaveButton}
                 >
                     <Text style={styles.saveText}>Save</Text>
                 </TouchableOpacity>
+            </View>
+            </ScrollView>
             </View>
             <Footer showBack />
         </ImageBackground>
