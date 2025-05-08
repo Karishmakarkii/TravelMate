@@ -250,7 +250,6 @@ const styles = StyleSheet.create({
     maxHeight: '70%', //prevent it from stretching to full screen
   },
   
-
   attractionTitle: {
     fontSize: scale(20),
     fontWeight: '700',
@@ -299,6 +298,13 @@ const styles = StyleSheet.create({
     fontSize: scale(12),
     color: '#777',
     marginTop: verticalScale(2),
+  },
+
+  attractionVicinity: {
+    fontSize: scale(11),
+    color: '#666',
+    marginTop: verticalScale(2),
+    fontStyle: 'italic',
   },
 
   attractionRating: {
@@ -400,7 +406,19 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 
+  createItineraryButton: {
+    backgroundColor: Colors.dustyPurple,
+    paddingVertical: verticalScale(14),
+    paddingHorizontal: scale(20),
+    borderRadius: moderateScale(10),
+    alignItems: 'center',
+    marginBottom: verticalScale(12),
+  },
   
+  disabledButton: {
+    backgroundColor: Colors.paleGrey,
+    opacity: 0.7,
+  },
 });
 
 export default styles;
