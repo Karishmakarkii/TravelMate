@@ -22,7 +22,7 @@ export default function LoginScreen() {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
   function login() {
-    if (email === '') {
+    if (email === '') { // Check if email is empty
       setEmailErrorMessage("Please enter email address!");
     } else if (pword === '') {
       setPasswordErrorMessage("Please enter password!");
