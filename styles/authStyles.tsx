@@ -84,6 +84,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontFamily: 'Roboto_400Regular',
   },
+  errorText: {
+    fontFamily: 'Roboto_700Bold',
+    color: 'red'
+  },
   loginButton: {
     backgroundColor: Colors.dustyPurple,
     paddingVertical: verticalScale(14),
