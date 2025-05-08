@@ -6,6 +6,8 @@ import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
+import { ScrollView } from 'react-native';
+
 
 
 
@@ -15,6 +17,9 @@ const mockAttractions = [
   { id: '3', name: 'Botanic garden', distance: '4.5 km', time: '15 mins', rating: 4.5 },
   { id: '4', name: 'Papola garden', distance: '5.5 km', time: '20 mins', rating: 2.5 },
   { id: '5', name: 'Romani garden', distance: '6.5 km', time: '30 mins', rating: 2.5 },
+  { id: '6', name: 'Zeerba garden', distance: '7.5 km', time: '60 mins', rating: 5.0 },
+  { id: '6', name: 'Zeerba garden', distance: '7.5 km', time: '60 mins', rating: 5.0 },
+  { id: '6', name: 'Zeerba garden', distance: '7.5 km', time: '60 mins', rating: 5.0 },
   { id: '6', name: 'Zeerba garden', distance: '7.5 km', time: '60 mins', rating: 5.0 },
 ];
 
@@ -62,30 +67,37 @@ export default function AttractionListScreen() {
   return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <Header title="TravelMate" />
-      <View style={styles.attractionContainer}>
-        <Text style={styles.attractionTitle}>Nearby Attractions in Location</Text>
-        <Text style={styles.attractionSubtitle}>
-          Hey you are in luck!{'\n'}
-          There are {mockAttractions.length} tourist places near you. Check from list to add to itinerary.
-        </Text>
+      <View style={styles.scrollWrapper}>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.attractionContainer}>
+            <Text style={styles.attractionTitle}>Nearby Attractions in Location</Text>
+            <Text style={styles.attractionSubtitle}>
+              Hey you are in luck!{'\n'}
+              There are {mockAttractions.length} tourist places near you. Check from list to add to itinerary.
+            </Text>
 
-        <FlatList
-          data={mockAttractions}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          contentContainerStyle={styles.attractionListContainer}
-          showsVerticalScrollIndicator={false}
-        />
+            <FlatList
+              data={mockAttractions}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              contentContainerStyle={styles.attractionListContainer}
+              showsVerticalScrollIndicator={false}
+            />
 
-        <View style={styles.attractionButtonContainer}>
-          <TouchableOpacity onPress={() => router.push('/itinerary')}>
-            <Text style={styles.createItineraryButtonText}>Create Itinerary</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => router.back()} >
-            <Text style={styles.attractionCancelText}>Cancel</Text>
-          </TouchableOpacity>
-        </View>
+            <View style={styles.attractionButtonContainer}>
+              <TouchableOpacity onPress={() => router.back()} >
+                <Text style={styles.attractionCancelText}>Cancel</Text>
+              </TouchableOpacity>
+            </View> 
+          </View>
 
+          <View style={{ alignItems: 'center', marginBottom: 10 , marginTop: 10}}>
+            <TouchableOpacity onPress={() => router.push('/itinerary')} style={styles.createItineraryButton}>
+              <Text style={styles.createItineraryButtonText}>Create Itinerary</Text>
+            </TouchableOpacity>
+          </View>
+
+        </ScrollView>
       </View>
       <Footer showBack />
     </ImageBackground>

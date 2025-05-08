@@ -34,7 +34,7 @@ export default function LoginScreen() {
         // signed in
         setEmail('');
         setPword('');
-        router.push('/home');        
+        router.push('/home');
       })
       .catch((error) => {
         alert("Incorrect username or password!");
