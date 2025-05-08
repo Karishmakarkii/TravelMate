@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 60,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
-    maxHeight: '70%',
+    maxHeight: '85%',
   },
   signUpInputLabel: {
     fontSize: scale(14),

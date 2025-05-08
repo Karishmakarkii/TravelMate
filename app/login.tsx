@@ -34,7 +34,6 @@ export default function LoginScreen() {
         // signed in
         setEmail('');
         setPword('');
-        setEmailErrorMessage('');
         router.push('/home');        
       })
       .catch((error) => {

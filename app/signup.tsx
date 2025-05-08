@@ -21,6 +21,10 @@ export default function SignUpScreen() {
   const [cpword, setCPword] = useState('');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [nameErrorMessage, setNameErrorMessage] = useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [cpasswordErrorMessage, setCPasswordErrorMessage] = useState('');
 
   // Initialize db
   const db = getFirestore(app);
@@ -37,21 +41,38 @@ export default function SignUpScreen() {
   }
 
   function create() {
-    if (pword === cpword) {
+    if (name === '') {
+      setNameErrorMessage("Please enter name!");
+    } else if (email === '') {
+      setEmailErrorMessage("Please enter email address!");
+    } else if (pword === '') {
+      setPasswordErrorMessage("Please enter password!");
+    } else if (cpword === '') {
+      setCPasswordErrorMessage("Please confirm password!");
+    } else if (pword === cpword) {
       createUserWithEmailAndPassword(auth, email, pword)
       .then((userCredential) => {
         // created
         writeToDB(email, name);
+        setName('');
+        setEmail('');
+        setPword('');
+        setCPword('');
         alert("User successfully created!");
-        router.push('/login')
+        router.push('/home')
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert("User not created!");
+        if (error.code === "auth/email-already-in-use") {
+          alert("User already exists!");
+        } else if (error.code === "auth/weak-password") {
+          alert("Password should be at least 6 characters!");
+        } else {
+          console.log("error: " + error.code + " AND " + error.message);
+          alert("User not created!");
+        }
       });
     } else {
-      alert("Passwords do not match!");
+      setCPasswordErrorMessage("Passwords do not match!");
     }
   }
 
@@ -62,14 +83,17 @@ export default function SignUpScreen() {
         <Text style={styles.loginTitle}>Sign Up</Text>
         
         <Text style={styles.signUpInputLabel}>Name</Text>
-        <TextInput placeholder="Enter name" placeholderTextColor="#999"  style={styles.signupInput} onChangeText = {setName} value={name} />
+        <TextInput placeholder="Enter name" placeholderTextColor="#999"  style={styles.signupInput} onChangeText = {(input) => {setName(input); setNameErrorMessage('');}} value={name} />
+        <Text style={styles.errorText}>{nameErrorMessage}</Text>
         <Text style={styles.signUpInputLabel}>Email Address</Text>
-        <TextInput placeholder="Enter email" placeholderTextColor="#999"  style={styles.signupInput} keyboardType="email-address" onChangeText = {setEmail} value={email} />
+        <TextInput placeholder="Enter email" placeholderTextColor="#999"  style={styles.signupInput} keyboardType="email-address" onChangeText = {(input) => {setEmail(input); setEmailErrorMessage('');}} value={email} />
+        <Text style={styles.errorText}>{emailErrorMessage}</Text>
         <Text style={styles.signUpInputLabel}>Password</Text>
-        <TextInput placeholder="Enter password" placeholderTextColor="#999" style={styles.signupInput} secureTextEntry onChangeText = {setPword} value={pword} />
+        <TextInput placeholder="Enter password" placeholderTextColor="#999" style={styles.signupInput} secureTextEntry onChangeText = {(input) => {setPword(input); setPasswordErrorMessage('');}} value={pword} />
+        <Text style={styles.errorText}>{passwordErrorMessage}</Text>
         <Text style={styles.signUpInputLabel}>Confirm Password</Text>
-        <TextInput placeholder="Re enter password" placeholderTextColor="#999" style={styles.signupInput} secureTextEntry onChangeText = {setCPword} value={cpword} />
-
+        <TextInput placeholder="Re enter password" placeholderTextColor="#999" style={styles.signupInput} secureTextEntry onChangeText = {(input) => {setCPword(input); setCPasswordErrorMessage('');}} value={cpword} />
+        <Text style={styles.errorText}>{cpasswordErrorMessage}</Text>
         <TouchableOpacity style={styles.signupButton} onPress={() => create()}>
           <Text style={styles.signupButtonText}>Sign Up</Text>
         </TouchableOpacity>
