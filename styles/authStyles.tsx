@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   loginContainer: {
     margin: wp('5%'),
-    backgroundColor: Colors.lightCream,
+    backgroundColor: Colors.lightCreamTransparent,
     borderRadius: moderateScale(30),
     padding: moderateScale(35),
     shadowColor: '#000',
@@ -101,21 +101,21 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_700Bold',
   },
   loginLink: {
-    color: Colors.skyBlue,
+    color: Colors.darkskyBlue,
     textAlign: 'center',
     marginTop: verticalScale(10),
     fontFamily: 'Roboto_500Medium',
   },
   loginSubLink: {
     textAlign: 'right',
-    color: Colors.skyBlue,
+    color: Colors.darkskyBlue,
     marginBottom: verticalScale(16),
     fontSize: scale(12),
     fontFamily: 'Roboto_500Medium',
   },
   signupContainer: {
     margin: wp('3%'),
-    backgroundColor: Colors.lightCream,
+    backgroundColor: Colors.lightCreamTransparent,
     borderRadius: moderateScale(25),
     padding: moderateScale(35),
     shadowColor: '#000',
@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 60,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
+    maxHeight: '70%',
   },
   signUpInputLabel: {
     fontSize: scale(14),
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_700Bold',
   },
   signupLink: {
-    color: Colors.skyBlue,
+    color: Colors.darkskyBlue,
     textAlign: 'center',
     marginTop: verticalScale(12),
     fontFamily: 'Roboto_500Medium',
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
   },
   
   homeButton: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.lightCream,
     paddingVertical: verticalScale(14),
     borderRadius: moderateScale(30),
     alignItems: 'center',
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
 
   // Attractionlist screen
   attractionContainer: {
-    margin: 20,
+    margin: 15,
     padding: 20,
     backgroundColor: Colors.lightCreamTransparent,
     borderTopLeftRadius: 40,
@@ -251,7 +252,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    maxHeight: '70%', //prevent it from stretching to full screen
+    maxHeight: '90%', //prevent it from stretching to full screen
+    maxWidth: '100%',
   },
   
 
@@ -330,18 +332,264 @@ const styles = StyleSheet.create({
   },
 
   createItineraryButtonText: {
-    color: Colors.Lavender,
+    color: Colors.deepBrown,
     fontWeight: '600',
     marginRight: scale(20)
 
   },
+  createItineraryButton: {
+    backgroundColor: Colors.lightCream,
+    paddingVertical: verticalScale(14),
+    borderRadius: moderateScale(30),
+    alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: verticalScale(15),
+    width: wp('50%'),
+  },
+  
 
   attractionCancelText: {
-    color: Colors.Lavender,
+    color: Colors.deepBrown,
     fontWeight: '600',
     marginRight: scale(20),
     marginBottom: scale(10),
+    textAlign: 'center',
   },
+
+  //itinerary screen
+  itineraryContainer: {
+    margin: 5,
+    padding: 10,
+    backgroundColor: 'transparent',
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    elevation: 3,
+    maxHeight: '80%', //prevent it from stretching to full screen
+  },
+  itineraryInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: verticalScale(10),
+    marginTop:verticalScale(20),
+    backgroundColor: Colors.lightCreamTransparent,
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: scale(16),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+
+  itinerarySaveButton: {
+    backgroundColor: Colors.lightCream,
+    paddingVertical: verticalScale(14),
+    borderRadius: moderateScale(30),
+    alignItems: 'center',
+    marginBottom: verticalScale(15),
+    width: wp('50%'),
+    
+  },
+  saveText:{
+    color: Colors.deepBrown,
+    fontWeight: '500',
+  },
+
+  itineraryInfoText: {
+    fontSize: scale(13),
+    color: '#3b2e2e',
+    fontWeight: '500',
+    marginBottom: verticalScale(2),
+  },
+  
+  itineraryMapButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
+  itineraryMapText: {
+    fontSize: scale(12),
+    color: '#6e4b63',
+    fontWeight: '600',
+    marginTop: 2,
+  },
+  scrollWrapper: {
+    flex: 1,
+  },
+  
+  scrollContent: {
+    paddingBottom: 100, // Leave space above Footer
+  },
+  
+  dialogOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dialogBox: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 20,
+    width: '80%',
+    alignItems: 'center',
+  },
+  dialogTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: Colors.deepBrown,
+  },
+  dialogMessage: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  dialogActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    margin: 10,
+  },
+  dialogLink: {
+    color: Colors.Lavender,
+    fontWeight: 'bold',
+    marginHorizontal: 20,
+  },
+  
+  //saved trips
+  tripCard: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  
+  tripTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: '#3C2D30',
+  },
+  
+  tripMeta: {
+    fontSize: 14,
+    color: '#555',
+    marginBottom: 4,
+  },
+  
+  tripActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 12,
+  },
+  
+  tripLink: {
+    color: '#6e4b63',
+    fontWeight: '600',
+    fontSize: 13,
+  },
+  // No result screen
+  noResultContainer:{
+    margin: 15,
+    padding: 20,
+    backgroundColor: Colors.lightCreamTransparent,
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    maxHeight: '60%', //prevent it from stretching to full screen
+    maxWidth: '90%',
+  },
+
+  //setting screen
+  settingContainer:{
+    margin: 15,
+    marginTop: 15,
+    marginBottom: 0,
+    padding: 20,
+    backgroundColor: Colors.lightCream,
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 0,
+    borderTopRightRadius: 40,
+    borderBottomLeftRadius: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+    maxHeight: '60%', //prevent it from stretching to full screen
+    maxWidth: '90%',
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  profileSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  profileCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: Colors.dustyPurple,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  profileInitial: {
+    color: '#fff',
+    fontWeight: '700',
+  },
+  profileEmail: {
+    fontWeight: '600',
+    color: Colors.deepBrown,
+  },
+  editProfileText: {
+    color: Colors.skyBlue,
+    fontSize: 12,
+  },
+  sectionTitle: {
+    marginTop: 20,
+    marginBottom: 10,
+    fontWeight: '600',
+    color: Colors.mauveBrown,
+  },
+  preferenceLabel: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    marginBottom: 5,
+  },
+  toggleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  linkText: {
+    color: Colors.dustyPurple,
+    textDecorationLine: 'underline',
+    fontWeight: '600',
+    marginBottom: 10,
+  }
+  
+
   
 });
 

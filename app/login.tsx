@@ -57,10 +57,10 @@ export default function LoginScreen() {
         <Text style={styles.loginTitle}>Login</Text>
         
         <Text style={styles.loginInputLabel}>Email</Text>
-        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" onChangeText = {(input) => {setEmail(input); setEmailErrorMessage('');}} value={email} />
+        <TextInput placeholder="Enter email" placeholderTextColor="#999" style={styles.loginInput} keyboardType="email-address" onChangeText = {(input) => {setEmail(input); setEmailErrorMessage('');}} value={email} />
         <Text style={styles.errorText}>{emailErrorMessage}</Text>
         <Text style={styles.loginInputLabel}>Password</Text>
-        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry onChangeText = {(input) => {setPword(input); setPasswordErrorMessage('');}} value={pword} />
+        <TextInput placeholder="Enter password" placeholderTextColor="#999" style={styles.loginInput} secureTextEntry onChangeText = {(input) => {setPword(input); setPasswordErrorMessage('');}} value={pword} />
         <Text style={styles.errorText}>{passwordErrorMessage}</Text>
         <TouchableOpacity onPress={() => router.push('/forgotPassword')}>
           <Text style={styles.loginSubLink}>Forgot password?</Text>
