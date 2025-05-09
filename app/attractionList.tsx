@@ -61,16 +61,27 @@ export default function AttractionListScreen() {
   // Function to fetch nearby places from Google Places API
   const fetchNearbyPlaces = async (latitude: number, longitude: number, radiusInKm: number) => {
     try {
+      console.log('API Key:', GOOGLE_MAPS_API_KEY); // Log the API key (masked)
       const radiusInMeters = radiusInKm * 1000;
-      const response = await fetch(
-          `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radiusInMeters}&type=tourist_attraction&key=${GOOGLE_MAPS_API_KEY}`
-      );
+      const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radiusInMeters}&type=tourist_attraction&key=${GOOGLE_MAPS_API_KEY}`;
+      console.log('Places API URL:', placesUrl.replace(GOOGLE_MAPS_API_KEY, 'API_KEY_HIDDEN')); // Log URL with hidden key
       
+      const response = await fetch(placesUrl);
       const data = await response.json();
       
-      console.log(data);
+      console.log('Places API Response:', {
+        status: data.status,
+        error_message: data.error_message,
+        results: data.results ? `Found ${data.results.length} places` : 'No results'
+      });
+      
       if (data.status === 'REQUEST_DENIED') {
-        console.error('Google Maps API Error:', data.error_message);
+        console.error('Google Maps API Error Details:', {
+          status: data.status,
+          error: data.error_message,
+          apiKey: GOOGLE_MAPS_API_KEY ? 'Present' : 'Missing',
+          apiKeyLength: GOOGLE_MAPS_API_KEY ? GOOGLE_MAPS_API_KEY.length : 0
+        });
         throw new Error('Invalid API key or API not enabled. Please check your Google Maps API configuration.');
       }
       
@@ -79,75 +90,54 @@ export default function AttractionListScreen() {
         throw new Error(data.error_message || 'Failed to fetch places');
       }
 
+      // Prepare destinations for Distance Matrix API
+      const destinations = data.results.map((place: any) => `${place.geometry.location.lat},${place.geometry.location.lng}`).join('|');
+      let distanceData = null;
+      let useFallback = false;
+      try {
+        const distanceResponse = await fetch(
+          `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${latitude},${longitude}&destinations=${destinations}&mode=${transportMode}&key=${GOOGLE_MAPS_API_KEY}`
+        );
+        distanceData = await distanceResponse.json();
+        if (distanceData.status !== 'OK') {
+          console.error('Distance Matrix API Error:', distanceData.error_message);
+          useFallback = true;
+        }
+      } catch (err) {
+        console.error('Distance Matrix API request failed:', err);
+        useFallback = true;
+      }
+
       // Process and format the places data
-      const formattedPlaces = await Promise.all(data.results.map(async (place: any) => {
-        try {
-          // Calculate actual distance using Distance Matrix API
-          const distanceResponse = await fetch(
-            `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${latitude},${longitude}&destinations=${place.geometry.location.lat},${place.geometry.location.lng}&mode=${transportMode}&key=${GOOGLE_MAPS_API_KEY}`
-          );
-          
-          const distanceData = await distanceResponse.json();
-          
-          if (distanceData.status !== 'OK') {
-            console.error('Distance Matrix API Error:', distanceData.error_message);
-            // If distance calculation fails, fall back to straight-line distance
-            const straightLineDistance = calculateStraightLineDistance(
-              latitude,
-              longitude,
-              place.geometry.location.lat,
-              place.geometry.location.lng
-            );
-            return {
-              id: place.place_id,
-              name: place.name,
-              distance: `${straightLineDistance.toFixed(1)} km`,
-              time: calculateTravelTime(straightLineDistance, transportMode as string),
-              rating: place.rating || 0,
-              vicinity: place.vicinity,
-              geometry: place.geometry
-            };
-          }
-
-          if (!distanceData.rows?.[0]?.elements?.[0]?.distance) {
-            throw new Error('Invalid distance matrix response structure');
-          }
-
-          const distanceInKm = distanceData.rows[0].elements[0].distance.value / 1000;
-          const travelTime = calculateTravelTime(distanceInKm, transportMode as string);
-
-          return {
-            id: place.place_id,
-            name: place.name,
-            distance: `${distanceInKm.toFixed(1)} km`,
-            time: travelTime,
-            rating: place.rating || 0,
-            vicinity: place.vicinity,
-            geometry: place.geometry
-          };
-        } catch (error) {
-          console.error('Error calculating distance for place:', place.name, error);
-          // Fall back to straight-line distance calculation
-          const straightLineDistance = calculateStraightLineDistance(
+      const formattedPlaces = data.results.map((place: any, idx: number) => {
+        let distanceInKm: number | null = null;
+        let travelTime: string | null = null;
+        if (!useFallback && distanceData && distanceData.rows && distanceData.rows[0] && distanceData.rows[0].elements && distanceData.rows[0].elements[idx] && distanceData.rows[0].elements[idx].status === 'OK') {
+          distanceInKm = distanceData.rows[0].elements[idx].distance.value / 1000;
+          travelTime = calculateTravelTime(distanceInKm, transportMode as string);
+        } else {
+          // Fallback to straight-line distance
+          distanceInKm = calculateStraightLineDistance(
             latitude,
             longitude,
             place.geometry.location.lat,
             place.geometry.location.lng
           );
-          return {
-            id: place.place_id,
-            name: place.name,
-            distance: `${straightLineDistance.toFixed(1)} km`,
-            time: calculateTravelTime(straightLineDistance, transportMode as string),
-            rating: place.rating || 0,
-            vicinity: place.vicinity,
-            geometry: place.geometry
-          };
+          travelTime = calculateTravelTime(distanceInKm, transportMode as string);
         }
-      }));
+        return {
+          id: place.place_id,
+          name: place.name,
+          distance: `${distanceInKm.toFixed(1)} km`,
+          time: travelTime,
+          rating: place.rating || 0,
+          vicinity: place.vicinity,
+          geometry: place.geometry
+        };
+      });
 
       // Sort places by distance
-      return formattedPlaces.sort((a, b) => 
+      return formattedPlaces.sort((a: Place, b: Place) => 
         parseFloat(a.distance.split(' ')[0]) - parseFloat(b.distance.split(' ')[0])
       );
     } catch (error) {
@@ -192,7 +182,6 @@ export default function AttractionListScreen() {
 
         const location = await Location.getCurrentPositionAsync({});
         setLocation(location);
-        console.log(location);
         
         const places = await fetchNearbyPlaces(
           location.coords.latitude,
