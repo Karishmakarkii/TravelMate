@@ -19,18 +19,32 @@ export default function LoginScreen() {
   const [pword, setPword] = useState('');
   const [email, setEmail] = useState('');
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
   function login() {
-    signInWithEmailAndPassword(auth, email, pword)
-    .then((userCredential) => {
-      // signed in
+    if (email === '') {
+      setEmailErrorMessage("Please enter email address!");
+    } else if (pword === '') {
+      setPasswordErrorMessage("Please enter password!");
+    } else if (!validateEmail(email)) {
+      setEmailErrorMessage("Please enter a valid email address!");
+    } else {
+      signInWithEmailAndPassword(auth, email, pword)
+      .then((userCredential) => {
+        // signed in
+        setEmail('');
+        setPword('');
+        router.push('/home');
+      })
+      .catch((error) => {
+        alert("Incorrect username or password!");
+      });
+    }
+  }
 
-      router.push('/home');
-
-    })
-    .catch((error) => {
-      alert("Login Unsuccessful!");
-    }); 
+  const validateEmail = (str: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(str);
   }
 
   return (
@@ -42,11 +56,11 @@ export default function LoginScreen() {
         <Text style={styles.loginTitle}>Login</Text>
         
         <Text style={styles.loginInputLabel}>Email</Text>
-        <TextInput placeholder="Email" style={styles.loginInput} keyboardType="email-address" onChangeText = {setEmail} value={email} />
-        <Text>{emailErrorMessage}</Text>
+        <TextInput placeholder="Enter email" placeholderTextColor="#999" style={styles.loginInput} keyboardType="email-address" onChangeText = {(input) => {setEmail(input); setEmailErrorMessage('');}} value={email} />
+        <Text style={styles.errorText}>{emailErrorMessage}</Text>
         <Text style={styles.loginInputLabel}>Password</Text>
-        <TextInput placeholder="Password" style={styles.loginInput} secureTextEntry onChangeText = {setPword} value={pword} />
-
+        <TextInput placeholder="Enter password" placeholderTextColor="#999" style={styles.loginInput} secureTextEntry onChangeText = {(input) => {setPword(input); setPasswordErrorMessage('');}} value={pword} />
+        <Text style={styles.errorText}>{passwordErrorMessage}</Text>
         <TouchableOpacity onPress={() => router.push('/forgotPassword')}>
           <Text style={styles.loginSubLink}>Forgot password?</Text>
         </TouchableOpacity>
