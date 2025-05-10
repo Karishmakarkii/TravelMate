@@ -50,7 +50,7 @@ export default function ItineraryScreen() {
             <MainLayout title="Your Itinerary">
 
             <View style={styles.scrollWrapper}>
-                <ScrollView contentContainerStyle={styles.scrollContent}>
+                <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.scrollContent}>
                     <View style={styles.itineraryInfoContainer}>
                         <View>
                             <Text style={styles.itineraryInfoText}>Total stops : {selected.length}</Text>
