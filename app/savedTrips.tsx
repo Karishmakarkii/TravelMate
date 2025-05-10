@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import { useState } from 'react';
 import Header from '@/components/header';
+import MainLayout from '@/components/mainLayout';
 
 const savedTrips = [
     {
@@ -44,14 +45,15 @@ export default function SavedTripScreen() {
             source={require('../assets/images/starterImage.jpeg')}
             style={styles.background}
         >
-            <Header title="Saved Trips" />
-            <FlatList
-                data={savedTrips}
-                renderItem={renderItem}
-                keyExtractor={(item: { id: any; }) => item.id}
-                contentContainerStyle={{ padding: 20 }}
-            />
-
+            <MainLayout showFooter={false}>
+                <Header title="Saved Trips" />
+                <FlatList
+                    data={savedTrips}
+                    renderItem={renderItem}
+                    keyExtractor={(item: { id: any; }) => item.id}
+                    contentContainerStyle={{ padding: 20 }}
+                />
+            </MainLayout>
         </ImageBackground>
     );
 }

@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import Checkbox from 'expo-checkbox';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import Header from '@/components/header';
-import Footer from '@/components/footer';
 import { ScrollView } from 'react-native';
+import MainLayout from '@/components/mainLayout';
 
 
 export default function NoResultScreen() {
@@ -14,6 +12,7 @@ export default function NoResultScreen() {
 
     return (
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
+            <MainLayout>
             <Header title="TravelMate" />
 
             <View style={styles.noResultContainer}>
@@ -32,7 +31,7 @@ export default function NoResultScreen() {
                     </TouchableOpacity>
                 </View>
             </View>
-            <Footer showBack />
+            </MainLayout>
         </ImageBackground>
     );
 }

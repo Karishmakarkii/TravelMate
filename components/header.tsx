@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors } from '../styles/colors';
-import SettingsModal from '@/app/setting';
+import SettingsModal from './settingModal';
+
 
 type Props = {
   title: string;
@@ -22,7 +23,7 @@ export default function Header({ title, showMenu = true }: Props) {
       />
       <Text style={styles.title}>{title}</Text>
       <TouchableOpacity onPress={() => setShowSettings(true)}>
-      <SettingsModal isVisible={showSettings} onClose={() => setShowSettings(false)} />
+      <SettingsModal isVisible={showSettings} onClose={() => setShowSettings(false)} onOpenProfile={() =>{}}/>
         <Text style={styles.menuIcon}>⋮</Text>
       </TouchableOpacity>
 
