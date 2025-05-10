@@ -61,10 +61,18 @@ export default function ProfileModal({ isVisible, onClose, user }: Props) {
           </View>
         ))}
 
-        {/* Log out */}
-        <TouchableOpacity>
-          <Text style={styles.profileLogout}>Log out</Text>
-        </TouchableOpacity>
+        {/* Update proflie*/}
+
+        <View style={styles.profileActionRow}>
+          <TouchableOpacity onPress={onClose}>
+            <Text style={styles.profileActionBtn}>Discard</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <Text style={styles.profileActionBtn}>Update Profile</Text>
+          </TouchableOpacity>
+        </View>
+
       </View>
     </Modal>
   );
