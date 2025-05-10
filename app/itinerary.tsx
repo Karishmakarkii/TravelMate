@@ -5,7 +5,7 @@ import Checkbox from 'expo-checkbox';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import Header from '@/components/header';
-import Footer from '@/components/footer';
+import MainLayout from '@/components/mainLayout';
 
 const mockAttractions = [
     { id: '1', name: 'Aorena beach', distance: '1.5 km', time: '5 mins', rating: 4.2 },
@@ -45,6 +45,7 @@ export default function ItineraryScreen() {
 
     return (
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
+            <MainLayout>
             <Header title="Your Itinerary" />
 
             <View style={styles.scrollWrapper}>
@@ -102,8 +103,7 @@ export default function ItineraryScreen() {
                     </View>
                 </View>
             </Modal>
-
-            <Footer showBack />
+</MainLayout>
         </ImageBackground>
     );
 }

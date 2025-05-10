@@ -7,6 +7,7 @@ import styles from '../styles/authStyles';
 import Header from '@/components/header';
 import Footer from '@/components/footer';
 import { ScrollView } from 'react-native';
+import MainLayout from '@/components/mainLayout';
 
 
 
@@ -66,6 +67,7 @@ export default function AttractionListScreen() {
 
   return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
+      <MainLayout>
       <Header title="TravelMate" />
       <View style={styles.scrollWrapper}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -99,7 +101,7 @@ export default function AttractionListScreen() {
 
         </ScrollView>
       </View>
-      <Footer showBack />
+      </MainLayout>
     </ImageBackground>
   );
 }

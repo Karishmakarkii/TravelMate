@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { View, Text, Switch, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,10 +10,11 @@ import { Ionicons } from '@expo/vector-icons';
 type SettingsModalProps = {
     isVisible: boolean;
     onClose: () => void;
+    onOpenProfile: () => void;
   };
   
 
-export default function SettingsModal({ isVisible, onClose}:SettingsModalProps) {
+export default function SettingsModal({ isVisible, onClose, onOpenProfile}:SettingsModalProps) {
     const router = useRouter();
     const [darkMode, setDarkMode] = useState(false);
     const [radiusOpen, setRadiusOpen] = useState(false);
@@ -25,6 +24,7 @@ export default function SettingsModal({ isVisible, onClose}:SettingsModalProps) 
         { label: '10 km', value: '10' },
         { label: '20 km', value: '20' },
     ]);
+
 
     return (
         <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.bottomModal}>
@@ -40,7 +40,7 @@ export default function SettingsModal({ isVisible, onClose}:SettingsModalProps) 
                     <View style={styles.profileCircle}><Text style={styles.profileInitial}>PJ</Text></View>
                     <View>
                         <Text style={styles.profileEmail}>pk34demo@gmail.com</Text>
-                        <TouchableOpacity onPress={() => router.push('/profile')}>
+                        <TouchableOpacity onPress={onOpenProfile}>
                             <Text style={styles.editProfileText}>Edit profile</Text>
                         </TouchableOpacity>
                     </View>
