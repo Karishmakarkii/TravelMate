@@ -2,8 +2,8 @@ import { View, Text, TextInput, TouchableOpacity, ImageBackground, FlatList } fr
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import { useState } from 'react';
-import Header from '@/components/header';
 import MainLayout from '@/components/mainLayout';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const savedTrips = [
     {
@@ -45,6 +45,7 @@ export default function SavedTripScreen() {
             source={require('../assets/images/starterImage.jpeg')}
             style={styles.background}
         >
+            <SafeAreaView style={{ flex: 1 }}>
             <MainLayout title="Saved Trips" showFooter={false}>
                 <FlatList
                     data={savedTrips}
@@ -53,6 +54,7 @@ export default function SavedTripScreen() {
                     contentContainerStyle={{ padding: 20 }}
                 />
             </MainLayout>
+            </SafeAreaView>
         </ImageBackground>
     );
 }
