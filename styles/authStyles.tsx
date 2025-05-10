@@ -651,15 +651,95 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-  profileLogout: {
-    color: Colors.dustyPurple, // 💜 matches links/buttons in settings
+  profileActionRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingRight: 20,
+    marginTop: 20,
+  },
+  profileActionBtn: {
+    color: Colors.dustyPurple, 
     textAlign: 'center',
     marginTop: 24,
     fontWeight: '600',
     fontSize: 15,
+    marginLeft: 15,
   },
   
+  // premium modal 
+    premiumContainer: {
+      flex: 1,
+      backgroundColor: Colors.lightCream,
+      margin: 20,
+      marginTop: 60,
+      padding: 20,
+      borderRadius: 30,
+    },
+    premiumBackBtn: {
+      marginBottom: 15,
+    },
+    premiumTitle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: Colors.deepBrown,
+      marginBottom: 10,
+    },
+    premiumIconCircle: {
+      alignSelf: 'center',
+      backgroundColor: Colors.dustyPurple,
+      padding: 20,
+      borderRadius: 60,
+      marginBottom: 10,
+    },
+    premiumDescription: {
+      textAlign: 'center',
+      color: Colors.deepBrown,
+      marginBottom: 20,
+      fontSize: 16,
+    },
+    premiumBenefitItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: 8,
+    },
+    premiumBenefitIcon: {
+      marginRight: 10,
+    },
+    premiumBenefitText: {
+      fontSize: 14,
+      color: Colors.deepBrown,
+    },
+    premiumUpgradeBtn: {
+      backgroundColor: Colors.dustyPurple,
+      padding: 12,
+      borderRadius: 20,
+      marginTop: 20,
+      alignItems: 'center',
+    },
+    premiumUpgradeBtnText: {
+      color: '#fff',
+      fontWeight: '600',
+    },
+    premiumCancelNote: {
+      textAlign: 'center',
+      fontSize: 12,
+      marginVertical: 10,
+      color: Colors.mauveBrown,
+    },
+    premiumUnlockBtn: {
+      borderColor: Colors.mauveBrown,
+      borderWidth: 1,
+      padding: 12,
+      borderRadius: 20,
+      alignItems: 'center',
+    },
+    premiumUnlockBtnText: {
+      color: Colors.deepBrown,
+      fontWeight: '600',
+    },
   });
+  
+
   
 
 export default styles;
