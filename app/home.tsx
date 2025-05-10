@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ImageBackground, ScrollView, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
-import Header from '../components/header';
-import Footer from '../components/footer';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MainLayout from '@/components/mainLayout';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -34,10 +33,11 @@ export default function HomeScreen() {
   }, [radiusOpen, transportOpen]);
 
   return (
+  
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-      <MainLayout>
+       <SafeAreaView style={{ flex: 1 }}>
+      <MainLayout title="TravelMate">
         <View style={{ flex: 1 }}>
-          <Header title="TravelMate" />
           <ScrollView contentContainerStyle={[styles.homeContainer, { paddingBottom: 30 }]}>
             <Text style={styles.homeTitle}>Set search radius</Text>
             <DropDownPicker
@@ -75,6 +75,7 @@ export default function HomeScreen() {
           </ScrollView>
         </View>
       </MainLayout>
+      </SafeAreaView>
     </ImageBackground>
   );
 }

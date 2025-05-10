@@ -4,10 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
 import { ScrollView } from 'react-native';
 import MainLayout from '@/components/mainLayout';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -67,12 +66,12 @@ export default function AttractionListScreen() {
 
   return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-      <MainLayout>
-      <Header title="TravelMate" />
+      <SafeAreaView style={{ flex: 1 }}>
+      <MainLayout title="Nearby Attractions">
       <View style={styles.scrollWrapper}>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.attractionContainer}>
-            <Text style={styles.attractionTitle}>Nearby Attractions in Location</Text>
+            <Text style={styles.attractionTitle}>Travel in Location</Text>
             <Text style={styles.attractionSubtitle}>
               Hey you are in luck!{'\n'}
               There are {mockAttractions.length} tourist places near you. Check from list to add to itinerary.
@@ -102,6 +101,7 @@ export default function AttractionListScreen() {
         </ScrollView>
       </View>
       </MainLayout>
+      </SafeAreaView>
     </ImageBackground>
   );
 }
