@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors } from '../styles/colors';
-import SettingsModal from '@/app/setting';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 type Props = {
   title: string;
   showMenu?: boolean;
+  onOpenSettings: () => void;
 };
 
-export default function Header({ title, showMenu = true }: Props) {
-  const router = useRouter();
-  const [showSettings, setShowSettings] = useState(false);
+export default function Header({ title, showMenu = true, onOpenSettings  }: Props) {
+  // const router = useRouter();
+  // const [showSettings, setShowSettings] = useState(false);
 
   return (
     <View style={styles.header}>
@@ -21,10 +23,12 @@ export default function Header({ title, showMenu = true }: Props) {
         resizeMode="contain"
       />
       <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity onPress={() => setShowSettings(true)}>
-      <SettingsModal isVisible={showSettings} onClose={() => setShowSettings(false)} />
-        <Text style={styles.menuIcon}>⋮</Text>
-      </TouchableOpacity>
+      
+      {showMenu && (
+        <TouchableOpacity onPress={onOpenSettings}>
+          <Text style={styles.menuIcon}>⋮</Text>
+        </TouchableOpacity>
+      )}
 
     </View>
   );

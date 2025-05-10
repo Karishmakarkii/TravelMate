@@ -515,36 +515,35 @@ const styles = StyleSheet.create({
     maxHeight: '60%', //prevent it from stretching to full screen
     maxWidth: '90%',
   },
-
-  //setting screen
-  settingContainer:{
-    margin: 15,
-    marginTop: 15,
-    marginBottom: 0,
+  
+// setting modal
+  settingContainer: {
     padding: 20,
     backgroundColor: Colors.lightCream,
-    borderTopLeftRadius: 40,
-    borderBottomRightRadius: 0,
-    borderTopRightRadius: 40,
-    borderBottomLeftRadius: 0,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    maxHeight: '60%', //prevent it from stretching to full screen
-    maxWidth: '90%',
+    maxHeight: '85%',
+    minHeight: '60%',
+    maxWidth: '100%',
   },
-  bottomModal: {
+  settingBottomModal: {
     justifyContent: 'flex-end',
     margin: 0,
   },
-  profileSection: {
+  settingScrollContainer: {
+    paddingBottom: 40,
+  },
+  settingProfileSection: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 20,
   },
-  profileCircle: {
+  settingProfileCircle: {
     width: 50,
     height: 50,
     borderRadius: 25,
@@ -553,44 +552,112 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginRight: 10,
   },
-  profileInitial: {
+  settingProfileInitial: {
     color: '#fff',
     fontWeight: '700',
   },
-  profileEmail: {
+  settingProfileEmail: {
     fontWeight: '600',
     color: Colors.deepBrown,
   },
-  editProfileText: {
+  settingEditProfileText: {
     color: Colors.skyBlue,
     fontSize: 12,
+    marginTop: 2,
   },
-  sectionTitle: {
+  settingSectionTitle: {
     marginTop: 20,
     marginBottom: 10,
     fontWeight: '600',
     color: Colors.mauveBrown,
   },
-  preferenceLabel: {
+  settingPreferenceLabel: {
     fontSize: 14,
     color: Colors.deepBrown,
     marginBottom: 5,
   },
-  toggleRow: {
+  settingToggleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 10,
   },
-  linkText: {
+ 
+  settingLinkText: {
     color: Colors.dustyPurple,
     textDecorationLine: 'underline',
     fontWeight: '600',
     marginBottom: 10,
-  }
-  
+  },
+  settingDropdown: {
+    marginBottom: 10,
+  },
+  settingDropdownContainer: {
+    borderColor: Colors.deepBrown,
+  },
 
+
+
+  // Profile modal
+    profileModal: {
+      justifyContent: 'flex-end',
+      margin: 0,
+    },
+    profileContainer: {
+      backgroundColor: Colors.lightCream,
+      padding: 20,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      minHeight: '65.5%',
+    },
+    profileBackButton: {
+      marginBottom: 10,
+    },
+    profileHeader: {
+      alignItems: 'center',
+      marginBottom: 20,
+    },
+    profileAvatar: {
+      width: 60,
+      height: 60,
+      borderRadius: 30,
+      backgroundColor: '#b8a2c8',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    profileAvatarText: {
+      color: '#fff',
+      fontWeight: '700',
+      fontSize: 20,
+    },
+    profileTitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: Colors.deepBrown,
+    },
+    profileInputGroup: {
+      marginBottom: 10,
+    },
+    profileLabel: {
+      fontWeight: '600',
+      marginBottom: 5,
+      color: Colors.deepBrown,
+    },
+    profileInput: {
+      borderWidth: 1,
+      borderColor: '#ccc',
+      padding: 8,
+      borderRadius: 8,
+    },
+    profileLogout: {
+      color: Colors.STARLAVENDER,
+      textAlign: 'center',
+      marginTop: 20,
+      fontWeight: '600',
+      fontSize: 15,
+    },
+  });
   
-});
 
 export default styles;
