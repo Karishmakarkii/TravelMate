@@ -45,8 +45,7 @@ export default function SavedTripScreen() {
             source={require('../assets/images/starterImage.jpeg')}
             style={styles.background}
         >
-            <MainLayout showFooter={false}>
-                <Header title="Saved Trips" />
+            <MainLayout title="Saved Trips" showFooter={false}>
                 <FlatList
                     data={savedTrips}
                     renderItem={renderItem}
