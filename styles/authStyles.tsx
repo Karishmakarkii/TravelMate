@@ -346,23 +346,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   itineraryContainer: {
-    margin: 5,
-    padding: 10,
     backgroundColor: 'transparent',
     borderTopLeftRadius: 40,
     borderBottomRightRadius: 40,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
-   
     elevation: 3,
-    maxHeight: '50%', //prevent it from stretching to full screen
   },
   itineraryInfoContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: verticalScale(10),
-    marginTop:verticalScale(20),
+    marginTop: verticalScale(20),
+    marginHorizontal: 20,
     backgroundColor: Colors.lightCreamTransparent,
     paddingVertical: verticalScale(12),
     paddingHorizontal: scale(16),
@@ -371,6 +368,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
+    borderRadius: 10,
   },
 
   itinerarySaveButton: {
