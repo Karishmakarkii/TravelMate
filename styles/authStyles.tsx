@@ -597,66 +597,68 @@ const styles = StyleSheet.create({
   },
 
 
+// Profile modal
 
-  // Profile modal
-    profileModal: {
-      justifyContent: 'flex-end',
-      margin: 0,
-    },
-    profileContainer: {
-      backgroundColor: Colors.lightCream,
-      padding: 20,
-      borderTopLeftRadius: 20,
-      borderTopRightRadius: 20,
-      minHeight: '65.5%',
-    },
-    profileBackButton: {
-      marginBottom: 10,
-    },
-    profileHeader: {
-      alignItems: 'center',
-      marginBottom: 20,
-    },
-    profileAvatar: {
-      width: 60,
-      height: 60,
-      borderRadius: 30,
-      backgroundColor: '#b8a2c8',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: 10,
-    },
-    profileAvatarText: {
-      color: '#fff',
-      fontWeight: '700',
-      fontSize: 20,
-    },
-    profileTitle: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      color: Colors.deepBrown,
-    },
-    profileInputGroup: {
-      marginBottom: 10,
-    },
-    profileLabel: {
-      fontWeight: '600',
-      marginBottom: 5,
-      color: Colors.deepBrown,
-    },
-    profileInput: {
-      borderWidth: 1,
-      borderColor: '#ccc',
-      padding: 8,
-      borderRadius: 8,
-    },
-    profileLogout: {
-      color: Colors.STARLAVENDER,
-      textAlign: 'center',
-      marginTop: 20,
-      fontWeight: '600',
-      fontSize: 15,
-    },
+  profileModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  profileContainer: {
+    backgroundColor: Colors.lightCream,
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    minHeight: '65.5%',
+  },
+  profileBackButton: {
+    marginBottom: 10,
+  },
+  profileHeader: {
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  profileAvatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: Colors.dustyPurple,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  profileAvatarText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 20,
+  },
+  profileTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.deepBrown,
+  },
+  profileInputGroup: {
+    marginBottom: 12,
+  },
+  profileLabel: {
+    fontWeight: '600',
+    marginBottom: 5,
+    color: Colors.deepBrown,
+  },
+  profileInput: {
+    borderWidth: 1,
+    borderColor: Colors.paleGrey,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
+  },
+  profileLogout: {
+    color: Colors.dustyPurple, // 💜 matches links/buttons in settings
+    textAlign: 'center',
+    marginTop: 24,
+    fontWeight: '600',
+    fontSize: 15,
+  },
+  
   });
   
 
