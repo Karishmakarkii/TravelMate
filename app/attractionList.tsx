@@ -69,7 +69,7 @@ export default function AttractionListScreen() {
       <SafeAreaView style={{ flex: 1 }}>
       <MainLayout title="Nearby Attractions">
       <View style={styles.scrollWrapper}>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+        <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.scrollContent}>
           <View style={styles.attractionContainer}>
             <Text style={styles.attractionTitle}>Travel in Location</Text>
             <Text style={styles.attractionSubtitle}>

@@ -27,7 +27,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.settingBottomModal}>
       <View style={styles.settingContainer}>
-        <ScrollView contentContainerStyle={styles.settingScrollContainer} showsVerticalScrollIndicator={false}>
+        <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.settingScrollContainer} showsVerticalScrollIndicator={false}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
             <TouchableOpacity onPress={onClose}>
               <Ionicons name="arrow-back" size={24} color="#3b2e2e" />
@@ -75,13 +75,13 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
           {/* Subscription */}
           <Text style={styles.settingSectionTitle}>SUBSCRIPTION</Text>
           <Text style={styles.settingPreferenceLabel}>Current plan</Text>
-          <TouchableOpacity onPress={() => router.push('/premium')}>
+          <TouchableOpacity onPress={() => {onClose();router.push('/premium');}}>
             <Text style={styles.settingLinkText}>Upgrade to Premium</Text>
           </TouchableOpacity>
 
           {/* Saved Trips */}
           <Text style={styles.settingSectionTitle}>SAVED TRIPS</Text>
-          <TouchableOpacity onPress={() => router.push('/savedTrips')}>
+          <TouchableOpacity onPress={() =>{onClose(); router.push('/savedTrips')}}>
             <Text style={styles.settingLinkText}>View my saved trips</Text>
           </TouchableOpacity>
 

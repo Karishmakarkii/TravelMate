@@ -38,7 +38,7 @@ export default function HomeScreen() {
        <SafeAreaView style={{ flex: 1 }}>
       <MainLayout title="TravelMate">
         <View style={{ flex: 1 }}>
-          <ScrollView contentContainerStyle={[styles.homeContainer, { paddingBottom: 30 }]}>
+          <ScrollView nestedScrollEnabled={true} contentContainerStyle={[styles.homeContainer, { paddingBottom: 30 }]}>
             <Text style={styles.homeTitle}>Set search radius</Text>
             <DropDownPicker
               open={radiusOpen}
