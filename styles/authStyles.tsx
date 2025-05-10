@@ -651,12 +651,19 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-  profileLogout: {
-    color: Colors.dustyPurple, // 💜 matches links/buttons in settings
+  profileActionRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingRight: 20,
+    marginTop: 20,
+  },
+  profileActionBtn: {
+    color: Colors.dustyPurple, 
     textAlign: 'center',
     marginTop: 24,
     fontWeight: '600',
     fontSize: 15,
+    marginLeft: 15,
   },
   
   // premium modal 
