@@ -84,6 +84,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontFamily: 'Roboto_400Regular',
   },
+  errorText: {
+    fontFamily: 'Roboto_700Bold',
+    color: 'red'
+  },
   loginButton: {
     backgroundColor: Colors.dustyPurple,
     paddingVertical: verticalScale(14),
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 60,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
-    maxHeight: '70%',
+    maxHeight: '85%',
   },
   signUpInputLabel: {
     fontSize: scale(14),
