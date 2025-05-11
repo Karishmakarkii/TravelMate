@@ -3,8 +3,6 @@ import { View, Text, TouchableOpacity, ImageBackground, ScrollView, Platform } f
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from '../styles/authStyles';
-import Header from '../components/header';
-import Footer from '@/components/footer';
 import DropDownPicker from 'react-native-dropdown-picker';
 import ProfileModal, { UserType } from '../components/profileModal';
 import MainLayout from '../components/mainLayout';

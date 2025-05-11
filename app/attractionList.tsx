@@ -7,6 +7,7 @@ import styles from '../styles/authStyles';
 import * as Location from 'expo-location';
 import { GOOGLE_MAPS_API_KEY } from '@env';
 import Header from '../components/header';
+import MainLayout from '../components/mainLayout';
 
 // Types for our places
 interface Place {
@@ -266,51 +267,52 @@ export default function AttractionListScreen() {
   return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <SafeAreaView style={{ flex: 1 }}>
-        <Header title="Nearby Attractions" onOpenSettings={() => {}} />
-        <View style={[styles.attractionContainer, { flex: 1 }]}> 
-          <Text style={styles.attractionTitle}>Nearby Attractions</Text>
-          <Text style={styles.attractionSubtitle}>
-            Hey you are in luck!{"\n"}
-            There are {attractions.length} tourist places within {radius}km. Check from list to add to itinerary.
-          </Text>
+        <MainLayout title="Nearby Attractions">
+          <View style={[styles.attractionContainer, { flex: 1 }]}> 
+            <Text style={styles.attractionTitle}>Nearby Attractions</Text>
+            <Text style={styles.attractionSubtitle}>
+              Hey you are in luck!{"\n"}
+              There are {attractions.length} tourist places within {radius}km. Check from list to add to itinerary.
+            </Text>
 
-          <FlatList
-            data={attractions}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            contentContainerStyle={styles.attractionListContainer}
-            showsVerticalScrollIndicator={false}
-            style={{ flex: 1 }}
-          />
+            <FlatList
+              data={attractions}
+              renderItem={renderItem}
+              keyExtractor={item => item.id}
+              contentContainerStyle={styles.attractionListContainer}
+              showsVerticalScrollIndicator={false}
+              style={{ flex: 1 }}
+            />
 
-          <View style={styles.attractionButtonContainer}>
-            <TouchableOpacity 
-              onPress={() => {
-                // Pass selected attractions to the itinerary screen
-                const selectedAttractions = attractions.filter(a => selected.includes(a.id));
-                router.push({
-                  pathname: '/itinerary',
-                  params: { 
-                    attractions: JSON.stringify(selectedAttractions),
-                    transportMode
-                  }
-                });
-              }}
-              disabled={selected.length === 0}
-              style={[
-                styles.createItineraryButton,
-                selected.length === 0 && styles.disabledButton
-              ]}
-            >
-              <Text style={styles.createItineraryButtonText}>
-                Create Itinerary ({selected.length} selected)
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => router.back()} >
-              <Text style={styles.attractionCancelText}>Cancel</Text>
-            </TouchableOpacity>
+            <View style={styles.attractionButtonContainer}>
+              <TouchableOpacity 
+                onPress={() => {
+                  // Pass selected attractions to the itinerary screen
+                  const selectedAttractions = attractions.filter(a => selected.includes(a.id));
+                  router.push({
+                    pathname: '/itinerary',
+                    params: { 
+                      attractions: JSON.stringify(selectedAttractions),
+                      transportMode
+                    }
+                  });
+                }}
+                disabled={selected.length === 0}
+                style={[
+                  styles.createItineraryButton,
+                  selected.length === 0 && styles.disabledButton
+                ]}
+              >
+                <Text style={styles.createItineraryButtonText}>
+                  Create Itinerary ({selected.length} selected)
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => router.back()} >
+                <Text style={styles.attractionCancelText}>Cancel</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </MainLayout>
       </SafeAreaView>
     </ImageBackground>
   );

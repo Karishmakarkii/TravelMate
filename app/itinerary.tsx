@@ -5,7 +5,8 @@ import Checkbox from 'expo-checkbox';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../styles/authStyles';
 import { GOOGLE_MAPS_API_KEY } from '@env';
-import Header from '../components/header';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import MainLayout from '../components/mainLayout';
 
 interface Place {
     id: string;
@@ -181,44 +182,48 @@ export default function ItineraryScreen() {
 
     return (
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-            <View style={{ flex: 1 }}>
-                <View style={styles.itineraryInfoContainer}>
-                    <View>
-                        <Text style={styles.itineraryInfoText}>Total stops: {optimizedStops.length}</Text>
-                        <Text style={styles.itineraryInfoText}>Total distance: {totalDistance}</Text>
-                        <Text style={styles.itineraryInfoText}>Total time: {totalTime}</Text>
-                        <Text style={styles.itineraryInfoText}>
-                            Travel mode: {getTransportIcon(transportMode as string)}
-                        </Text>
-                    </View>
-                    <TouchableOpacity style={styles.itineraryMapButton} onPress={handleOpenMaps}>
-                        <Ionicons name="map-outline" size={24} color="#6e4b63" />
-                        <Text style={styles.itineraryMapText}>Open in Maps</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <FlatList
-                    data={optimizedStops}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    style={{ flex: 1 }}
-                    contentContainerStyle={[
-                        styles.attractionListContainer,
-                        { paddingHorizontal: 20 }
-                    ]}
-                    showsVerticalScrollIndicator={false}
-                    ListFooterComponent={() => (
-                        <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
-                            <TouchableOpacity 
-                                onPress={() => router.push('/home')}
-                                style={styles.itinerarySaveButton}
-                            >
-                                <Text style={styles.saveText}>Save Trip</Text>
+            <SafeAreaView style={{ flex: 1 }}>
+                <MainLayout title="Itinerary">
+                    <View style={{ flex: 1 }}>
+                        <View style={styles.itineraryInfoContainer}>
+                            <View>
+                                <Text style={styles.itineraryInfoText}>Total stops: {optimizedStops.length}</Text>
+                                <Text style={styles.itineraryInfoText}>Total distance: {totalDistance}</Text>
+                                <Text style={styles.itineraryInfoText}>Total time: {totalTime}</Text>
+                                <Text style={styles.itineraryInfoText}>
+                                    Travel mode: {getTransportIcon(transportMode as string)}
+                                </Text>
+                            </View>
+                            <TouchableOpacity style={styles.itineraryMapButton} onPress={handleOpenMaps}>
+                                <Ionicons name="map-outline" size={24} color="#6e4b63" />
+                                <Text style={styles.itineraryMapText}>Open in Maps</Text>
                             </TouchableOpacity>
                         </View>
-                    )}
-                />
-            </View>
+
+                        <FlatList
+                            data={optimizedStops}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.id}
+                            style={{ flex: 1 }}
+                            contentContainerStyle={[
+                                styles.attractionListContainer,
+                                { paddingHorizontal: 20 }
+                            ]}
+                            showsVerticalScrollIndicator={false}
+                            ListFooterComponent={() => (
+                                <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
+                                    <TouchableOpacity 
+                                        onPress={() => router.push('/home')}
+                                        style={styles.itinerarySaveButton}
+                                    >
+                                        <Text style={styles.saveText}>Save Trip</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            )}
+                        />
+                    </View>
+                </MainLayout>
+            </SafeAreaView>
         </ImageBackground>
     );
 }
