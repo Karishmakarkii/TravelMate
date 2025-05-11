@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import { useState } from 'react';
+import Header from '../components/header';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -78,7 +79,7 @@ export default function SignUpScreen() {
 
   return (
     <ImageBackground source={require('../assets/images/starterImage.jpeg')} style={styles.background}>
-      
+      <Header title="Sign Up" onOpenSettings={() => {}} />
       <View style={styles.signupContainer}>
         <Text style={styles.loginTitle}>Sign Up</Text>
         

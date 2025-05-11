@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ImageBackground, Alert, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../styles/authStyles';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import { BlurView } from 'expo-blur';
 import * as Location from 'expo-location';
 import { GOOGLE_MAPS_API_KEY } from '@env';
+import Header from '../components/header';
 
 // Types for our places
 interface Place {
@@ -243,11 +241,11 @@ export default function AttractionListScreen() {
   if (loading) {
     return (
       <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-        <Header title="TravelMate" />
-        <View style={styles.attractionContainer}>
-          <Text style={styles.attractionTitle}>Loading nearby attractions...</Text>
-        </View>
-        <Footer showBack />
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={[styles.attractionContainer, { flex: 1 }]}> 
+            <Text style={styles.attractionTitle}>Loading nearby attractions...</Text>
+          </View>
+        </SafeAreaView>
       </ImageBackground>
     );
   }
@@ -255,63 +253,65 @@ export default function AttractionListScreen() {
   if (errorMsg) {
     return (
       <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-        <Header title="TravelMate" />
-        <View style={styles.attractionContainer}>
-          <Text style={styles.attractionTitle}>Error</Text>
-          <Text style={styles.attractionSubtitle}>{errorMsg}</Text>
-        </View>
-        <Footer showBack />
+        <SafeAreaView style={{ flex: 1 }}>
+          <View style={[styles.attractionContainer, { flex: 1 }]}> 
+            <Text style={styles.attractionTitle}>Error</Text>
+            <Text style={styles.attractionSubtitle}>{errorMsg}</Text>
+          </View>
+        </SafeAreaView>
       </ImageBackground>
     );
   }
 
   return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-      <Header title="TravelMate" />
-      <View style={styles.attractionContainer}>
-        <Text style={styles.attractionTitle}>Nearby Attractions</Text>
-        <Text style={styles.attractionSubtitle}>
-          Hey you are in luck!{'\n'}
-          There are {attractions.length} tourist places within {radius}km. Check from list to add to itinerary.
-        </Text>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Header title="Nearby Attractions" onOpenSettings={() => {}} />
+        <View style={[styles.attractionContainer, { flex: 1 }]}> 
+          <Text style={styles.attractionTitle}>Nearby Attractions</Text>
+          <Text style={styles.attractionSubtitle}>
+            Hey you are in luck!{"\n"}
+            There are {attractions.length} tourist places within {radius}km. Check from list to add to itinerary.
+          </Text>
 
-        <FlatList
-          data={attractions}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-          contentContainerStyle={styles.attractionListContainer}
-          showsVerticalScrollIndicator={false}
-        />
+          <FlatList
+            data={attractions}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.attractionListContainer}
+            showsVerticalScrollIndicator={false}
+            style={{ flex: 1 }}
+          />
 
-        <View style={styles.attractionButtonContainer}>
-          <TouchableOpacity 
-            onPress={() => {
-              // Pass selected attractions to the itinerary screen
-              const selectedAttractions = attractions.filter(a => selected.includes(a.id));
-              router.push({
-                pathname: '/itinerary',
-                params: { 
-                  attractions: JSON.stringify(selectedAttractions),
-                  transportMode
-                }
-              });
-            }}
-            disabled={selected.length === 0}
-            style={[
-              styles.createItineraryButton,
-              selected.length === 0 && styles.disabledButton
-            ]}
-          >
-            <Text style={styles.createItineraryButtonText}>
-              Create Itinerary ({selected.length} selected)
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => router.back()} >
-            <Text style={styles.attractionCancelText}>Cancel</Text>
-          </TouchableOpacity>
+          <View style={styles.attractionButtonContainer}>
+            <TouchableOpacity 
+              onPress={() => {
+                // Pass selected attractions to the itinerary screen
+                const selectedAttractions = attractions.filter(a => selected.includes(a.id));
+                router.push({
+                  pathname: '/itinerary',
+                  params: { 
+                    attractions: JSON.stringify(selectedAttractions),
+                    transportMode
+                  }
+                });
+              }}
+              disabled={selected.length === 0}
+              style={[
+                styles.createItineraryButton,
+                selected.length === 0 && styles.disabledButton
+              ]}
+            >
+              <Text style={styles.createItineraryButtonText}>
+                Create Itinerary ({selected.length} selected)
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => router.back()} >
+              <Text style={styles.attractionCancelText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-      <Footer showBack />
+      </SafeAreaView>
     </ImageBackground>
   );
 }

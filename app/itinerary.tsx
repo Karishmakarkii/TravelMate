@@ -4,9 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../styles/authStyles';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
 import { GOOGLE_MAPS_API_KEY } from '@env';
+import Header from '../components/header';
 
 interface Place {
     id: string;
@@ -182,7 +181,6 @@ export default function ItineraryScreen() {
 
     return (
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-            <Header title="Your Itinerary" />
             <View style={{ flex: 1 }}>
                 <View style={styles.itineraryInfoContainer}>
                     <View>
@@ -221,7 +219,6 @@ export default function ItineraryScreen() {
                     )}
                 />
             </View>
-            <Footer showBack />
         </ImageBackground>
     );
 }

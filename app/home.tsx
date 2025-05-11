@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ImageBackground, ScrollView, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
-import Header from '@/components/header';
+import Header from '../components/header';
 import Footer from '@/components/footer';
 import DropDownPicker from 'react-native-dropdown-picker';
+import ProfileModal, { UserType } from '../components/profileModal';
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -27,6 +28,15 @@ export default function HomeScreen() {
     { label: 'Bicycle', value: 'bicycle' },
   ]);
 
+  // Profile modal state and dummy user
+  const [profileVisible, setProfileVisible] = useState(false);
+  const dummyUser: UserType = {
+    firstName: 'John',
+    lastName: 'Doe',
+    phone: '1234567890',
+    email: 'john@example.com',
+  };
+
   useEffect(() => {
     if (radiusOpen) setTransportOpen(false);
     if (transportOpen) setRadiusOpen(false);
@@ -35,7 +45,7 @@ export default function HomeScreen() {
   return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <View style={{ flex: 1 }}>
-        <Header title="TravelMate" />
+        <Header title="Home" onOpenSettings={() => {}} />
         <ScrollView contentContainerStyle={[styles.homeContainer, { paddingBottom: 30 }]}>
           <Text style={styles.homeTitle}>Set search radius</Text>
           <DropDownPicker
@@ -80,7 +90,6 @@ export default function HomeScreen() {
             <Text style={styles.homeButtonText}>Find Places</Text>
           </TouchableOpacity>
         </ScrollView>
-        <Footer showBack />
       </View>
     </ImageBackground>
   );

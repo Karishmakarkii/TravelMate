@@ -5,6 +5,7 @@ import { useState } from 'react';
 // Firebase functions needed from the SDKs
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import Header from '../components/header';
 
 import '../firebase.js';
 
@@ -52,6 +53,7 @@ export default function LoginScreen() {
       source={require('../assets/images/starterImage.jpeg')}
       style={styles.background}
     >
+      <Header title="Login" onOpenSettings={() => {}} />
       <View style={styles.loginContainer}>
         <Text style={styles.loginTitle}>Login</Text>
         
