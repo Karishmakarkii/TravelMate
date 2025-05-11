@@ -60,20 +60,15 @@ export default function AttractionListScreen() {
   // Function to fetch nearby places from Google Places API
   const fetchNearbyPlaces = async (latitude: number, longitude: number, radiusInKm: number) => {
     try {
-      console.log('API Key:', GOOGLE_MAPS_API_KEY); // Log the API key (masked)
+      // Convert radius from kilometers to meters for API
       const radiusInMeters = radiusInKm * 1000;
       const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radiusInMeters}&type=tourist_attraction&key=${GOOGLE_MAPS_API_KEY}`;
-      console.log('Places API URL:', placesUrl.replace(GOOGLE_MAPS_API_KEY, 'API_KEY_HIDDEN')); // Log URL with hidden key
       
       const response = await fetch(placesUrl);
       const data = await response.json();
       
-      console.log('Places API Response:', {
-        status: data.status,
-        error_message: data.error_message,
-        results: data.results ? `Found ${data.results.length} places` : 'No results'
-      });
       
+      // Handle API key and configuration errors
       if (data.status === 'REQUEST_DENIED') {
         console.error('Google Maps API Error Details:', {
           status: data.status,
@@ -84,12 +79,13 @@ export default function AttractionListScreen() {
         throw new Error('Invalid API key or API not enabled. Please check your Google Maps API configuration.');
       }
       
+      // Handle other API errors
       if (data.status !== 'OK') {
         console.error('Google Maps API Error:', data.error_message);
         throw new Error(data.error_message || 'Failed to fetch places');
       }
 
-      // Prepare destinations for Distance Matrix API
+      // Prepare location data for distance calculations
       const destinations = data.results.map((place: any) => `${place.geometry.location.lat},${place.geometry.location.lng}`).join('|');
       let distanceData = null;
       let useFallback = false;

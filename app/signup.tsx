@@ -42,6 +42,7 @@ export default function SignUpScreen() {
   }
 
   function create() {
+    // Validate all required form fields
     if (name === '') {
       setNameErrorMessage("Please enter name!");
     } else if (email === '') {
@@ -51,9 +52,10 @@ export default function SignUpScreen() {
     } else if (cpword === '') {
       setCPasswordErrorMessage("Please confirm password!");
     } else if (pword === cpword) {
+      // Create new user account in Firebase Authentication
       createUserWithEmailAndPassword(auth, email, pword)
       .then((userCredential) => {
-        // created
+        // Store additional user data in database and reset form
         writeToDB(email, name);
         setName('');
         setEmail('');
@@ -63,6 +65,7 @@ export default function SignUpScreen() {
         router.push('/home')
       })
       .catch((error) => {
+        // Handle specific Firebase authentication errors
         if (error.code === "auth/email-already-in-use") {
           alert("User already exists!");
         } else if (error.code === "auth/weak-password") {
