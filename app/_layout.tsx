@@ -24,8 +24,8 @@ export default function RootLayout() {
   const Layout = isAuthRoute ? AuthLayout : MainLayout;
 
   return (
-    <Layout>
       <Stack screenOptions={{ headerShown: false }} />
-    </Layout>
+    // <Layout>
+    // </Layout>
   );
 }
