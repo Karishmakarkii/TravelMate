@@ -80,11 +80,3 @@ export default function HomeScreen() {
   );
 }
 
-// Implement with firebase to route to no results screen when no location found
-
-// //if (results.length === 0) {
-//   router.push('/noResults');
-// } else {
-//   router.push('/attractionList');
-// }
-
