@@ -5,7 +5,7 @@ import { Colors } from '../styles/colors';
 import PremiumConfirmationModal from '@/components/premiumConfirm';
 import { useState } from 'react';
 import styles from '@/styles/authStyles';
-import Header from '../components/header';
+
 
 export default function Premium() {
   const router = useRouter();
@@ -13,7 +13,6 @@ export default function Premium() {
 
   return (
     <View style={styles.premiumContainer}>
-      <Header title="Premium" onOpenSettings={() => {}} />
       <TouchableOpacity onPress={() => router.back()} style={styles.premiumBackBtn}>
         <Ionicons name="arrow-back" size={24} color={Colors.deepBrown} />
       </TouchableOpacity>

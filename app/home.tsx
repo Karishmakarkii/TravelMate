@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from '../styles/authStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MainLayout from '../components/mainLayout';
-import ProfileModal, { UserType } from '../components/profileModal';
+
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -28,14 +28,6 @@ export default function HomeScreen() {
     { label: 'Bicycle', value: 'bicycle' },
   ]);
 
-  // Profile modal state and dummy user
-  const [profileVisible, setProfileVisible] = useState(false);
-  const dummyUser: UserType = {
-    firstName: 'John',
-    lastName: 'Doe',
-    phone: '1234567890',
-    email: 'john@example.com',
-  };
 
   useEffect(() => {
     if (radiusOpen) setTransportOpen(false);
