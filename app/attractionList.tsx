@@ -5,7 +5,6 @@ import Checkbox from 'expo-checkbox';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../styles/authStyles';
 import * as Location from 'expo-location';
-import { GOOGLE_MAPS_API_KEY } from '@env';
 import MainLayout from '../components/mainLayout';
 
 // Types for our places
@@ -61,7 +60,7 @@ export default function AttractionListScreen() {
     try {
       // Convert radius from kilometers to meters for API
       const radiusInMeters = radiusInKm * 1000;
-      const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radiusInMeters}&type=tourist_attraction&key=${GOOGLE_MAPS_API_KEY}`;
+      const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radiusInMeters}&type=tourist_attraction&key=${process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY}`;
       
       const response = await fetch(placesUrl);
       const data = await response.json();
@@ -72,8 +71,8 @@ export default function AttractionListScreen() {
         console.error('Google Maps API Error Details:', {
           status: data.status,
           error: data.error_message,
-          apiKey: GOOGLE_MAPS_API_KEY ? 'Present' : 'Missing',
-          apiKeyLength: GOOGLE_MAPS_API_KEY ? GOOGLE_MAPS_API_KEY.length : 0
+          apiKey: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY ? 'Present' : 'Missing',
+          apiKeyLength: process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY ? process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY.length : 0
         });
         throw new Error('Invalid API key or API not enabled. Please check your Google Maps API configuration.');
       }
@@ -90,7 +89,7 @@ export default function AttractionListScreen() {
       let useFallback = false;
       try {
         const distanceResponse = await fetch(
-          `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${latitude},${longitude}&destinations=${destinations}&mode=${transportMode}&key=${GOOGLE_MAPS_API_KEY}`
+          `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${latitude},${longitude}&destinations=${destinations}&mode=${transportMode}&key=${process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY}`
         );
         distanceData = await distanceResponse.json();
         if (distanceData.status !== 'OK') {
