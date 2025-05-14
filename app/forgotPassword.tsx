@@ -5,7 +5,6 @@ import { useState } from 'react';
 // Firebase functions needed from the SDKs
 import { initializeApp } from "firebase/app";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import Header from '../components/header';
 
 import '../firebase.js';
 
@@ -41,7 +40,7 @@ export default function ForgotPasswordScreen() {
       source={require('../assets/images/starterImage.jpeg')}
       style={styles.background}
     >
-      <Header title="Forgot Password" onOpenSettings={() => {}} />
+
       <View style={styles.loginContainer}>
         <Text style={styles.loginTitle}>Forgot Password</Text>
 

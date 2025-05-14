@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ImageBackground, Alert, SafeAreaView } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ImageBackground, Alert, SafeAreaView, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../styles/authStyles';
 import * as Location from 'expo-location';
 import { GOOGLE_MAPS_API_KEY } from '@env';
-import Header from '../components/header';
 import MainLayout from '../components/mainLayout';
 
 // Types for our places
@@ -208,7 +207,7 @@ export default function AttractionListScreen() {
         <Text style={styles.attractionDetails}>
           {item.distance} • {item.time}
         </Text>
-        <Text style={styles.attractionVicinity}>{item.vicinity}</Text>
+        <Text>{item.vicinity}</Text>
       </View>
 
       <View style={styles.attractionRating}>
@@ -238,10 +237,12 @@ export default function AttractionListScreen() {
   if (loading) {
     return (
       <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-        <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+      <MainLayout title="Nearby Attractions">
           <View style={[styles.attractionContainer, { flex: 1 }]}> 
             <Text style={styles.attractionTitle}>Loading nearby attractions...</Text>
           </View>
+          </MainLayout>
         </SafeAreaView>
       </ImageBackground>
     );
@@ -264,6 +265,8 @@ export default function AttractionListScreen() {
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <SafeAreaView style={{ flex: 1 }}>
         <MainLayout title="Nearby Attractions">
+        <View style={styles.scrollWrapper}>
+        <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.scrollContent}>
           <View style={[styles.attractionContainer, { flex: 1 }]}> 
             <Text style={styles.attractionTitle}>Nearby Attractions</Text>
             <Text style={styles.attractionSubtitle}>
@@ -307,6 +310,9 @@ export default function AttractionListScreen() {
                 <Text style={styles.attractionCancelText}>Cancel</Text>
               </TouchableOpacity>
             </View>
+          </View>
+          
+          </ScrollView>
           </View>
         </MainLayout>
       </SafeAreaView>

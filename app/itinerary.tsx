@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ImageBackground, ScrollView, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../styles/authStyles';
+import MainLayout from '@/components/mainLayout';
 import { GOOGLE_MAPS_API_KEY } from '@env';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import MainLayout from '../components/mainLayout';
+
 
 interface Place {
     id: string;
@@ -35,6 +36,7 @@ export default function ItineraryScreen() {
     const [optimizedStops, setOptimizedStops] = useState<OptimizedStop[]>([]);
     const [totalDistance, setTotalDistance] = useState<string>('0 km');
     const [totalTime, setTotalTime] = useState<string>('0 mins');
+    const [tripSaved, setTripSaved] = useState(false);
 
     useEffect(() => {
         if (attractionsJson) {
@@ -139,7 +141,7 @@ export default function ItineraryScreen() {
                 <Text style={styles.attractionDetails}>
                     {item.distanceFromPrevious} • {item.timeFromPrevious} {index === 0 ? 'from your current location' : 'from previous stop'}
                 </Text>
-                <Text style={styles.attractionVicinity}>{item.vicinity}</Text>
+                <Text>{item.vicinity}</Text>
             </View>
 
             <View style={styles.attractionRating}>
@@ -184,8 +186,9 @@ export default function ItineraryScreen() {
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
             <SafeAreaView style={{ flex: 1 }}>
                 <MainLayout title="Itinerary">
-                    <View style={{ flex: 1 }}>
-                        <View style={styles.itineraryInfoContainer}>
+                <View style={styles.scrollWrapper}>
+                <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.scrollContent}>
+                    <View style={styles.itineraryInfoContainer}>
                             <View>
                                 <Text style={styles.itineraryInfoText}>Total stops: {optimizedStops.length}</Text>
                                 <Text style={styles.itineraryInfoText}>Total distance: {totalDistance}</Text>
@@ -221,7 +224,32 @@ export default function ItineraryScreen() {
                                 </View>
                             )}
                         />
+                        </ScrollView>
                     </View>
+
+                            
+            {/* Trip Saved Modal */}
+            <Modal transparent visible={tripSaved} animationType="fade">
+                <View style={styles.dialogOverlay}>
+                    <View style={styles.dialogBox}>
+                        <Text style={styles.dialogTitle}>Trip Saved !</Text>
+                        <Text style={styles.dialogMessage}>
+                            Your trip to Mornington has been successfully saved to Saved trips page.{"\n"}
+                            Click below to view it from saved trips.
+                        </Text>
+
+                        <View style={styles.dialogActions}>
+                            {/* savedTrips false to close dialog box */}
+                            <TouchableOpacity onPress={() => setTripSaved(false)}>
+                                <Text style={styles.dialogLink}>Back</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => {setTripSaved(false); router.push('/savedTrips');}}> 
+                                <Text style={styles.dialogLink}>View Trip</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
                 </MainLayout>
             </SafeAreaView>
         </ImageBackground>

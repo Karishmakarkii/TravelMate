@@ -9,7 +9,7 @@ import Header from './header';
 type MainLayoutProps = {
   children: React.ReactNode;
   showFooter?: boolean;
-  title?: string;
+  title: string;
 };
 
 
