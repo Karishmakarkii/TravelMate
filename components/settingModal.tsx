@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Switch, TouchableOpacity, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -6,6 +6,13 @@ import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '@/styles/authStyles';
 import { Colors } from '@/styles/colors';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
+import '../firebase.js';
+
+const {firebaseConfig} = require('../firebase.js');
 
 type SettingsModalProps = {
   isVisible: boolean;
@@ -23,6 +30,30 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     { label: '10 km', value: '10' },
     { label: '20 km', value: '20' },
   ]);
+  const [email, setEmail] = useState('');
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setEmail(user.email || '');
+      }
+    });
+  }, []);
+
+  function logout() {
+    // Firebase function to sign out user
+    signOut(auth)
+    .then((userCredential) => {     
+      router.push('/login');
+    })
+    .catch((error) => {
+      alert("Signout unsuccessful");
+    }); 
+  }
 
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.settingBottomModal}>
@@ -37,10 +68,10 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
           {/* Profile section */}
           <View style={styles.settingProfileSection}>
             <View style={styles.settingProfileCircle}>
-              <Text style={styles.settingProfileInitial}>PJ</Text>
+              <Text style={styles.settingProfileInitial}>{email.substring(0, 2).toUpperCase()}</Text>
             </View>
             <View>
-              <Text style={styles.settingProfileEmail}>pk34demo@gmail.com</Text>
+              <Text style={styles.settingProfileEmail}>{email}</Text>
               <TouchableOpacity onPress={onOpenProfile}>
                 <Text style={styles.settingEditProfileText}>Edit profile</Text>
               </TouchableOpacity>
@@ -87,7 +118,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
 
           {/* Account */}
           <Text style={styles.settingSectionTitle}>ACCOUNT</Text>
-          <TouchableOpacity onPress={() => router.push('/login')}>
+          <TouchableOpacity onPress={() => logout()}>
             <Text style={styles.settingLinkText}>Log out</Text>
           </TouchableOpacity>
         </ScrollView>
