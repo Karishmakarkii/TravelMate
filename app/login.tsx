@@ -22,16 +22,18 @@ export default function LoginScreen() {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
   function login() {
-    if (email === '') { // Check if email is empty
+    // Validate form inputs and ensure email format is correct
+    if (email === '') {
       setEmailErrorMessage("Please enter email address!");
     } else if (pword === '') {
       setPasswordErrorMessage("Please enter password!");
     } else if (!validateEmail(email)) {
       setEmailErrorMessage("Please enter a valid email address!");
     } else {
+      // Attempt Firebase authentication with provided credentials
       signInWithEmailAndPassword(auth, email, pword)
       .then((userCredential) => {
-        // signed in
+        // Reset form and redirect on successful login
         setEmail('');
         setPword('');
         router.push('/home');
@@ -42,6 +44,7 @@ export default function LoginScreen() {
     }
   }
 
+  // Email validation using regex pattern
   const validateEmail = (str: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(str);
@@ -52,6 +55,7 @@ export default function LoginScreen() {
       source={require('../assets/images/starterImage.jpeg')}
       style={styles.background}
     >
+
       <View style={styles.loginContainer}>
         <Text style={styles.loginTitle}>Login</Text>
         

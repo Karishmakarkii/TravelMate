@@ -63,4 +63,3 @@ export default function SavedTripScreen() {
 // - Store fetched trips in state using useState()
 // - Ensure each trip object includes: id, name (from first attraction), date, number of stops, location
 // - Optional: implement delete functionality (TRAV-34) and enforce trip limit (TRAV-35)
-

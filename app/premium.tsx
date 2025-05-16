@@ -6,6 +6,7 @@ import PremiumConfirmationModal from '@/components/premiumConfirm';
 import { useState } from 'react';
 import styles from '@/styles/authStyles';
 
+
 export default function Premium() {
   const router = useRouter();
   const [showConfirmation, setShowConfirmation] = useState(false);

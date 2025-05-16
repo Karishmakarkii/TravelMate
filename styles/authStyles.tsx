@@ -346,6 +346,10 @@ const styles = StyleSheet.create({
     marginBottom: verticalScale(15),
     width: wp('50%'),
   },
+  disabledButton: {
+    backgroundColor: Colors.paleGrey,
+    opacity: 0.6,
+  },
   
 
   attractionCancelText: {

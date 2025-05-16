@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
-import Header from '@/components/header';
 import { ScrollView } from 'react-native';
 import MainLayout from '@/components/mainLayout';
 
@@ -12,9 +11,7 @@ export default function NoResultScreen() {
 
     return (
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-            <MainLayout>
-            <Header title="TravelMate" />
-
+            <MainLayout title="Nearby Attractions">
             <View style={styles.noResultContainer}>
                 <Text style={styles.attractionTitle}>Nearby Attractions in Location{"\n\n"}</Text>
                 <Text style={styles.attractionSubtitle}>OH NOOO!</Text>

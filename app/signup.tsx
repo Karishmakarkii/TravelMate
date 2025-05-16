@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import { useState } from 'react';
+import Header from '../components/header';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -41,6 +42,7 @@ export default function SignUpScreen() {
   }
 
   function create() {
+    // Validate all required form fields
     if (name === '') {
       setNameErrorMessage("Please enter name!");
     } else if (email === '') {
@@ -50,9 +52,10 @@ export default function SignUpScreen() {
     } else if (cpword === '') {
       setCPasswordErrorMessage("Please confirm password!");
     } else if (pword === cpword) {
+      // Create new user account in Firebase Authentication
       createUserWithEmailAndPassword(auth, email, pword)
       .then((userCredential) => {
-        // created
+        // Store additional user data in database and reset form
         writeToDB(email, name);
         setName('');
         setEmail('');
@@ -62,6 +65,7 @@ export default function SignUpScreen() {
         router.push('/home')
       })
       .catch((error) => {
+        // Handle specific Firebase authentication errors
         if (error.code === "auth/email-already-in-use") {
           alert("User already exists!");
         } else if (error.code === "auth/weak-password") {
@@ -78,7 +82,7 @@ export default function SignUpScreen() {
 
   return (
     <ImageBackground source={require('../assets/images/starterImage.jpeg')} style={styles.background}>
-      
+      <Header title="Sign Up" onOpenSettings={() => {}} />
       <View style={styles.signupContainer}>
         <Text style={styles.loginTitle}>Sign Up</Text>
         

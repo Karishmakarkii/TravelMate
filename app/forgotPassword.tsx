@@ -40,6 +40,7 @@ export default function ForgotPasswordScreen() {
       source={require('../assets/images/starterImage.jpeg')}
       style={styles.background}
     >
+
       <View style={styles.loginContainer}>
         <Text style={styles.loginTitle}>Forgot Password</Text>
 
