@@ -6,7 +6,7 @@ import Header from '../components/header';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, addDoc, collection } from "firebase/firestore";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 
 import '../firebase.js';
 
@@ -30,11 +30,10 @@ export default function SignUpScreen() {
   // Initialize db
   const db = getFirestore(app);
 
-  async function writeToDB(email: String, name: String) {
+  async function writeToDB(email: string, name: string) {
     try{
-      const docRef =  await addDoc(collection(db, "users"), {
-        email: email,
-        name: name
+      const docRef =  await setDoc(doc(db, "users", email), {
+        firstname: name
       });
     } catch(e) {
       console.error("Error adding document: ", e)
