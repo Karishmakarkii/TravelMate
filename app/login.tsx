@@ -8,7 +8,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import '../firebase.js';
 
-const {firebaseConfig} = require('../firebase.js');
+const { firebaseConfig } = require('../firebase.js');
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -32,15 +32,15 @@ export default function LoginScreen() {
     } else {
       // Attempt Firebase authentication with provided credentials
       signInWithEmailAndPassword(auth, email, pword)
-      .then((userCredential) => {
-        // Reset form and redirect on successful login
-        setEmail('');
-        setPword('');
-        router.push('/home');
-      })
-      .catch((error) => {
-        alert("Incorrect username or password!");
-      });
+        .then((userCredential) => {
+          // Reset form and redirect on successful login
+          setEmail('');
+          setPword('');
+          router.push('/home');
+        })
+        .catch((error) => {
+          alert("Incorrect username or password!");
+        });
     }
   }
 
@@ -58,13 +58,17 @@ export default function LoginScreen() {
 
       <View style={styles.loginContainer}>
         <Text style={styles.loginTitle}>Login</Text>
-        
+
         <Text style={styles.loginInputLabel}>Email</Text>
-        <TextInput placeholder="Enter email" placeholderTextColor="#999" style={styles.loginInput} keyboardType="email-address" onChangeText = {(input) => {setEmail(input); setEmailErrorMessage('');}} value={email} />
-        <Text style={styles.errorText}>{emailErrorMessage}</Text>
+        <TextInput placeholder="Enter email" placeholderTextColor="#999" style={styles.loginInput} keyboardType="email-address" onChangeText={(input) => { setEmail(input); setEmailErrorMessage(''); }} value={email} />
+        {emailErrorMessage !== '' && (
+          <Text style={styles.errorText}>{emailErrorMessage}</Text>
+        )}
         <Text style={styles.loginInputLabel}>Password</Text>
-        <TextInput placeholder="Enter password" placeholderTextColor="#999" style={styles.loginInput} secureTextEntry onChangeText = {(input) => {setPword(input); setPasswordErrorMessage('');}} value={pword} />
-        <Text style={styles.errorText}>{passwordErrorMessage}</Text>
+        <TextInput placeholder="Enter password" placeholderTextColor="#999" style={styles.loginInput} secureTextEntry onChangeText={(input) => { setPword(input); setPasswordErrorMessage(''); }} value={pword} />
+        {passwordErrorMessage !== '' && (
+          <Text style={styles.errorText}>{passwordErrorMessage}</Text>
+        )}
         <TouchableOpacity onPress={() => router.push('/forgotPassword')}>
           <Text style={styles.loginSubLink}>Forgot password?</Text>
         </TouchableOpacity>
