@@ -6,7 +6,7 @@ import Header from '../components/header';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, addDoc, collection } from "firebase/firestore";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
 
 import '../firebase.js';
 
@@ -30,11 +30,10 @@ export default function SignUpScreen() {
   // Initialize db
   const db = getFirestore(app);
 
-  async function writeToDB(email: String, name: String) {
+  async function writeToDB(email: string, name: string) {
     try{
-      const docRef =  await addDoc(collection(db, "users"), {
-        email: email,
-        name: name
+      const docRef =  await setDoc(doc(db, "users", email), {
+        firstname: name
       });
     } catch(e) {
       console.error("Error adding document: ", e)
@@ -42,6 +41,7 @@ export default function SignUpScreen() {
   }
 
   function create() {
+    // Validate all required form fields
     if (name === '') {
       setNameErrorMessage("Please enter name!");
     } else if (email === '') {
@@ -51,9 +51,10 @@ export default function SignUpScreen() {
     } else if (cpword === '') {
       setCPasswordErrorMessage("Please confirm password!");
     } else if (pword === cpword) {
+      // Create new user account in Firebase Authentication
       createUserWithEmailAndPassword(auth, email, pword)
       .then((userCredential) => {
-        // created
+        // Store additional user data in database and reset form
         writeToDB(email, name);
         setName('');
         setEmail('');
@@ -63,6 +64,7 @@ export default function SignUpScreen() {
         router.push('/home')
       })
       .catch((error) => {
+        // Handle specific Firebase authentication errors
         if (error.code === "auth/email-already-in-use") {
           alert("User already exists!");
         } else if (error.code === "auth/weak-password") {

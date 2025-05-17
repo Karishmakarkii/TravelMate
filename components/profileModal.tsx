@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import Modal from 'react-native-modal';
 import { Ionicons } from '@expo/vector-icons';
 import styles from '../styles/authStyles';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getFirestore, getDoc, doc, updateDoc } from "firebase/firestore";
+
+import '../firebase.js';
+
+const {firebaseConfig} = require('../firebase.js');
 
 export type UserType = {
   firstName: string;
@@ -26,11 +34,68 @@ export default function ProfileModal({ isVisible, onClose, user }: Props) {
   const initials = `${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase();
 
   const fields = [
-    { label: 'First name', value: firstName, setter: setFirstName },
+    { label: 'First Name', value: firstName, setter: setFirstName },
     { label: 'Last name', value: lastName, setter: setLastName },
     { label: 'Phone', value: phone, setter: setPhone },
     { label: 'Email', value: email, setter: setEmail },
   ];
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  // Initialize db
+  const db = getFirestore(app);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        getUserData(user.email || '');
+      }
+    });
+    
+  }, []);
+
+  async function getUserData(email: string) {
+    try {
+      const docRef = await getDoc(doc(db, 'users', email));
+
+      if (docRef.exists()) {
+        const firstName = docRef.get("firstname");
+        const lastName = docRef.get("lastname");
+        const phone = docRef.get("phone");
+
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPhone(phone);
+        setEmail(email);
+      }
+    } catch (error) {
+      console.error('Error getting document:', error);
+    }
+  }
+
+  async function updateUserData() {
+    try {
+      if (fields[0].value !== '') {
+        if (fields[2].value !== '' && /[a-zA-Z]/.test(fields[2].value)) {
+          alert("Invalid phone input");
+        } else  {
+          const docRef = await updateDoc(doc(db, 'users', fields[3].value), {
+            firstname: fields[0].value || '',
+            lastname: fields[1].value || '',
+            phone: fields[2].value || ''
+          });
+
+          alert("Profile successfully updated");
+        }
+      }
+      else {
+        alert("First Name cannot be empty");
+      }
+    } catch (error) {
+      console.error('Error updating document:', error);
+    }
+  }
 
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.profileModal}>
@@ -57,6 +122,7 @@ export default function ProfileModal({ isVisible, onClose, user }: Props) {
               style={styles.profileInput}
               value={field.value}
               onChangeText={field.setter}
+              editable={!(field.label === 'Email')}
             />
           </View>
         ))}
@@ -68,7 +134,7 @@ export default function ProfileModal({ isVisible, onClose, user }: Props) {
             <Text style={styles.profileActionBtn}>Discard</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => updateUserData()}>
             <Text style={styles.profileActionBtn}>Update Profile</Text>
           </TouchableOpacity>
         </View>
