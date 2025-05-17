@@ -47,8 +47,8 @@ export default function ForgotPasswordScreen() {
         <Text style={styles.loginInputLabel}>Email</Text>
         <TextInput placeholder="Enter your email" placeholderTextColor="#999" keyboardType="email-address" style={styles.loginInput} onChangeText = {setEmail} value={email} />
 
-        <TouchableOpacity style={styles.loginButton} onPress={() => resetPassword()}>
-          <Text style={styles.loginButtonText}>Send Reset Link</Text>
+        <TouchableOpacity style={styles.resetButton} onPress={() => resetPassword()}>
+          <Text style={styles.resetButtonText}>Send Reset Link</Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => router.back()}>

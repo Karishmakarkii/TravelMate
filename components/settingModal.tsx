@@ -118,7 +118,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
 
           {/* Account */}
           <Text style={styles.settingSectionTitle}>ACCOUNT</Text>
-          <TouchableOpacity onPress={() => logout()}>
+          <TouchableOpacity onPress={() => {onClose(); logout()}}>
             <Text style={styles.settingLinkText}>Log out</Text>
           </TouchableOpacity>
         </ScrollView>
