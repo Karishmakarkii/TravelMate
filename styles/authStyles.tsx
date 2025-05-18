@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     justifyContent: 'center',
-    borderTopLeftRadius: 60,
-    borderBottomRightRadius: 60,
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
   },
@@ -75,26 +75,31 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_500Medium',
   },
   loginInput: {
-    height: verticalScale(48),
+    height: verticalScale(40),
     borderColor: Colors.paleGrey,
     borderWidth: 1,
-    borderRadius: moderateScale(10),
-    marginBottom: verticalScale(10),
-    paddingHorizontal: scale(12),
+    borderRadius: moderateScale(8),
+    marginBottom: verticalScale(4),
+    paddingHorizontal: scale(10),
     backgroundColor: '#fff',
     fontFamily: 'Roboto_400Regular',
   },
+
   errorText: {
     fontFamily: 'Roboto_700Bold',
-    color: 'red'
+    color: 'red',
+    marginBottom: verticalScale(4),
+    minHeight: verticalScale(14),
   },
+
   loginButton: {
     backgroundColor: Colors.dustyPurple,
-    paddingVertical: verticalScale(14),
-    borderRadius: moderateScale(10),
+    paddingVertical: verticalScale(12),
+    borderRadius: moderateScale(8),
     alignItems: 'center',
     marginBottom: verticalScale(12),
   },
+
   loginButtonText: {
     color: '#fff',
     fontSize: scale(16),
@@ -113,60 +118,84 @@ const styles = StyleSheet.create({
     fontSize: scale(12),
     fontFamily: 'Roboto_500Medium',
   },
+
+  resetButton: {
+    backgroundColor: Colors.dustyPurple,
+    paddingVertical: verticalScale(12),
+    borderRadius: moderateScale(8),
+    alignItems: 'center',
+    marginBottom: verticalScale(12),
+    marginTop: verticalScale(12),
+  },
+
+  resetButtonText: {
+    color: '#fff',
+    fontFamily: 'Roboto_700Bold',
+    fontSize: scale(16),
+
+  },
+
   signupContainer: {
-    margin: wp('3%'),
+    marginHorizontal: wp('5%'),
+    marginTop: verticalScale(30),
     backgroundColor: Colors.lightCreamTransparent,
-    borderRadius: moderateScale(25),
-    padding: moderateScale(35),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-    justifyContent: 'center',
-    borderTopLeftRadius: 60,
-    borderBottomRightRadius: 60,
+    borderRadius: moderateScale(16),
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 0,
-    maxHeight: '85%',
+    paddingVertical: verticalScale(20),
+    paddingHorizontal: scale(20),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2,
+    maxHeight: '90%',
   },
+
   signUpInputLabel: {
-    fontSize: scale(14),
-    marginBottom: verticalScale(3),
-    marginTop: verticalScale(2),
+    fontSize: scale(13),
+    marginBottom: verticalScale(4),
+    marginTop: verticalScale(10),
     color: Colors.deepBrown,
     fontFamily: 'Roboto_500Medium',
   },
+
   signupInput: {
-    height: verticalScale(48),
+    height: verticalScale(40),
     borderColor: Colors.paleGrey,
     borderWidth: 1,
-    borderRadius: moderateScale(10),
-    marginBottom: verticalScale(5),
-    paddingHorizontal: scale(12),
+    borderRadius: moderateScale(8),
+    marginBottom: verticalScale(4),
+    paddingHorizontal: scale(10),
     backgroundColor: '#fff',
     fontFamily: 'Roboto_400Regular',
-    
+    fontSize: scale(13),
   },
+
   signupButton: {
     backgroundColor: Colors.dustyPurple,
-    paddingVertical: verticalScale(14),
-    borderRadius: moderateScale(6),
+    paddingVertical: verticalScale(12),
+    borderRadius: moderateScale(8),
     alignItems: 'center',
-    marginBottom: verticalScale(12),
-    marginTop: verticalScale(10),
+    marginTop: verticalScale(20),
   },
+
   signupButtonText: {
     color: '#fff',
-    fontSize: scale(16),
+    fontSize: scale(15),
     fontFamily: 'Roboto_700Bold',
   },
+
   signupLink: {
     color: Colors.darkskyBlue,
     textAlign: 'center',
     marginTop: verticalScale(12),
     fontFamily: 'Roboto_500Medium',
+    fontSize: scale(13),
   },
+
   homeContainer: {
     margin: wp('5%'),
     padding: moderateScale(35),
@@ -183,11 +212,12 @@ const styles = StyleSheet.create({
     marginTop: verticalScale(20),
   },
   homeSelectBox: {
-    backgroundColor: Colors.dustyPurple,
     paddingVertical: verticalScale(12),
     paddingHorizontal: scale(20),
     borderRadius: moderateScale(10),
     marginBottom: verticalScale(20),
+    borderColor: Colors.deepBrown,
+    backgroundColor: Colors.lightCream,
   },
   homeSelectText: {
     color: '#fff',
@@ -198,7 +228,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  
+
   homeButton: {
     backgroundColor: Colors.lightCream,
     paddingVertical: verticalScale(14),
@@ -213,28 +243,40 @@ const styles = StyleSheet.create({
   },
 
   // two dropdown list in home screen
+
   dropdown: {
+    borderRadius: 12,
+    borderColor: Colors.deepBrown,
     backgroundColor: Colors.dustyPurple,
-    borderWidth: 0,
-    borderRadius: 10,
+    height: 48,
     paddingHorizontal: 12,
-    marginTop: 8,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
-  
   dropdownContainer: {
+    borderRadius: 12,
+    borderColor: Colors.deepBrown,
     backgroundColor: Colors.lightCream,
-    borderWidth: 0,
-    elevation: 3,
-    zIndex: 1000,
+    elevation: 4,
   },
-  
+
+  placeholderStyle: {
+    color: Colors.lightCream,
+    fontFamily: 'Roboto_600SemiBold',
+  },
+
   dropdownText: {
     fontSize: 14,
     color: Colors.deepBrown,
     fontFamily: 'Roboto_400Regular',
-  }, 
-  
-  dropdownTitle:{
+  },
+
+
+
+  dropdownTitle: {
     color: '#fff',
   },
 
@@ -255,7 +297,7 @@ const styles = StyleSheet.create({
     maxHeight: '90%', //prevent it from stretching to full screen
     maxWidth: '100%',
   },
-  
+
 
   attractionTitle: {
     fontSize: scale(20),
@@ -269,7 +311,7 @@ const styles = StyleSheet.create({
     fontSize: scale(12),
     color: '#3b2e2e',
     marginBottom: verticalScale(20),
-    
+
   },
 
   attractionListContainer: {
@@ -350,7 +392,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.paleGrey,
     opacity: 0.6,
   },
-  
+
 
   attractionCancelText: {
     color: Colors.deepBrown,
@@ -377,7 +419,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: verticalScale(10),
-    marginTop:verticalScale(20),
+    marginTop: verticalScale(20),
     backgroundColor: Colors.lightCreamTransparent,
     paddingVertical: verticalScale(12),
     paddingHorizontal: scale(16),
@@ -395,9 +437,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: verticalScale(15),
     width: wp('50%'),
-    
+
   },
-  saveText:{
+  saveText: {
     color: Colors.deepBrown,
     fontWeight: '500',
   },
@@ -408,12 +450,12 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginBottom: verticalScale(2),
   },
-  
+
   itineraryMapButton: {
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
+
   itineraryMapText: {
     fontSize: scale(12),
     color: '#6e4b63',
@@ -423,11 +465,11 @@ const styles = StyleSheet.create({
   scrollWrapper: {
     flex: 1,
   },
-  
+
   scrollContent: {
     paddingBottom: 100, // Leave space above Footer
   },
-  
+
   dialogOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
@@ -464,7 +506,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 20,
   },
-  
+
   //saved trips
   tripCard: {
     backgroundColor: '#fff',
@@ -477,33 +519,33 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
-  
+
   tripTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 8,
     color: '#3C2D30',
   },
-  
+
   tripMeta: {
     fontSize: 14,
     color: '#555',
     marginBottom: 4,
   },
-  
+
   tripActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 12,
   },
-  
+
   tripLink: {
     color: '#6e4b63',
     fontWeight: '600',
     fontSize: 13,
   },
   // No result screen
-  noResultContainer:{
+  noResultContainer: {
     margin: 15,
     padding: 20,
     backgroundColor: Colors.lightCreamTransparent,
@@ -519,8 +561,8 @@ const styles = StyleSheet.create({
     maxHeight: '60%', //prevent it from stretching to full screen
     maxWidth: '90%',
   },
-  
-// setting modal
+
+  // setting modal
   settingContainer: {
     padding: 20,
     backgroundColor: Colors.lightCream,
@@ -586,7 +628,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
   },
- 
+
   settingLinkText: {
     color: Colors.dustyPurple,
     textDecorationLine: 'underline',
@@ -595,13 +637,17 @@ const styles = StyleSheet.create({
   },
   settingDropdown: {
     marginBottom: 10,
+    zIndex: 3000,
+    elevation: 3,
   },
   settingDropdownContainer: {
     borderColor: Colors.deepBrown,
+    zIndex: 2000,
+    elevation: 2,
   },
 
 
-// Profile modal
+  // Profile modal
 
   profileModal: {
     justifyContent: 'flex-end',
@@ -662,88 +708,115 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   profileActionBtn: {
-    color: Colors.dustyPurple, 
+    color: Colors.dustyPurple,
     textAlign: 'center',
     marginTop: 24,
     fontWeight: '600',
     fontSize: 15,
     marginLeft: 15,
   },
-  
-  // premium modal 
-    premiumContainer: {
-      flex: 1,
-      backgroundColor: Colors.lightCream,
-      margin: 20,
-      marginTop: 60,
-      padding: 20,
-      borderRadius: 30,
-    },
-    premiumBackBtn: {
-      marginBottom: 15,
-    },
-    premiumTitle: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: Colors.deepBrown,
-      marginBottom: 10,
-    },
-    premiumIconCircle: {
-      alignSelf: 'center',
-      backgroundColor: Colors.dustyPurple,
-      padding: 20,
-      borderRadius: 60,
-      marginBottom: 10,
-    },
-    premiumDescription: {
-      textAlign: 'center',
-      color: Colors.deepBrown,
-      marginBottom: 20,
-      fontSize: 16,
-    },
-    premiumBenefitItem: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: 8,
-    },
-    premiumBenefitIcon: {
-      marginRight: 10,
-    },
-    premiumBenefitText: {
-      fontSize: 14,
-      color: Colors.deepBrown,
-    },
-    premiumUpgradeBtn: {
-      backgroundColor: Colors.dustyPurple,
-      padding: 12,
-      borderRadius: 20,
-      marginTop: 20,
-      alignItems: 'center',
-    },
-    premiumUpgradeBtnText: {
-      color: '#fff',
-      fontWeight: '600',
-    },
-    premiumCancelNote: {
-      textAlign: 'center',
-      fontSize: 12,
-      marginVertical: 10,
-      color: Colors.mauveBrown,
-    },
-    premiumUnlockBtn: {
-      borderColor: Colors.mauveBrown,
-      borderWidth: 1,
-      padding: 12,
-      borderRadius: 20,
-      alignItems: 'center',
-    },
-    premiumUnlockBtnText: {
-      color: Colors.deepBrown,
-      fontWeight: '600',
-    },
-  });
-  
 
-  
+  // premium modal 
+  premiumContainer: {
+    flex: 1,
+    backgroundColor: Colors.paleGrey,
+    margin: 20,
+    marginTop: 60,
+    padding: 20,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center', // ← Center content vertically
+    paddingHorizontal: 24,
+    paddingVertical: 32,
+  },
+  premiumBackBtn: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+  },
+
+  premiumTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.deepBrown,
+    marginBottom: 16,
+  },
+
+  premiumIconCircle: {
+    backgroundColor: Colors.dustyPurple,
+    padding: 16,
+    borderRadius: 50,
+    marginBottom: 16,
+  },
+
+  premiumDescription: {
+    fontSize: 16,
+    color: Colors.deepBrown,
+    textAlign: 'center',
+    marginBottom: 24,
+  },
+
+  premiumBenefitItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+
+  premiumBenefitIcon: {
+    marginRight: 10,
+  },
+
+  premiumBenefitText: {
+    fontSize: 15,
+    color: Colors.deepBrown,
+  },
+
+  premiumUpgradeBtnText: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    marginTop: 20,
+    marginBottom: 20,
+    fontWeight: '600',
+    borderWidth: 1,
+    borderRadius: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderColor: Colors.deepBrown,
+    backgroundColor: Colors.lightCream,
+  },
+
+  premiumPrice: {
+    fontSize: 16,
+    color: '#6E4C42',
+    fontWeight: '600',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+
+  premiumCancelNote: {
+    fontSize: 12,
+    color: '#8A7F7B',
+    textAlign: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
+
+  premiumUnlockBtn: {
+    borderColor: Colors.deepBrown,
+    borderWidth: 1,
+    borderRadius: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+  },
+
+  premiumUnlockBtnText: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    fontWeight: '600',
+  },
+});
+
+
+
 
 export default styles;

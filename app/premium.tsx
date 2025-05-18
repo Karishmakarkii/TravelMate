@@ -36,10 +36,13 @@ export default function Premium() {
         <Text style={styles.premiumBenefitText}>Ad-free experience</Text>
       </View>
 
-    
-<TouchableOpacity onPress={() => setShowConfirmation(true)}>
-  <Text style={styles.premiumUpgradeBtnText}>Upgrade now</Text>
-</TouchableOpacity>
+
+      <TouchableOpacity onPress={() => setShowConfirmation(true)}>
+        <Text style={styles.premiumUpgradeBtnText}>Upgrade now</Text>
+      </TouchableOpacity>
+
+      <Text style={styles.premiumPrice}>Just $4.99/month</Text>
+
 
       <Text style={styles.premiumCancelNote}>You can cancel anytime. Premium applies across all your devices.</Text>
 

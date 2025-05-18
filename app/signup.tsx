@@ -1,8 +1,7 @@
-import { View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ImageBackground, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
 import { useState } from 'react';
-import Header from '../components/header';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
@@ -10,7 +9,7 @@ import { getFirestore, setDoc, doc } from "firebase/firestore";
 
 import '../firebase.js';
 
-const {firebaseConfig} = require('../firebase.js');
+const { firebaseConfig } = require('../firebase.js');
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -31,11 +30,11 @@ export default function SignUpScreen() {
   const db = getFirestore(app);
 
   async function writeToDB(email: string, name: string) {
-    try{
-      const docRef =  await setDoc(doc(db, "users", email), {
+    try {
+      const docRef = await setDoc(doc(db, "users", email), {
         firstname: name
       });
-    } catch(e) {
+    } catch (e) {
       console.error("Error adding document: ", e)
     }
   }
@@ -53,58 +52,73 @@ export default function SignUpScreen() {
     } else if (pword === cpword) {
       // Create new user account in Firebase Authentication
       createUserWithEmailAndPassword(auth, email, pword)
-      .then((userCredential) => {
-        // Store additional user data in database and reset form
-        writeToDB(email, name);
-        setName('');
-        setEmail('');
-        setPword('');
-        setCPword('');
-        alert("User successfully created!");
-        router.push('/home')
-      })
-      .catch((error) => {
-        // Handle specific Firebase authentication errors
-        if (error.code === "auth/email-already-in-use") {
-          alert("User already exists!");
-        } else if (error.code === "auth/weak-password") {
-          alert("Password should be at least 6 characters!");
-        } else {
-          console.log("error: " + error.code + " AND " + error.message);
-          alert("User not created!");
-        }
-      });
+        .then((userCredential) => {
+          // Store additional user data in database and reset form
+          writeToDB(email, name);
+          setName('');
+          setEmail('');
+          setPword('');
+          setCPword('');
+          alert("User successfully created!");
+          router.push('/home')
+        })
+        .catch((error) => {
+          // Handle specific Firebase authentication errors
+          if (error.code === "auth/email-already-in-use") {
+            alert("User already exists!");
+          } else if (error.code === "auth/weak-password") {
+            alert("Password should be at least 6 characters!");
+          } else {
+            console.log("error: " + error.code + " AND " + error.message);
+            alert("User not created!");
+          }
+        });
     } else {
       setCPasswordErrorMessage("Passwords do not match!");
     }
   }
 
   return (
-    <ImageBackground source={require('../assets/images/starterImage.jpeg')} style={styles.background}>
-      <Header title="Sign Up" onOpenSettings={() => {}} />
-      <View style={styles.signupContainer}>
-        <Text style={styles.loginTitle}>Sign Up</Text>
-        
-        <Text style={styles.signUpInputLabel}>Name</Text>
-        <TextInput placeholder="Enter name" placeholderTextColor="#999"  style={styles.signupInput} onChangeText = {(input) => {setName(input); setNameErrorMessage('');}} value={name} />
-        <Text style={styles.errorText}>{nameErrorMessage}</Text>
-        <Text style={styles.signUpInputLabel}>Email Address</Text>
-        <TextInput placeholder="Enter email" placeholderTextColor="#999"  style={styles.signupInput} keyboardType="email-address" onChangeText = {(input) => {setEmail(input); setEmailErrorMessage('');}} value={email} />
-        <Text style={styles.errorText}>{emailErrorMessage}</Text>
-        <Text style={styles.signUpInputLabel}>Password</Text>
-        <TextInput placeholder="Enter password" placeholderTextColor="#999" style={styles.signupInput} secureTextEntry onChangeText = {(input) => {setPword(input); setPasswordErrorMessage('');}} value={pword} />
-        <Text style={styles.errorText}>{passwordErrorMessage}</Text>
-        <Text style={styles.signUpInputLabel}>Confirm Password</Text>
-        <TextInput placeholder="Re enter password" placeholderTextColor="#999" style={styles.signupInput} secureTextEntry onChangeText = {(input) => {setCPword(input); setCPasswordErrorMessage('');}} value={cpword} />
-        <Text style={styles.errorText}>{cpasswordErrorMessage}</Text>
-        <TouchableOpacity style={styles.signupButton} onPress={() => create()}>
-          <Text style={styles.signupButtonText}>Sign Up</Text>
-        </TouchableOpacity>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ImageBackground source={require('../assets/images/starterImage.jpeg')} style={styles.background}>
+          <View style={styles.signupContainer}>
+            <Text style={styles.loginTitle}>Sign Up</Text>
 
-        <TouchableOpacity onPress={() => router.back()}>
-          <Text style={styles.signupLink}>Already have an account? Login</Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
+            <Text style={styles.signUpInputLabel}>Name</Text>
+            <TextInput placeholder="Enter name" placeholderTextColor="#999" style={styles.signupInput} onChangeText={(val) => { setName(val); setNameErrorMessage(''); }} value={name} />
+            {nameErrorMessage !== '' && (
+              <Text style={styles.errorText}>{nameErrorMessage}</Text>
+            )}
+
+            <Text style={styles.signUpInputLabel}>Email Address</Text>
+            <TextInput placeholder="Enter email" placeholderTextColor="#999" style={styles.signupInput} keyboardType="email-address" onChangeText={(val) => { setEmail(val); setEmailErrorMessage(''); }} value={email} />
+            {nameErrorMessage !== '' && (
+              <Text style={styles.errorText}>{emailErrorMessage}</Text>
+            )}
+
+            <Text style={styles.signUpInputLabel}>Password</Text>
+            <TextInput placeholder="Enter password" placeholderTextColor="#999" style={styles.signupInput} secureTextEntry onChangeText={(val) => { setPword(val); setPasswordErrorMessage(''); }} value={pword} />
+            {nameErrorMessage !== '' && (
+              <Text style={styles.errorText}>{passwordErrorMessage}</Text>
+            )}
+
+            <Text style={styles.signUpInputLabel}>Confirm Password</Text>
+            <TextInput placeholder="Re enter password" placeholderTextColor="#999" style={styles.signupInput} secureTextEntry onChangeText={(val) => { setCPword(val); setCPasswordErrorMessage(''); }} value={cpword} />
+            {nameErrorMessage !== '' && (
+              <Text style={styles.errorText}>{cpasswordErrorMessage}</Text>
+            )}
+
+            <TouchableOpacity style={styles.signupButton} onPress={create}>
+              <Text style={styles.signupButtonText}>Sign Up</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => router.back()}>
+              <Text style={styles.signupLink}>Already have an account? Login</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
