@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, ScrollView, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, ImageBackground, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styles from '../styles/authStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MainLayout from '../components/mainLayout';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 export default function HomeScreen() {
@@ -38,52 +39,64 @@ export default function HomeScreen() {
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <SafeAreaView style={{ flex: 1 }}>
         <MainLayout title="Home">
-          <View style={{ flex: 1 }}>
-            <ScrollView contentContainerStyle={[styles.homeContainer, { paddingBottom: 30 }]}>
-              <Text style={styles.homeTitle}>Set search radius</Text>
-              <DropDownPicker
-                open={radiusOpen}
-                value={radiusValue}
-                items={radiusItems}
-                setOpen={setRadiusOpen}
-                setValue={setRadiusValue}
-                setItems={setRadiusItems}
-                placeholder="Select"
-                style={styles.dropdown}
-                dropDownContainerStyle={styles.dropdownContainer}
-                zIndex={3000}
-                zIndexInverse={1000}
-              />
+          <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+            <View style={[styles.homeContainer, { paddingBottom: 30 }]}>
 
-              <Text style={styles.homeTitle}>Select transport mode</Text>
-              <DropDownPicker
-                open={transportOpen}
-                value={transportValue}
-                items={transportItems}
-                setOpen={setTransportOpen}
-                setValue={setTransportValue}
-                setItems={setTransportItems}
-                placeholder="Select"
-                style={styles.dropdown}
-                dropDownContainerStyle={styles.dropdownContainer}
-                zIndex={2000}
-                zIndexInverse={2000}
-              />
+              {/* Radius Dropdown */}
+              <View style={{ zIndex: 3000, marginBottom: 20 }}>
+                <Text style={styles.homeTitle}>Set search radius</Text>
+                <DropDownPicker
+                  open={radiusOpen}
+                  value={radiusValue}
+                  items={radiusItems}
+                  setOpen={setRadiusOpen}
+                  setValue={setRadiusValue}
+                  setItems={setRadiusItems}
+                  placeholder="Select"
+                  placeholderStyle={styles.placeholderStyle}
+                  style={styles.dropdown}
+                  dropDownContainerStyle={styles.dropdownContainer}
+                />
+              </View>
 
-              <TouchableOpacity 
-                style={styles.homeButton} 
-                onPress={() => router.push({
-                  pathname: '/attractionList',
-                  params: {
-                    radius: radiusValue,
-                    transportMode: transportValue
-                  }
-                })}
+              {/* Transport Dropdown */}
+              <View style={{ zIndex: 2000, marginBottom: 20 }}>
+                <Text style={styles.homeTitle}>Select transport mode</Text>
+                <DropDownPicker
+                  open={transportOpen}
+                  value={transportValue}
+                  items={transportItems}
+                  setOpen={setTransportOpen}
+                  setValue={setTransportValue}
+                  setItems={setTransportItems}
+                  placeholder="Select"
+                  placeholderStyle={styles.placeholderStyle}
+                  style={styles.dropdown}
+                  dropDownContainerStyle={styles.dropdownContainer}
+                />
+              </View>
+
+
+              {/* Button */}
+              <TouchableOpacity
+                style={styles.homeButton}
+                onPress={() =>
+                  router.push({
+                    pathname: '/attractionList',
+                    params: {
+                      radius: radiusValue,
+                      transportMode: transportValue,
+                    },
+                  })
+                }
               >
                 <Text style={styles.homeButtonText}>Find Places</Text>
               </TouchableOpacity>
-            </ScrollView>
-          </View>
+            </View>
+          </KeyboardAvoidingView>
         </MainLayout>
       </SafeAreaView>
     </ImageBackground>
