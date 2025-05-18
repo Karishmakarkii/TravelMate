@@ -12,7 +12,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 import '../firebase.js';
 
-const {firebaseConfig} = require('../firebase.js');
+const { firebaseConfig } = require('../firebase.js');
 
 type SettingsModalProps = {
   isVisible: boolean;
@@ -24,11 +24,11 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
   const router = useRouter();
   const [darkMode, setDarkMode] = useState(false);
   const [radiusOpen, setRadiusOpen] = useState(false);
-  const [radiusValue, setRadiusValue] = useState(null);
+  const [radiusValue, setRadiusValue] = useState<string | null>(null);
   const [radiusItems, setRadiusItems] = useState([
     { label: '5 km', value: '5' },
     { label: '10 km', value: '10' },
-    { label: '20 km', value: '20' },
+    { label: '30 km', value: '30' },
   ]);
   const [email, setEmail] = useState('');
 
@@ -43,21 +43,43 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
       }
     });
   }, []);
+  
+
+  // Called when user selects or types in a radius
+  // Let me know if i need to do this, this is for default radius select or type
+  const handleRadiusChange = (value: string | null) => {
+    if (!value) return;
+    // Remove "km" if user typed it
+    const cleanValue = value.replace(/\s*km/i, '').trim();
+    // Check if it's already in the list
+    const exists = radiusItems.some(item => item.value === cleanValue);
+
+    if (!exists) {
+      setRadiusItems(prev => [...prev, { label: `${cleanValue} km`, value: cleanValue }]);
+    }
+    setRadiusValue(cleanValue);
+
+    //Firestore developer: Save `defaultRadius = cleanValue` under user document @Adia
+  };
+
+
+
 
   function logout() {
     // Firebase function to sign out user
     signOut(auth)
-    .then((userCredential) => {     
-      router.push('/login');
-    })
-    .catch((error) => {
-      alert("Signout unsuccessful");
-    }); 
+      .then((userCredential) => {
+        router.push('/login');
+      })
+      .catch((error) => {
+        alert("Signout unsuccessful");
+      });
   }
 
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.settingBottomModal}>
       <View style={styles.settingContainer}>
+
         <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.settingScrollContainer} showsVerticalScrollIndicator={false}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
             <TouchableOpacity onPress={onClose}>
@@ -81,17 +103,33 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
           {/* Preferences */}
           <Text style={styles.settingSectionTitle}>PREFERENCES</Text>
           <Text style={styles.settingPreferenceLabel}>Default radius</Text>
-          <DropDownPicker
-            open={radiusOpen}
-            value={radiusValue}
-            items={radiusItems}
-            setOpen={setRadiusOpen}
-            setValue={setRadiusValue}
-            setItems={setRadiusItems}
-            placeholder="Select radius"
-            style={styles.settingDropdown}
-            dropDownContainerStyle={styles.settingDropdownContainer}
-          />
+          <View>
+            <DropDownPicker
+              open={radiusOpen}
+              value={radiusValue}
+              items={radiusItems}
+              setOpen={setRadiusOpen}
+              setValue={setRadiusValue}
+              setItems={setRadiusItems}
+              placeholder="Select or enter radius"
+              style={styles.settingDropdown}
+              dropDownContainerStyle={styles.settingDropdownContainer}
+              zIndex={3000}
+              zIndexInverse={1000}
+              listMode="SCROLLVIEW" // prevent FlatList use
+              // Option for user to add value manually
+              searchable={true}
+              searchPlaceholder="Type radius in km"
+              onChangeValue={handleRadiusChange}
+              onChangeSearchText={handleRadiusChange}
+              searchTextInputStyle={{
+                borderWidth: 0,
+                backgroundColor: 'transparent',
+                paddingLeft: 10,
+                fontFamily: 'Roboto_400Regular',
+              }}
+            />
+          </View>
 
           <View style={styles.settingToggleRow}>
             <Text style={styles.settingPreferenceLabel}>Dark mode</Text>
@@ -106,19 +144,19 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
           {/* Subscription */}
           <Text style={styles.settingSectionTitle}>SUBSCRIPTION</Text>
           <Text style={styles.settingPreferenceLabel}>Current plan</Text>
-          <TouchableOpacity onPress={() => {onClose();router.push('/premium');}}>
+          <TouchableOpacity onPress={() => { onClose(); router.push('/premium'); }}>
             <Text style={styles.settingLinkText}>Upgrade to Premium</Text>
           </TouchableOpacity>
 
           {/* Saved Trips */}
           <Text style={styles.settingSectionTitle}>SAVED TRIPS</Text>
-          <TouchableOpacity onPress={() =>{onClose(); router.push('/savedTrips')}}>
+          <TouchableOpacity onPress={() => { onClose(); router.push('/savedTrips') }}>
             <Text style={styles.settingLinkText}>View my saved trips</Text>
           </TouchableOpacity>
 
           {/* Account */}
           <Text style={styles.settingSectionTitle}>ACCOUNT</Text>
-          <TouchableOpacity onPress={() => {onClose(); logout()}}>
+          <TouchableOpacity onPress={() => { onClose(); logout() }}>
             <Text style={styles.settingLinkText}>Log out</Text>
           </TouchableOpacity>
         </ScrollView>

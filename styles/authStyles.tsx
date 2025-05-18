@@ -84,12 +84,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     fontFamily: 'Roboto_400Regular',
   },
- 
+
   errorText: {
     fontFamily: 'Roboto_700Bold',
     color: 'red',
     marginBottom: verticalScale(4),
-    minHeight: verticalScale(14), 
+    minHeight: verticalScale(14),
   },
 
   loginButton: {
@@ -119,84 +119,84 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_500Medium',
   },
 
-  resetButton:{
+  resetButton: {
     backgroundColor: Colors.dustyPurple,
     paddingVertical: verticalScale(12),
     borderRadius: moderateScale(8),
     alignItems: 'center',
     marginBottom: verticalScale(12),
-    marginTop:verticalScale(12),
+    marginTop: verticalScale(12),
   },
 
-  resetButtonText:{
-     color: '#fff',
-     fontFamily: 'Roboto_700Bold',
-     fontSize: scale(16),
+  resetButtonText: {
+    color: '#fff',
+    fontFamily: 'Roboto_700Bold',
+    fontSize: scale(16),
 
   },
-  
-signupContainer: {
-  marginHorizontal: wp('5%'),
-  marginTop: verticalScale(30),
-  backgroundColor: Colors.lightCreamTransparent,
-  borderRadius: moderateScale(16),
-  borderTopLeftRadius: 40,
-  borderBottomRightRadius: 40,
-  borderTopRightRadius: 0,
-  borderBottomLeftRadius: 0,
-  paddingVertical: verticalScale(20),
-  paddingHorizontal: scale(20),
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.05,
-  shadowRadius: 3,
-  elevation: 2,
-  maxHeight: '90%',
-},
 
-signUpInputLabel: {
-  fontSize: scale(13),
-  marginBottom: verticalScale(4),
-  marginTop: verticalScale(10),
-  color: Colors.deepBrown,
-  fontFamily: 'Roboto_500Medium',
-},
+  signupContainer: {
+    marginHorizontal: wp('5%'),
+    marginTop: verticalScale(30),
+    backgroundColor: Colors.lightCreamTransparent,
+    borderRadius: moderateScale(16),
+    borderTopLeftRadius: 40,
+    borderBottomRightRadius: 40,
+    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    paddingVertical: verticalScale(20),
+    paddingHorizontal: scale(20),
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 3,
+    elevation: 2,
+    maxHeight: '90%',
+  },
 
-signupInput: {
-  height: verticalScale(40),
-  borderColor: Colors.paleGrey,
-  borderWidth: 1,
-  borderRadius: moderateScale(8),
-  marginBottom: verticalScale(4),
-  paddingHorizontal: scale(10),
-  backgroundColor: '#fff',
-  fontFamily: 'Roboto_400Regular',
-  fontSize: scale(13),
-},
+  signUpInputLabel: {
+    fontSize: scale(13),
+    marginBottom: verticalScale(4),
+    marginTop: verticalScale(10),
+    color: Colors.deepBrown,
+    fontFamily: 'Roboto_500Medium',
+  },
 
-signupButton: {
-  backgroundColor: Colors.dustyPurple,
-  paddingVertical: verticalScale(12),
-  borderRadius: moderateScale(8),
-  alignItems: 'center',
-  marginTop: verticalScale(20),
-},
+  signupInput: {
+    height: verticalScale(40),
+    borderColor: Colors.paleGrey,
+    borderWidth: 1,
+    borderRadius: moderateScale(8),
+    marginBottom: verticalScale(4),
+    paddingHorizontal: scale(10),
+    backgroundColor: '#fff',
+    fontFamily: 'Roboto_400Regular',
+    fontSize: scale(13),
+  },
 
-signupButtonText: {
-  color: '#fff',
-  fontSize: scale(15),
-  fontFamily: 'Roboto_700Bold',
-},
+  signupButton: {
+    backgroundColor: Colors.dustyPurple,
+    paddingVertical: verticalScale(12),
+    borderRadius: moderateScale(8),
+    alignItems: 'center',
+    marginTop: verticalScale(20),
+  },
 
-signupLink: {
-  color: Colors.darkskyBlue,
-  textAlign: 'center',
-  marginTop: verticalScale(12),
-  fontFamily: 'Roboto_500Medium',
-  fontSize: scale(13),
-},
+  signupButtonText: {
+    color: '#fff',
+    fontSize: scale(15),
+    fontFamily: 'Roboto_700Bold',
+  },
 
-homeContainer: {
+  signupLink: {
+    color: Colors.darkskyBlue,
+    textAlign: 'center',
+    marginTop: verticalScale(12),
+    fontFamily: 'Roboto_500Medium',
+    fontSize: scale(13),
+  },
+
+  homeContainer: {
     margin: wp('5%'),
     padding: moderateScale(35),
     borderTopLeftRadius: 40,
@@ -243,20 +243,29 @@ homeContainer: {
   },
 
   // two dropdown list in home screen
+
   dropdown: {
+    borderRadius: 12,
+    borderColor: Colors.deepBrown,
     backgroundColor: Colors.dustyPurple,
-    borderWidth: 0,
-    borderRadius: 10,
+    height: 48,
     paddingHorizontal: 12,
-    marginTop: 8,
-    
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  dropdownContainer: {
+    borderRadius: 12,
+    borderColor: Colors.deepBrown,
+    backgroundColor: Colors.lightCream,
+    elevation: 4,
   },
 
-  dropdownContainer: {
-    backgroundColor: Colors.lightCream,
-    borderWidth: 0,
-    elevation: 3,
-    zIndex: 1000,
+  placeholderStyle: {
+    color: Colors.lightCream,
+    fontFamily: 'Roboto_600SemiBold',
   },
 
   dropdownText: {
@@ -264,6 +273,8 @@ homeContainer: {
     color: Colors.deepBrown,
     fontFamily: 'Roboto_400Regular',
   },
+
+
 
   dropdownTitle: {
     color: '#fff',
@@ -626,9 +637,13 @@ homeContainer: {
   },
   settingDropdown: {
     marginBottom: 10,
+    zIndex: 3000,
+    elevation: 3,
   },
   settingDropdownContainer: {
     borderColor: Colors.deepBrown,
+    zIndex: 2000,
+    elevation: 2,
   },
 
 
@@ -715,90 +730,90 @@ homeContainer: {
     paddingVertical: 32,
   },
   premiumBackBtn: {
-  position: 'absolute',
-  top: 50,
-  left: 20,
-},
+    position: 'absolute',
+    top: 50,
+    left: 20,
+  },
 
-premiumTitle: {
-  fontSize: 20,
-  fontWeight: 'bold',
-  color: Colors.deepBrown,
-  marginBottom: 16,
-},
+  premiumTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: Colors.deepBrown,
+    marginBottom: 16,
+  },
 
-premiumIconCircle: {
-  backgroundColor: Colors.dustyPurple,
-  padding: 16,
-  borderRadius: 50,
-  marginBottom: 16,
-},
+  premiumIconCircle: {
+    backgroundColor: Colors.dustyPurple,
+    padding: 16,
+    borderRadius: 50,
+    marginBottom: 16,
+  },
 
-premiumDescription: {
-  fontSize: 16,
-  color: Colors.deepBrown,
-  textAlign: 'center',
-  marginBottom: 24,
-},
+  premiumDescription: {
+    fontSize: 16,
+    color: Colors.deepBrown,
+    textAlign: 'center',
+    marginBottom: 24,
+  },
 
-premiumBenefitItem: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginBottom: 12,
-},
+  premiumBenefitItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
 
-premiumBenefitIcon: {
-  marginRight: 10,
-},
+  premiumBenefitIcon: {
+    marginRight: 10,
+  },
 
-premiumBenefitText: {
-  fontSize: 15,
-  color: Colors.deepBrown,
-},
+  premiumBenefitText: {
+    fontSize: 15,
+    color: Colors.deepBrown,
+  },
 
-premiumUpgradeBtnText: {
-  fontSize: 14,
-  color: Colors.deepBrown,
-  marginTop: 20,
-  marginBottom: 20,
-  fontWeight: '600',
-  borderWidth: 1,
-  borderRadius: 50,
-  paddingVertical: 12,
-  paddingHorizontal: 24,
-  borderColor: Colors.deepBrown,
-  backgroundColor: Colors.lightCream,
-},
+  premiumUpgradeBtnText: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    marginTop: 20,
+    marginBottom: 20,
+    fontWeight: '600',
+    borderWidth: 1,
+    borderRadius: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderColor: Colors.deepBrown,
+    backgroundColor: Colors.lightCream,
+  },
 
-premiumPrice: {
-  fontSize: 16,
-  color: '#6E4C42', 
-  fontWeight: '600',
-  marginBottom: 16,
-  textAlign: 'center',
-},
+  premiumPrice: {
+    fontSize: 16,
+    color: '#6E4C42',
+    fontWeight: '600',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
 
-premiumCancelNote: {
-  fontSize: 12,
-  color: '#8A7F7B',
-  textAlign: 'center',
-  marginBottom: 20,
-  paddingHorizontal: 10,
-},
+  premiumCancelNote: {
+    fontSize: 12,
+    color: '#8A7F7B',
+    textAlign: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
 
-premiumUnlockBtn: {
-  borderColor: Colors.deepBrown,
-  borderWidth: 1,
-  borderRadius: 50,
-  paddingVertical: 12,
-  paddingHorizontal: 24,
-},
+  premiumUnlockBtn: {
+    borderColor: Colors.deepBrown,
+    borderWidth: 1,
+    borderRadius: 50,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+  },
 
-premiumUnlockBtnText: {
-  fontSize: 14,
-  color: Colors.deepBrown,
-  fontWeight: '600',
-},
+  premiumUnlockBtnText: {
+    fontSize: 14,
+    color: Colors.deepBrown,
+    fontWeight: '600',
+  },
 });
 
 
