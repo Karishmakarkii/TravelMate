@@ -5,8 +5,8 @@ import Checkbox from 'expo-checkbox';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../styles/authStyles';
 import MainLayout from '@/components/mainLayout';
-import { GOOGLE_MAPS_API_KEY } from '@env';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Linking } from 'react-native';
 
 
 interface Place {
@@ -168,18 +168,21 @@ export default function ItineraryScreen() {
     const handleOpenMaps = async () => {
         if (optimizedStops.length === 0) return;
 
-        const waypoints = optimizedStops
+        // URL encoding for the destination and waypoints(stops): https://developers.google.com/maps/documentation/urls/get-started
+        // Get all stops except the last one for waypoints
+        const waypointStops = optimizedStops.slice(0, -1);
+        const destination = optimizedStops[optimizedStops.length - 1];
+
+        const waypoints = waypointStops
             .map(stop => `${stop.geometry.location.lat},${stop.geometry.location.lng}`)
             .join('|');
 
-        const url = `https://www.google.com/maps/dir/?api=1&destination=${
-            optimizedStops[optimizedStops.length - 1].geometry.location.lat
-        },${
-            optimizedStops[optimizedStops.length - 1].geometry.location.lng
-        }&waypoints=${waypoints}&travelmode=${transportMode}`;
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+            destination.geometry.location.lat + ',' + 
+            destination.geometry.location.lng
+        )}&waypoints=${encodeURIComponent(waypoints)}&travelmode=${encodeURIComponent(transportMode as string)}`;
 
-        // You'll need to implement linking to open the URL
-        // Linking.openURL(url);
+        Linking.openURL(url);
     };
 
     return (
