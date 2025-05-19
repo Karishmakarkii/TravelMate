@@ -386,7 +386,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     marginBottom: verticalScale(15),
-    width: wp('50%'),
+    width: wp('60%'),
   },
   disabledButton: {
     backgroundColor: Colors.paleGrey,
