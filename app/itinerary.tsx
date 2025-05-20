@@ -7,7 +7,14 @@ import styles from '../styles/authStyles';
 import MainLayout from '@/components/mainLayout';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Linking } from 'react-native';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore, addDoc, doc, collection, getDoc } from "firebase/firestore";
 
+import '../firebase.js';
+
+const {firebaseConfig} = require('../firebase.js');
 
 interface Place {
     id: string;
@@ -37,6 +44,13 @@ export default function ItineraryScreen() {
     const [totalDistance, setTotalDistance] = useState<string>('0 km');
     const [totalTime, setTotalTime] = useState<string>('0 mins');
     const [tripSaved, setTripSaved] = useState(false);
+    const { id } = useLocalSearchParams();
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    // Initialize db
+    const db = getFirestore(app);
 
     useEffect(() => {
         if (attractionsJson) {
@@ -185,6 +199,29 @@ export default function ItineraryScreen() {
         Linking.openURL(url);
     };
 
+    function saveTripRecord() {
+        writeToDB(optimizedStops);
+    }
+
+    async function writeToDB(stops: OptimizedStop[]) {
+        try{
+            const today = new Date();
+            const docRef =  await addDoc(collection(doc(db, "users", auth.currentUser?.email || ''), "savedTrips"), {
+                name: stops[0].vicinity + ' Trip',
+                date: today.getDate().toString() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear().toString(),
+                location: stops[0].vicinity,
+                noOfStops: stops.length,
+                stops: stops,
+                totalDistance: totalDistance,
+                totalTime: totalTime
+            });
+            //alert("Trip successfully saved");
+            //router.push('/home');
+        } catch(e) {
+            console.error("Error adding document: ", e)
+        }
+    }
+
     return (
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
             <SafeAreaView style={{ flex: 1 }}>
@@ -219,7 +256,7 @@ export default function ItineraryScreen() {
                             ListFooterComponent={() => (
                                 <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
                                     <TouchableOpacity 
-                                        onPress={() => router.push('/home')}
+                                        onPress={() => {setTripSaved(true); saveTripRecord()}}
                                         style={styles.itinerarySaveButton}
                                     >
                                         <Text style={styles.saveText}>Save Trip</Text>
