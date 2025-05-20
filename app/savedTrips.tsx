@@ -20,22 +20,7 @@ interface SavedTrips {
     stops: string,
     location: string
 }
-/*const savedTrips = [
-    {
-        id: '1',
-        name: 'Mornington Trip',
-        date: '25.03.2025',
-        stops: 5,
-        location: 'Mornington Melbourne'
-    },
-    {
-        id: '2',
-        name: 'Beach Getaway',
-        date: '18.04.2025',
-        stops: 3,
-        location: 'Bondi Beach'
-    }
-];*/
+
 
 export default function SavedTripScreen() {
     const router = useRouter();
@@ -103,14 +88,10 @@ export default function SavedTripScreen() {
                     renderItem={renderItem}
                     keyExtractor={(item: { id: any; }) => item.id}
                     contentContainerStyle={{ padding: 20 }}
+                    
                 />
             </MainLayout>
             </SafeAreaView>
         </ImageBackground>
     );
 }
-// TODO:Replace `savedTrips` mock data with real data from Firebase
-// - Use `useEffect` to fetch trips from Firestore when component mounts
-// - Store fetched trips in state using useState()
-// - Ensure each trip object includes: id, name (from first attraction), date, number of stops, location
-// - Optional: implement delete functionality (TRAV-34) and enforce trip limit (TRAV-35)
