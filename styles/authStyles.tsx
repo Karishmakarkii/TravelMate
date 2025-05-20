@@ -281,125 +281,114 @@ const styles = StyleSheet.create({
   },
 
   // Attractionlist screen
-  attractionContainer: {
-    margin: 15,
+   attractionHeader: {
     padding: 20,
     backgroundColor: Colors.lightCreamTransparent,
-    borderTopLeftRadius: 40,
-    borderBottomRightRadius: 40,
-    borderTopRightRadius: 0,
-    borderBottomLeftRadius: 0,
+    borderRadius: 12,
+    margin: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 4,
-    elevation: 3,
-    maxHeight: '90%', //prevent it from stretching to full screen
-    maxWidth: '100%',
-  },
-
-
-  attractionTitle: {
-    fontSize: scale(20),
-    fontWeight: '700',
-    color: '#3b2e2e',
-    marginBottom: verticalScale(10),
-    marginTop: scale(8),
-  },
-
-  attractionSubtitle: {
-    fontSize: scale(12),
-    color: '#3b2e2e',
-    marginBottom: verticalScale(20),
-
-  },
-
-  attractionListContainer: {
-    paddingBottom: verticalScale(20),
-  },
-
-  attractionCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: moderateScale(20),
-    paddingVertical: verticalScale(12),
-    paddingHorizontal: scale(16),
-    marginBottom: verticalScale(12),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
     elevation: 2,
   },
-
-  attractionInfo: {
-    flex: 1,
-  },
-
-  attractionName: {
-    fontSize: scale(15),
+  attractionTitle: {
+    fontSize: 20,
     fontWeight: '600',
-    color: '#3b2e2e',
-  },
-
-  attractionDetails: {
-    fontSize: scale(12),
-    color: '#777',
-    marginTop: verticalScale(2),
-  },
-
-  attractionRating: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: scale(12),
-  },
-
-  attractionRatingText: {
-    fontSize: scale(14),
-    marginRight: scale(4),
     color: '#333',
   },
-
-  attractionCheckbox: {
-    height: moderateScale(20),
-    width: moderateScale(20),
-    borderRadius: 4,
+  attractionSubtitle: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 6,
+    lineHeight: 20,
   },
 
-  attractionButtonContainer: {
+  centeredContainer: {
+  flex: 1,
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingHorizontal: 20,
+  backgroundColor: 'rgba(255, 255, 255, 0.8)', // optional for better readability on background image
+},
+
+  attractionListContainer: {
+    paddingHorizontal: 16,
+    paddingBottom: 100,
+  },
+  attractionCard: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 12,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: verticalScale(20),
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 3,
   },
-
-  createItineraryButtonText: {
-    color: Colors.deepBrown,
+  attractionInfo: {
+    flex: 1,
+    marginRight: 10,
+  },
+  attractionName: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#222',
+  },
+  attractionDetails: {
+    fontSize: 13,
+    color: '#777',
+    marginTop: 4,
+  },
+  attractionVicinity: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 2,
+  },
+  attractionRating: {
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  attractionRatingText: {
+    fontSize: 14,
     fontWeight: '600',
-    marginRight: scale(20)
-
+    color: '#444',
+  },
+  attractionCheckbox: {
+    height: 20,
+    width: 20,
+  },
+  footerButtons: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    flexDirection: 'column',
+    alignItems: 'center',
+    borderTopWidth: 0.5,
+    borderColor: '#ccc',
+  },
+  attractionCancelText: {
+    color: '#6e4b63',
+    fontSize: 14,
+    marginBottom: 10,
   },
   createItineraryButton: {
-    backgroundColor: Colors.lightCream,
-    paddingVertical: verticalScale(14),
-    borderRadius: moderateScale(30),
+    backgroundColor: '#6e4b63',
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    borderRadius: 8,
     alignItems: 'center',
-    alignSelf: 'center',
-    marginBottom: verticalScale(15),
-    width: wp('60%'),
+    width: '100%',
+  },
+  createItineraryButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   disabledButton: {
-    backgroundColor: Colors.paleGrey,
-    opacity: 0.6,
-  },
-
-
-  attractionCancelText: {
-    color: Colors.deepBrown,
-    fontWeight: '600',
-    marginRight: scale(20),
-    marginBottom: scale(10),
-    textAlign: 'center',
+    backgroundColor: '#ccc',
   },
 
   //itinerary screen
@@ -814,7 +803,79 @@ const styles = StyleSheet.create({
     color: Colors.deepBrown,
     fontWeight: '600',
   },
+
+  FlatListContainer:{
+    backgroundColor: Colors.lightCreamTransparent,
+  },
+
+  // Map card
+  mapCardContainer: {
+  width: '90%',
+  backgroundColor: '#fff',
+  borderRadius: 16,
+  overflow: 'hidden',
+  elevation: 4,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 2 },
+  shadowOpacity: 0.1,
+  shadowRadius: 6,
+  marginBottom: 20,
+},
+
+mapCardImageWrapper: {
+  position: 'relative',
+  width: '100%',
+  height: 180,
+},
+
+mapCardImage: {
+  width: '100%',
+  height: '100%',
+},
+
+mapPin: {
+  position: 'absolute',
+  top: 60,
+  left: '50%',
+  marginLeft: -12,
+  width: 24,
+  height: 24,
+},
+
+mapLabel: {
+  position: 'absolute',
+  top: 90,
+  left: '50%',
+  transform: [{ translateX: -50 }],
+  backgroundColor: '#fff',
+  paddingHorizontal: 8,
+  paddingVertical: 4,
+  borderRadius: 12,
+  elevation: 2,
+},
+
+mapLabelText: {
+  fontSize: 12,
+  color: '#333',
+  textAlign: 'center',
+},
+
+mapCardButton: {
+  backgroundColor: '#6e4b63',
+  paddingVertical: 12,
+  alignItems: 'center',
+},
+
+mapCardButtonText: {
+  color: '#fff',
+  fontSize: 16,
+  fontWeight: '600',
+},
+
+
 });
+
+  
 
 
 
