@@ -46,7 +46,7 @@ export default function SavedTripScreen() {
             style={styles.background}
         >
             <SafeAreaView style={{ flex: 1 }}>
-            <MainLayout title="Saved Trips" showFooter={false}>
+            <MainLayout title="Saved Trips" showFooter={true}>
                 <FlatList
                     data={savedTrips}
                     renderItem={renderItem}
