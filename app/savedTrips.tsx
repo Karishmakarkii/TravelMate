@@ -1,11 +1,26 @@
 import { View, Text, TextInput, TouchableOpacity, ImageBackground, FlatList } from 'react-native';
 import { useRouter } from 'expo-router';
 import styles from '../styles/authStyles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainLayout from '@/components/mainLayout';
 import { SafeAreaView } from 'react-native-safe-area-context';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, getDoc, doc, updateDoc, collection, getDocs } from "firebase/firestore";
 
-const savedTrips = [
+import '../firebase.js';
+
+const {firebaseConfig} = require('../firebase.js');
+
+interface SavedTrips {
+    id: string,
+    name: string,
+    date: string,
+    stops: string,
+    location: string
+}
+/*const savedTrips = [
     {
         id: '1',
         name: 'Mornington Trip',
@@ -20,11 +35,47 @@ const savedTrips = [
         stops: 3,
         location: 'Bondi Beach'
     }
-];
+];*/
 
 export default function SavedTripScreen() {
     const router = useRouter();
+    const [savedTrips, setSavedTrips] = useState<SavedTrips[]>([]);
 
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    // Initialize db
+    const db = getFirestore(app);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                getSavedTrips(user.email || '');
+            }
+        });
+    }, []);
+
+    async function getSavedTrips(email: string) {
+        try {
+            const docRef = await getDocs(collection(db, 'users', email, 'savedTrips'));
+            
+            const trips: SavedTrips[] = docRef.docs.map(doc => {
+                const data = doc.data();
+                
+                return {
+                    id: doc.id,
+                    name: data.name,
+                    date: data.date,
+                    stops: data.noOfStops,
+                    location: data.location
+                };
+            });
+            
+            setSavedTrips(trips);
+        } catch (error) {
+          console.error('Error getting document:', error);
+        }
+    }
 
     const renderItem = ({ item }: any) => (
         <View style={styles.tripCard}>
@@ -33,7 +84,7 @@ export default function SavedTripScreen() {
             <Text style={styles.tripMeta}>Location: {item.location}</Text>
 
             <View style={styles.tripActions}>
-                <TouchableOpacity onPress={() => router.push('/itineraryView.tsx')}><Text style={styles.tripLink}>Open trip</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push({pathname: '/itineraryView', params: { tripId: item.id }})}><Text style={styles.tripLink}>Open trip</Text></TouchableOpacity>
                 <TouchableOpacity onPress={() => router.push('/home')}><Text style={styles.tripLink}>Map</Text></TouchableOpacity>
                 <TouchableOpacity ><Text style={styles.tripLink}>Remove</Text></TouchableOpacity>
             </View>
