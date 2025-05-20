@@ -304,11 +304,11 @@ return (
 
             <TouchableOpacity
               onPress={() => {
-                const selectedItems = attractions.filter(a => selected.includes(a.id));
+                const selectedAttractions = attractions.filter(a => selected.includes(a.id));
                 router.push({
                   pathname: '/itinerary',
                   params: {
-                    attractions: JSON.stringify(selectedItems),
+                    attractions: JSON.stringify(selectedAttractions),
                     transportMode
                   }
                 });
