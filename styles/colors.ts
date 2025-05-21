@@ -29,4 +29,5 @@ export const Colors = {
   mauveBrownTransparent: 'rgba(123, 90, 89, 0.5)',
   deepBrownTransparent: 'rgba(60, 45, 48, 0.5)',
   ExpoDefaultTransparent: 'rgba(160, 160, 160, 0.5)',
+  whiteTransparent: 'rgba(255, 255, 255, 0.85)',
 };
