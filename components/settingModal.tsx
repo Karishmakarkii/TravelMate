@@ -9,6 +9,7 @@ import { Colors } from '@/styles/colors';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
 
 import '../firebase.js';
 
@@ -29,28 +30,56 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     { label: '5 km', value: '5' },
     { label: '10 km', value: '10' },
     { label: '30 km', value: '30' },
+    { label: '50 km', value: '50' }
   ]);
   const [email, setEmail] = useState('');
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setEmail(user.email || '');
+        // Get user's default radius when component mounts
+        getUserDefaultRadius(user.email || '');
       }
     });
+
+    return () => unsubscribe();
   }, []);
-  
+
+  // Get user's default radius from Firestore
+  const getUserDefaultRadius = async (userEmail: string) => {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', userEmail));
+      if (userDoc.exists()) {
+        const defaultRadius = userDoc.get('defaultRadius');
+        if (defaultRadius) {
+          setRadiusValue(defaultRadius.toString());
+        }
+      }
+    } catch (error) {
+      console.error('Error getting default radius:', error);
+    }
+  };
 
   // Called when user selects or types in a radius
-  // Let me know if i need to do this, this is for default radius select or type
-  const handleRadiusChange = (value: string | null) => {
+  const handleRadiusChange = async (value: string | null) => {
     if (!value) return;
+    
     // Remove "km" if user typed it
     const cleanValue = value.replace(/\s*km/i, '').trim();
+    
+    // Validate if the value is one of the allowed values
+    const allowedValues = ['5', '10', '30', '50'];
+    if (!allowedValues.includes(cleanValue)) {
+      alert('Please select from the available radius options: 5km, 10km, 30km, or 50km');
+      return;
+    }
+
     // Check if it's already in the list
     const exists = radiusItems.some(item => item.value === cleanValue);
 
@@ -59,11 +88,16 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     }
     setRadiusValue(cleanValue);
 
-    //Firestore developer: Save `defaultRadius = cleanValue` under user document @Adia
+    // Save to Firestore
+    try {
+      await updateDoc(doc(db, 'users', email), {
+        defaultRadius: cleanValue
+      });
+    } catch (error) {
+      console.error('Error saving default radius:', error);
+      alert('Failed to save default radius');
+    }
   };
-
-
-
 
   function logout() {
     // Firebase function to sign out user
