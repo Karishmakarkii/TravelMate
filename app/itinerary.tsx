@@ -166,26 +166,29 @@ export default function ItineraryScreen() {
         setTotalTime(calculateTravelTime(totalDistanceKm, transportMode as string));
     };
 
+
     const renderItem = ({ item, index }: { item: OptimizedStop; index: number }) => (
-        <View style={styles.attractionCard}>
-            <View style={styles.attractionInfo}>
-                <Text style={styles.attractionName}>Stop {index + 1}: {item.name}</Text>
-                <Text style={styles.attractionDetails}>
-                    {item.distanceFromPrevious} • {item.timeFromPrevious} {index === 0 ? 'from your current location' : 'from previous stop'}
-                </Text>
-                <Text>{item.vicinity}</Text>
+        <View style={styles.itinerarytripCard}>
+            <View style={styles.tripCardTop}>
+                <Text style={styles.tripCardTitle}>Stop {index + 1}: {item.name}</Text>
+                <View style={styles.tripCardRating}>
+                    <Text style={styles.tripCardRatingText}>{item.rating.toFixed(1)}</Text>
+                    <Ionicons
+                        name={item.rating >= 4.5 ? 'star' : item.rating > 2.5 ? 'star-half' : 'star-outline'}
+                        size={16}
+                        color="#FDB813"
+                    />
+                </View>
             </View>
 
-            <View style={styles.attractionRating}>
-                <Text style={styles.attractionRatingText}>{item.rating.toFixed(1)}</Text>
-                <Ionicons
-                    name={item.rating >= 4.5 ? 'star' : item.rating > 2.5 ? 'star-half' : 'star-outline'}
-                    size={18}
-                    color="#FFB733"
-                />
-            </View>
+            <Text style={styles.tripCardMeta}>
+                {item.distanceFromPrevious} • {item.timeFromPrevious} {index === 0 ? 'from your current location' : 'from previous stop'}
+            </Text>
+
+            <Text style={styles.tripCardAddress}>{item.vicinity}</Text>
         </View>
     );
+
 
     const getTransportIcon = (mode: string) => {
         const icons = {
@@ -240,154 +243,99 @@ export default function ItineraryScreen() {
         }
     }
 
-    // return (
-    //     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-    //         <SafeAreaView style={{ flex: 1 }}>
-    //             <MainLayout title="Itinerary">
-    //                 <View style={styles.scrollWrapper}>
-    //                     <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-    //                         <View style={styles.itineraryInfoContainer}>
-    //                             <View>
-    //                                 <Text style={styles.itineraryInfoText}>Total stops: {optimizedStops.length}</Text>
-    //                                 <Text style={styles.itineraryInfoText}>Total distance: {totalDistance}</Text>
-    //                                 <Text style={styles.itineraryInfoText}>Total time: {totalTime}</Text>
-    //                                 <Text style={styles.itineraryInfoText}>
-    //                                     Travel mode: {getTransportIcon(transportMode as string)}
-    //                                 </Text>
-    //                             </View>
-    //                             <TouchableOpacity style={styles.itineraryMapButton} onPress={handleOpenMaps}>
-    //                                 <Ionicons name="map-outline" size={24} color="#6e4b63" />
-    //                                 <Text style={styles.itineraryMapText}>Open in Maps</Text>
-    //                             </TouchableOpacity>
-    //                         </View>
+    return (
+        <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
+            <SafeAreaView style={{ flex: 1 }}>
+                <MainLayout title="Itinerary">
+                    <FlatList
+                        data={optimizedStops}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        contentContainerStyle={{ paddingBottom: 100, paddingHorizontal: 20 }}
+                        showsVerticalScrollIndicator={false}
 
-    //                         <FlatList
-    //                             data={optimizedStops}
-    //                             renderItem={renderItem}
-    //                             keyExtractor={item => item.id}
-    //                             style={{ flex: 1 }}
-    //                             contentContainerStyle={[
-    //                                 styles.attractionListContainer,
-    //                                 { paddingHorizontal: 20 }
-    //                             ]}
-    //                             showsVerticalScrollIndicator={false}
-    //                             ListFooterComponent={() => (
-    //                                 <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
-    //                                     <TouchableOpacity
-    //                                         onPress={() => { setTripSaved(true); saveTripRecord() }}
-    //                                         style={styles.itinerarySaveButton}
-    //                                     >
-    //                                         <Text style={styles.saveText}>Save Trip</Text>
-    //                                     </TouchableOpacity>
-    //                                 </View>
-    //                             )}
-    //                         />
-    //                     </ScrollView>
-    //                 </View>
+                        // Header: Trip info and inline map link
+                        ListHeaderComponent={
+                            <View style={styles.tripSummaryCard}>
+                                <Image
+                                    source={require('../assets/images/touristimage2.png')} // replace with your asset
+                                    style={styles.tripSummaryImage}
+                                    resizeMode="contain"
+                                />
+
+                                <Text style={styles.tripSummaryTitle}>Trip Summary</Text>
+                                <View style={styles.divider} />
+
+                                <View style={styles.tripSummaryItem}>
+                                    <Text style={styles.label}>Stops:</Text>
+                                    <Text style={styles.value}>{optimizedStops.length}</Text>
+                                </View>
+                                <View style={styles.tripSummaryItem}>
+                                    <Text style={styles.label}>Distance:</Text>
+                                    <Text style={styles.value}>{totalDistance}</Text>
+                                </View>
+                                <View style={styles.tripSummaryItem}>
+                                    <Text style={styles.label}>Time:</Text>
+                                    <Text style={styles.value}>{totalTime}</Text>
+                                </View>
+                                <View style={styles.tripSummaryItem}>
+                                    <Text style={styles.label}>Mode:</Text>
+                                    <Text style={styles.value}>{getTransportIcon(transportMode as string)}</Text>
+                                </View>
+                            </View>
 
 
-    //                 {/* Trip Saved Modal */}
-    //                 <Modal transparent visible={tripSaved} animationType="fade">
-    //                     <View style={styles.dialogOverlay}>
-    //                         <View style={styles.dialogBox}>
-    //                             <Text style={styles.dialogTitle}>Trip Saved !</Text>
-    //                             <Text style={styles.dialogMessage}>
-    //                                 Your trip to {locationName} has been successfully saved to Saved trips page.{"\n"}
-    //                                 Click below to view it from saved trips.
-    //                             </Text>
+                        }
 
-    //                             <View style={styles.dialogActions}>
-    //                                 {/* savedTrips false to close dialog box */}
-    //                                 <TouchableOpacity onPress={() => setTripSaved(false)}>
-    //                                     <Text style={styles.dialogLink}>Back</Text>
-    //                                 </TouchableOpacity>
-    //                                 <TouchableOpacity onPress={() => { setTripSaved(false); router.push('/savedTrips'); }}>
-    //                                     <Text style={styles.dialogLink}>View Trip</Text>
-    //                                 </TouchableOpacity>
-    //                             </View>
-    //                         </View>
-    //                     </View>
-    //                 </Modal>
-    //             </MainLayout>
-    //         </SafeAreaView>
-    //     </ImageBackground>
-    // );
+                        // CTA map card + save button
+                        ListFooterComponent={
+                            <View style={{ alignItems: 'center', marginTop: 30, marginBottom: 40 }}>
+                                <TouchableOpacity style={styles.mapCardContainer} onPress={handleOpenMaps}>
+                                    <View style={styles.mapCardImageWrapper}>
+                                        <Image source={require('../assets/images/mapBackground.webp')} style={styles.mapCardImage} resizeMode="cover" />
+                                        <Image source={require('../assets/images/mapicon2.png')} style={styles.mapPin} />
+                                        <View style={styles.mapLabel}>
+                                            <Text style={styles.mapLabelText}>Your Route</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.mapCardButton}>
+                                        <Text style={styles.mapCardButtonText}>Open in Maps</Text>
+                                    </View>
+                                </TouchableOpacity>
 
-     return (
-    <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <MainLayout title="Itinerary">
-          <FlatList
-            data={optimizedStops}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-            contentContainerStyle={{ paddingBottom: 100, paddingHorizontal: 20 }}
-            showsVerticalScrollIndicator={false}
+                                <TouchableOpacity
+                                    onPress={() => { setTripSaved(true); saveTripRecord(); }}
+                                    style={styles.itinerarySaveButton}
+                                >
+                                    <Text style={styles.saveText}>Save Trip</Text>
+                                </TouchableOpacity>
+                            </View>
+                        }
+                    />
 
-            // Header: Trip info and inline map link
-            ListHeaderComponent={
-              <View style={styles.itineraryInfoContainer}>
-                <View>
-                  <Text style={styles.itineraryInfoText}>Total stops: {optimizedStops.length}</Text>
-                  <Text style={styles.itineraryInfoText}>Total distance: {totalDistance}</Text>
-                  <Text style={styles.itineraryInfoText}>Total time: {totalTime}</Text>
-                  <Text style={styles.itineraryInfoText}>Travel mode: {getTransportIcon(transportMode as string)}</Text>
-                </View>
-                <TouchableOpacity style={styles.itineraryMapButton} onPress={handleOpenMaps}>
-                  <Ionicons name="map-outline" size={24} color="#6e4b63" />
-                  <Text style={styles.itineraryMapText}>Open in Maps</Text>
-                </TouchableOpacity>
-              </View>
-            }
 
-            // ⬇️ Footer: CTA map card + save button
-            ListFooterComponent={
-              <View style={{ alignItems: 'center', marginTop: 30, marginBottom: 40 }}>
-                <TouchableOpacity style={styles.mapCardContainer} onPress={handleOpenMaps}>
-                  <View style={styles.mapCardImageWrapper}>
-                    <Image source={require('../assets/images/mapBackground.webp')} style={styles.mapCardImage} resizeMode="cover" />
-                    <Image source={require('../assets/images/mapicon2.png')} style={styles.mapPin} />
-                    <View style={styles.mapLabel}>
-                      <Text style={styles.mapLabelText}>Your Route</Text>
-                    </View>
-                  </View>
-                  <View style={styles.mapCardButton}>
-                    <Text style={styles.mapCardButtonText}>Open in Maps</Text>
-                  </View>
-                </TouchableOpacity>
+                    <Modal transparent visible={tripSaved} animationType="fade">
+                        <View style={styles.dialogOverlay}>
+                            <View style={styles.dialogBox}>
+                                <Text style={styles.dialogTitle}>Trip Saved!</Text>
+                                <Text style={styles.dialogMessage}>
+                                    Your trip to {locationName} has been successfully saved to your Saved Trips.
+                                    {'\n'}You can view it below.
+                                </Text>
+                                <View style={styles.dialogButtons}>
+                                    <TouchableOpacity onPress={() => setTripSaved(false)} style={styles.dialogButton}>
+                                        <Text style={styles.dialogButtonText}>Back</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setTripSaved(false); router.push('/savedTrips'); }} style={styles.dialogButtonPrimary}>
+                                        <Text style={styles.dialogButtonTextPrimary}>View Trip</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
 
-                <TouchableOpacity
-                  onPress={() => { setTripSaved(true); saveTripRecord(); }}
-                  style={styles.itinerarySaveButton}
-                >
-                  <Text style={styles.saveText}>Save Trip</Text>
-                </TouchableOpacity>
-              </View>
-            }
-          />
-
-          {/* ✅ Modal: Confirmation after saving trip */}
-          <Modal transparent visible={tripSaved} animationType="fade">
-            <View style={styles.dialogOverlay}>
-              <View style={styles.dialogBox}>
-                <Text style={styles.dialogTitle}>Trip Saved!</Text>
-                <Text style={styles.dialogMessage}>
-                  Your trip to {locationName} has been successfully saved to your Saved Trips.{"\n"}
-                  Click below to view it.
-                </Text>
-                <View style={styles.dialogActions}>
-                  <TouchableOpacity onPress={() => setTripSaved(false)}>
-                    <Text style={styles.dialogLink}>Back</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => { setTripSaved(false); router.push('/savedTrips'); }}>
-                    <Text style={styles.dialogLink}>View Trip</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </Modal>
-        </MainLayout>
-      </SafeAreaView>
-    </ImageBackground>
-  );
+                </MainLayout>
+            </SafeAreaView>
+        </ImageBackground>
+    );
 }
