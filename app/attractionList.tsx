@@ -275,18 +275,20 @@ export default function AttractionListScreen() {
   }
 
 
-return (
+  return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <SafeAreaView style={{ flex: 1 }}>
         <MainLayout title="Nearby Attractions">
-          <View style={styles.attractionHeader}>
-            <Text style={styles.attractionTitle}>Travel in {locationName}</Text>
-            <Text style={styles.attractionSubtitle}>
-              {errorMsg
-                ? errorMsg
-                : `Hey you are in luck!\nThere are ${attractions.length} tourist places within ${radius}km.`}
+
+          <View style={styles.topInfoCard}>
+            <Text style={styles.topInfoTitle}>Travel in {locationName}</Text>
+            <Text style={styles.topInfoSubtitle}>
+              There are {attractions.length} tourist places within {radius}km {'\n'}
+              <Text style={styles.icon}>🏔️ 🗻 ⛰️</Text>
             </Text>
           </View>
+
+
 
           <FlatList
             data={attractions}
