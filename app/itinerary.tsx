@@ -1,13 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { View, Text, FlatList, TouchableOpacity, ImageBackground, ScrollView, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Checkbox from 'expo-checkbox';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import styles from '../styles/authStyles';
 import MainLayout from '@/components/mainLayout';
-import { GOOGLE_MAPS_API_KEY } from '@env';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Linking } from 'react-native';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore, addDoc, doc, collection, getDoc } from "firebase/firestore";
+import * as Location from 'expo-location';
+import { Image } from 'react-native';
 
+
+
+import '../firebase.js';
+
+const { firebaseConfig } = require('../firebase.js');
 
 interface Place {
     id: string;
@@ -37,6 +48,14 @@ export default function ItineraryScreen() {
     const [totalDistance, setTotalDistance] = useState<string>('0 km');
     const [totalTime, setTotalTime] = useState<string>('0 mins');
     const [tripSaved, setTripSaved] = useState(false);
+    const { id } = useLocalSearchParams();
+    const [locationName, setLocationName] = useState<string>('your area'); // default fallback
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    // Initialize db
+    const db = getFirestore(app);
 
     useEffect(() => {
         if (attractionsJson) {
@@ -50,11 +69,11 @@ export default function ItineraryScreen() {
         const R = 6371; // Earth's radius in kilometers
         const dLat = (lat2 - lat1) * Math.PI / 180;
         const dLon = (lon2 - lon1) * Math.PI / 180;
-        const a = 
-            Math.sin(dLat/2) * Math.sin(dLat/2) +
-            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-            Math.sin(dLon/2) * Math.sin(dLon/2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
     };
 
@@ -65,11 +84,11 @@ export default function ItineraryScreen() {
             bicycle: 15,
             drive: 40,
         };
-        
+
         const speedKmH = speeds[mode as keyof typeof speeds] || speeds.walk;
         const timeHours = distanceInKm / speedKmH;
         const timeMinutes = Math.round(timeHours * 60);
-        
+
         if (timeMinutes < 60) {
             return `${timeMinutes} mins`;
         } else {
@@ -85,6 +104,18 @@ export default function ItineraryScreen() {
         let currentLocation = remainingAttractions[0].geometry.location;
         let totalDistanceKm = parseFloat(remainingAttractions[0].distance.split(' ')[0]); // Get initial distance from current location
 
+        //Use the first attraction directly
+        const firstStop = attractions[0];
+        const geocode = await Location.reverseGeocodeAsync({
+            latitude: firstStop.geometry.location.lat,
+            longitude: firstStop.geometry.location.lng,
+        });
+
+        if (geocode && geocode.length > 0) {
+            const city = geocode[0].city || geocode[0].district || geocode[0].region || 'your area';
+            setLocationName(city);
+        }
+
         // Add first stop with its original distance from current location
         optimizedRoute.push({
             ...remainingAttractions[0],
@@ -92,9 +123,10 @@ export default function ItineraryScreen() {
             timeFromPrevious: remainingAttractions[0].time // Use original time
         });
 
+
         // Remove first attraction from remaining list
         remainingAttractions.splice(0, 1);
-        
+
         // Continue with the rest of the attractions
         while (remainingAttractions.length > 0) {
             // Find the nearest attraction to current location
@@ -134,26 +166,29 @@ export default function ItineraryScreen() {
         setTotalTime(calculateTravelTime(totalDistanceKm, transportMode as string));
     };
 
+
     const renderItem = ({ item, index }: { item: OptimizedStop; index: number }) => (
-        <View style={styles.attractionCard}>
-            <View style={styles.attractionInfo}>
-                <Text style={styles.attractionName}>Stop {index + 1}: {item.name}</Text>
-                <Text style={styles.attractionDetails}>
-                    {item.distanceFromPrevious} • {item.timeFromPrevious} {index === 0 ? 'from your current location' : 'from previous stop'}
-                </Text>
-                <Text>{item.vicinity}</Text>
+        <View style={styles.itinerarytripCard}>
+            <View style={styles.tripCardTop}>
+                <Text style={styles.tripCardTitle}>Stop {index + 1}: {item.name}</Text>
+                <View style={styles.tripCardRating}>
+                    <Text style={styles.tripCardRatingText}>{item.rating.toFixed(1)}</Text>
+                    <Ionicons
+                        name={item.rating >= 4.5 ? 'star' : item.rating > 2.5 ? 'star-half' : 'star-outline'}
+                        size={16}
+                        color="#FDB813"
+                    />
+                </View>
             </View>
 
-            <View style={styles.attractionRating}>
-                <Text style={styles.attractionRatingText}>{item.rating.toFixed(1)}</Text>
-                <Ionicons
-                    name={item.rating >= 4.5 ? 'star' : item.rating > 2.5 ? 'star-half' : 'star-outline'}
-                    size={18}
-                    color="#FFB733"
-                />
-            </View>
+            <Text style={styles.tripCardMeta}>
+                {item.distanceFromPrevious} • {item.timeFromPrevious} {index === 0 ? 'from your current location' : 'from previous stop'}
+            </Text>
+
+            <Text style={styles.tripCardAddress}>{item.vicinity}</Text>
         </View>
     );
+
 
     const getTransportIcon = (mode: string) => {
         const icons = {
@@ -168,88 +203,137 @@ export default function ItineraryScreen() {
     const handleOpenMaps = async () => {
         if (optimizedStops.length === 0) return;
 
-        const waypoints = optimizedStops
+        // URL encoding for the destination and waypoints(stops): https://developers.google.com/maps/documentation/urls/get-started
+        // Get all stops except the last one for waypoints
+        const waypointStops = optimizedStops.slice(0, -1);
+        const destination = optimizedStops[optimizedStops.length - 1];
+
+        const waypoints = waypointStops
             .map(stop => `${stop.geometry.location.lat},${stop.geometry.location.lng}`)
             .join('|');
 
-        const url = `https://www.google.com/maps/dir/?api=1&destination=${
-            optimizedStops[optimizedStops.length - 1].geometry.location.lat
-        },${
-            optimizedStops[optimizedStops.length - 1].geometry.location.lng
-        }&waypoints=${waypoints}&travelmode=${transportMode}`;
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+            destination.geometry.location.lat + ',' +
+            destination.geometry.location.lng
+        )}&waypoints=${encodeURIComponent(waypoints)}&travelmode=${encodeURIComponent(transportMode as string)}`;
 
-        // You'll need to implement linking to open the URL
-        // Linking.openURL(url);
+        Linking.openURL(url);
     };
+
+    function saveTripRecord() {
+        writeToDB(optimizedStops);
+    }
+
+    async function writeToDB(stops: OptimizedStop[]) {
+        try {
+            const today = new Date();
+            const docRef = await addDoc(collection(doc(db, "users", auth.currentUser?.email || ''), "savedTrips"), {
+                name: stops[0].vicinity + ' Trip',
+                date: today.getDate().toString() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear().toString(),
+                location: stops[0].vicinity,
+                noOfStops: stops.length,
+                stops: stops,
+                totalDistance: totalDistance,
+                totalTime: totalTime
+            });
+            //alert("Trip successfully saved");
+            //router.push('/home');
+        } catch (e) {
+            console.error("Error adding document: ", e)
+        }
+    }
 
     return (
         <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
             <SafeAreaView style={{ flex: 1 }}>
                 <MainLayout title="Itinerary">
-                <View style={styles.scrollWrapper}>
-                <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.scrollContent}>
-                    <View style={styles.itineraryInfoContainer}>
-                            <View>
-                                <Text style={styles.itineraryInfoText}>Total stops: {optimizedStops.length}</Text>
-                                <Text style={styles.itineraryInfoText}>Total distance: {totalDistance}</Text>
-                                <Text style={styles.itineraryInfoText}>Total time: {totalTime}</Text>
-                                <Text style={styles.itineraryInfoText}>
-                                    Travel mode: {getTransportIcon(transportMode as string)}
-                                </Text>
-                            </View>
-                            <TouchableOpacity style={styles.itineraryMapButton} onPress={handleOpenMaps}>
-                                <Ionicons name="map-outline" size={24} color="#6e4b63" />
-                                <Text style={styles.itineraryMapText}>Open in Maps</Text>
-                            </TouchableOpacity>
-                        </View>
+                    <FlatList
+                        data={optimizedStops}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                        contentContainerStyle={{ paddingBottom: 100, paddingHorizontal: 20 }}
+                        showsVerticalScrollIndicator={false}
 
-                        <FlatList
-                            data={optimizedStops}
-                            renderItem={renderItem}
-                            keyExtractor={item => item.id}
-                            style={{ flex: 1 }}
-                            contentContainerStyle={[
-                                styles.attractionListContainer,
-                                { paddingHorizontal: 20 }
-                            ]}
-                            showsVerticalScrollIndicator={false}
-                            ListFooterComponent={() => (
-                                <View style={{ alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
-                                    <TouchableOpacity 
-                                        onPress={() => router.push('/home')}
-                                        style={styles.itinerarySaveButton}
-                                    >
-                                        <Text style={styles.saveText}>Save Trip</Text>
+                        // Header: Trip info and inline map link
+                        ListHeaderComponent={
+                            <View style={styles.tripSummaryCard}>
+                                <Image
+                                    source={require('../assets/images/touristimage2.png')} // replace with your asset
+                                    style={styles.tripSummaryImage}
+                                    resizeMode="contain"
+                                />
+
+                                <Text style={styles.tripSummaryTitle}>Trip Summary</Text>
+                                <View style={styles.divider} />
+
+                                <View style={styles.tripSummaryItem}>
+                                    <Text style={styles.label}>Stops:</Text>
+                                    <Text style={styles.value}>{optimizedStops.length}</Text>
+                                </View>
+                                <View style={styles.tripSummaryItem}>
+                                    <Text style={styles.label}>Distance:</Text>
+                                    <Text style={styles.value}>{totalDistance}</Text>
+                                </View>
+                                <View style={styles.tripSummaryItem}>
+                                    <Text style={styles.label}>Time:</Text>
+                                    <Text style={styles.value}>{totalTime}</Text>
+                                </View>
+                                <View style={styles.tripSummaryItem}>
+                                    <Text style={styles.label}>Mode:</Text>
+                                    <Text style={styles.value}>{getTransportIcon(transportMode as string)}</Text>
+                                </View>
+                            </View>
+
+
+                        }
+
+                        // CTA map card + save button
+                        ListFooterComponent={
+                            <View style={{ alignItems: 'center', marginTop: 30, marginBottom: 40 }}>
+                                <TouchableOpacity style={styles.mapCardContainer} onPress={handleOpenMaps}>
+                                    <View style={styles.mapCardImageWrapper}>
+                                        <Image source={require('../assets/images/mapBackground.webp')} style={styles.mapCardImage} resizeMode="cover" />
+                                        <Image source={require('../assets/images/mapicon2.png')} style={styles.mapPin} />
+                                        <View style={styles.mapLabel}>
+                                            <Text style={styles.mapLabelText}>Your Route</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.mapCardButton}>
+                                        <Text style={styles.mapCardButtonText}>Open in Maps</Text>
+                                    </View>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    onPress={() => { setTripSaved(true); saveTripRecord(); }}
+                                    style={styles.itinerarySaveButton}
+                                >
+                                    <Text style={styles.saveText}>Save Trip</Text>
+                                </TouchableOpacity>
+                            </View>
+                        }
+                    />
+
+
+                    <Modal transparent visible={tripSaved} animationType="fade">
+                        <View style={styles.dialogOverlay}>
+                            <View style={styles.dialogBox}>
+                                <Text style={styles.dialogTitle}>Trip Saved!</Text>
+                                <Text style={styles.dialogMessage}>
+                                    Your trip to {locationName} has been successfully saved to your Saved Trips.
+                                    {'\n'}You can view it below.
+                                </Text>
+                                <View style={styles.dialogButtons}>
+                                    <TouchableOpacity onPress={() => setTripSaved(false)} style={styles.dialogButton}>
+                                        <Text style={styles.dialogButtonText}>Back</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setTripSaved(false); router.push('/savedTrips'); }} style={styles.dialogButtonPrimary}>
+                                        <Text style={styles.dialogButtonTextPrimary}>View Trip</Text>
                                     </TouchableOpacity>
                                 </View>
-                            )}
-                        />
-                        </ScrollView>
-                    </View>
-
-                            
-            {/* Trip Saved Modal */}
-            <Modal transparent visible={tripSaved} animationType="fade">
-                <View style={styles.dialogOverlay}>
-                    <View style={styles.dialogBox}>
-                        <Text style={styles.dialogTitle}>Trip Saved !</Text>
-                        <Text style={styles.dialogMessage}>
-                            Your trip to Mornington has been successfully saved to Saved trips page.{"\n"}
-                            Click below to view it from saved trips.
-                        </Text>
-
-                        <View style={styles.dialogActions}>
-                            {/* savedTrips false to close dialog box */}
-                            <TouchableOpacity onPress={() => setTripSaved(false)}>
-                                <Text style={styles.dialogLink}>Back</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {setTripSaved(false); router.push('/savedTrips');}}> 
-                                <Text style={styles.dialogLink}>View Trip</Text>
-                            </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                </View>
-            </Modal>
+                    </Modal>
+
                 </MainLayout>
             </SafeAreaView>
         </ImageBackground>

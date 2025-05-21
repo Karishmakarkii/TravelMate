@@ -26,12 +26,14 @@ interface Place {
 export default function AttractionListScreen() {
   const router = useRouter();
   const { radius, transportMode } = useLocalSearchParams();
-  
+
   const [selected, setSelected] = useState<string[]>([]);
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [attractions, setAttractions] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
+  const [locationName, setLocationName] = useState<string>('your area'); // default fallback
+
 
   // Function to calculate travel time based on distance and transport mode
   const calculateTravelTime = (distanceInKm: number, mode: string): string => {
@@ -41,11 +43,11 @@ export default function AttractionListScreen() {
       bicycle: 15, // 15 km/h cycling speed
       drive: 40, // 40 km/h driving speed (urban average)
     };
-    
+
     const speedKmH = speeds[mode as keyof typeof speeds] || speeds.walk;
     const timeHours = distanceInKm / speedKmH;
     const timeMinutes = Math.round(timeHours * 60);
-    
+
     if (timeMinutes < 60) {
       return `${timeMinutes} mins`;
     } else {
@@ -61,11 +63,11 @@ export default function AttractionListScreen() {
       // Convert radius from kilometers to meters for API
       const radiusInMeters = radiusInKm * 1000;
       const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=${radiusInMeters}&type=tourist_attraction&key=${process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY}`;
-      
+
       const response = await fetch(placesUrl);
       const data = await response.json();
-      
-      
+
+
       // Handle API key and configuration errors
       if (data.status === 'REQUEST_DENIED') {
         console.error('Google Maps API Error Details:', {
@@ -76,7 +78,7 @@ export default function AttractionListScreen() {
         });
         throw new Error('Invalid API key or API not enabled. Please check your Google Maps API configuration.');
       }
-      
+
       // Handle other API errors
       if (data.status !== 'OK') {
         console.error('Google Maps API Error:', data.error_message);
@@ -130,7 +132,7 @@ export default function AttractionListScreen() {
       });
 
       // Sort places by distance
-      return formattedPlaces.sort((a: Place, b: Place) => 
+      return formattedPlaces.sort((a: Place, b: Place) =>
         parseFloat(a.distance.split(' ')[0]) - parseFloat(b.distance.split(' ')[0])
       );
     } catch (error) {
@@ -144,11 +146,11 @@ export default function AttractionListScreen() {
     const R = 6371; // Earth's radius in kilometers
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = 
-      Math.sin(dLat/2) * Math.sin(dLat/2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-      Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   };
 
@@ -175,13 +177,25 @@ export default function AttractionListScreen() {
 
         const location = await Location.getCurrentPositionAsync({});
         setLocation(location);
-        
+
+        // To add current location to heading 
+        const geocode = await Location.reverseGeocodeAsync({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+
+        if (geocode && geocode.length > 0) {
+          const city = geocode[0].city || geocode[0].district || geocode[0].region || 'your area';
+          setLocationName(city);
+        }
+
+
         const places = await fetchNearbyPlaces(
           location.coords.latitude,
           location.coords.longitude,
           parseInt(radius as string)
         );
-        
+
         setAttractions(places);
       } catch (error) {
         console.error('Error:', error);
@@ -220,7 +234,7 @@ export default function AttractionListScreen() {
                 : 'star-outline'
           }
           size={18}
-          color="#FFB733"
+          color="#FDB813"
         />
       </View>
 
@@ -236,11 +250,11 @@ export default function AttractionListScreen() {
   if (loading) {
     return (
       <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
-      <SafeAreaView style={{ flex: 1 }}>
-      <MainLayout title="Nearby Attractions">
-          <View style={[styles.attractionContainer, { flex: 1 }]}> 
-            <Text style={styles.attractionTitle}>Loading nearby attractions...</Text>
-          </View>
+        <SafeAreaView style={{ flex: 1 }}>
+          <MainLayout title="Nearby Attractions">
+            <View style={[styles.centeredContainer, { flex: 1 }]}>
+              <Text style={styles.attractionTitle}>Loading nearby attractions...</Text>
+            </View>
           </MainLayout>
         </SafeAreaView>
       </ImageBackground>
@@ -251,7 +265,7 @@ export default function AttractionListScreen() {
     return (
       <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
         <SafeAreaView style={{ flex: 1 }}>
-          <View style={[styles.attractionContainer, { flex: 1 }]}> 
+          <View style={[styles.centeredContainer, { flex: 1 }]}>
             <Text style={styles.attractionTitle}>Error</Text>
             <Text style={styles.attractionSubtitle}>{errorMsg}</Text>
           </View>
@@ -260,58 +274,55 @@ export default function AttractionListScreen() {
     );
   }
 
-  return (
+
+return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <SafeAreaView style={{ flex: 1 }}>
         <MainLayout title="Nearby Attractions">
-        <View style={styles.scrollWrapper}>
-        <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.scrollContent}>
-          <View style={[styles.attractionContainer, { flex: 1 }]}> 
-            <Text style={styles.attractionTitle}>Nearby Attractions</Text>
+          <View style={styles.attractionHeader}>
+            <Text style={styles.attractionTitle}>Travel in {locationName}</Text>
             <Text style={styles.attractionSubtitle}>
-              Hey you are in luck!{"\n"}
-              There are {attractions.length} tourist places within {radius}km. Check from list to add to itinerary.
+              {errorMsg
+                ? errorMsg
+                : `Hey you are in luck!\nThere are ${attractions.length} tourist places within ${radius}km.`}
             </Text>
-
-            <FlatList
-              data={attractions}
-              renderItem={renderItem}
-              keyExtractor={item => item.id}
-              contentContainerStyle={styles.attractionListContainer}
-              showsVerticalScrollIndicator={false}
-              style={{ flex: 1 }}
-            />
-
-            <View style={styles.attractionButtonContainer}>
-              <TouchableOpacity 
-                onPress={() => {
-                  // Pass selected attractions to the itinerary screen
-                  const selectedAttractions = attractions.filter(a => selected.includes(a.id));
-                  router.push({
-                    pathname: '/itinerary',
-                    params: { 
-                      attractions: JSON.stringify(selectedAttractions),
-                      transportMode
-                    }
-                  });
-                }}
-                disabled={selected.length === 0}
-                style={[
-                  styles.createItineraryButton,
-                  selected.length === 0 && styles.disabledButton
-                ]}
-              >
-                <Text style={styles.createItineraryButtonText}>
-                  Create Itinerary ({selected.length} selected)
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => router.back()} >
-                <Text style={styles.attractionCancelText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
           </View>
-          
-          </ScrollView>
+
+          <FlatList
+            data={attractions}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.attractionListContainer}
+            showsVerticalScrollIndicator={false}
+            style={{ flex: 1 }}
+          />
+
+          <View style={styles.footerButtons}>
+            <TouchableOpacity onPress={() => router.back()}>
+              <Text style={styles.attractionCancelText}>Cancel</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                const selectedAttractions = attractions.filter(a => selected.includes(a.id));
+                router.push({
+                  pathname: '/itinerary',
+                  params: {
+                    attractions: JSON.stringify(selectedAttractions),
+                    transportMode
+                  }
+                });
+              }}
+              disabled={selected.length === 0}
+              style={[
+                styles.createItineraryButton,
+                selected.length === 0 && styles.disabledButton
+              ]}
+            >
+              <Text style={styles.createItineraryButtonText}>
+                Create Itinerary ({selected.length} selected)
+              </Text>
+            </TouchableOpacity>
           </View>
         </MainLayout>
       </SafeAreaView>
