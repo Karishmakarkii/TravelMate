@@ -281,6 +281,42 @@ const styles = StyleSheet.create({
   },
 
   // Attractionlist screen
+
+  topInfoCard: {
+    backgroundColor: 'rgba(245, 240, 235, 0.85)',
+    backdropFilter: 'blur(6px)',
+    paddingVertical: 20,
+    paddingHorizontal: 24,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    borderRadius: 28, // Slightly softer pill look
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+
+    // Shadow (iOS + Android)
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  topInfoTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.dustyPurple,
+    marginBottom: 4,
+  },
+  topInfoSubtitle: {
+    fontSize: 14,
+    lineHeight: 24,             
+    textAlign: 'center',         
+    marginTop: 4,
+  },
+  icon: {
+  fontSize: 18, // adjust based on visual balance
+  marginHorizontal: 4,
+},
   attractionHeader: {
     padding: 20,
     backgroundColor: Colors.lightCreamTransparent,
@@ -308,7 +344,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)', // optional for better readability on background image
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', 
   },
 
   attractionListContainer: {
@@ -459,77 +495,77 @@ const styles = StyleSheet.create({
     paddingBottom: 100, // Leave space above Footer
   },
 
- // model dialog box
- dialogOverlay: {
-  flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
-  backgroundColor: 'rgba(0, 0, 0, 0.4)',
-  paddingHorizontal: 20,
-},
+  // model dialog box
+  dialogOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    paddingHorizontal: 20,
+  },
 
-dialogBox: {
-  backgroundColor: 'rgba(255,255,255,0.95)',
-  width: '100%',
-  borderRadius: 20,
-  paddingVertical: 28,
-  paddingHorizontal: 24,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.15,
-  shadowRadius: 6,
-  elevation: 6,
-},
+  dialogBox: {
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    width: '100%',
+    borderRadius: 20,
+    paddingVertical: 28,
+    paddingHorizontal: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 6,
+  },
 
-dialogTitle: {
-  fontSize: 22,
-  fontWeight: '700',
-  textAlign: 'center',
-  color: '#1c1c1e',
-  marginBottom: 12,
-},
+  dialogTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: '#1c1c1e',
+    marginBottom: 12,
+  },
 
-dialogMessage: {
-  fontSize: 15,
-  textAlign: 'center',
-  color: '#444',
-  lineHeight: 22,
-  marginBottom: 24,
-},
+  dialogMessage: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: '#444',
+    lineHeight: 22,
+    marginBottom: 24,
+  },
 
-dialogButtons: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  gap: 12,
-},
+  dialogButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
 
-dialogButton: {
-  flex: 1,
-  backgroundColor: '#f1f1f1',
-  paddingVertical: 12,
-  borderRadius: 10,
-  alignItems: 'center',
-},
+  dialogButton: {
+    flex: 1,
+    backgroundColor: '#f1f1f1',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
 
-dialogButtonText: {
-  fontSize: 15,
-  fontWeight: '600',
-  color: '#4b4453',
-},
+  dialogButtonText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#4b4453',
+  },
 
-dialogButtonPrimary: {
-  flex: 1,
-  backgroundColor: '#6e4b63',
-  paddingVertical: 12,
-  borderRadius: 10,
-  alignItems: 'center',
-},
+  dialogButtonPrimary: {
+    flex: 1,
+    backgroundColor: '#6e4b63',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
 
-dialogButtonTextPrimary: {
-  fontSize: 15,
-  fontWeight: '600',
-  color: '#fff',
-},
+  dialogButtonTextPrimary: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#fff',
+  },
 
   tripSummaryCard: {
     backgroundColor: Colors.whiteTransparent,
@@ -643,57 +679,57 @@ dialogButtonTextPrimary: {
 
   //saved trips
   savedTripCard: {
-  backgroundColor: 'rgba(255,255,255,0.92)',
-  padding: 18,
-  borderRadius: 18,
-  marginBottom: 20,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.1,
-  shadowRadius: 6,
-  elevation: 4,
-},
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    padding: 18,
+    borderRadius: 18,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
+  },
 
-savedTripHeader: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: 10,
-},
+  savedTripHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
 
-savedTripTitle: {
-  fontSize: 16,
-  fontWeight: '700',
-  color: '#1c1c1e',
-  flexShrink: 1,
-},
+  savedTripTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1c1c1e',
+    flexShrink: 1,
+  },
 
-savedTripDate: {
-  fontSize: 13,
-  fontWeight: '500',
-  color: '#6e4b63',
-},
+  savedTripDate: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#6e4b63',
+  },
 
-savedTripInfo: {
-  marginBottom: 14,
-},
+  savedTripInfo: {
+    marginBottom: 14,
+  },
 
-savedTripText: {
-  fontSize: 14,
-  color: '#444',
-  marginBottom: 4,
-},
+  savedTripText: {
+    fontSize: 14,
+    color: '#444',
+    marginBottom: 4,
+  },
 
-savedTripActions: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-},
+  savedTripActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 
-savedTripAction: {
-  fontSize: 14,
-  fontWeight: '600',
-  color: '#6e4b63',
-},
+  savedTripAction: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#6e4b63',
+  },
 
   // No result screen
   noResultContainer: {
