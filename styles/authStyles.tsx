@@ -531,7 +531,6 @@ dialogButtonTextPrimary: {
   color: '#fff',
 },
 
-
   tripSummaryCard: {
     backgroundColor: Colors.whiteTransparent,
     marginHorizontal: 20,
@@ -643,42 +642,59 @@ dialogButtonTextPrimary: {
 
 
   //saved trips
-  tripCard: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
+  savedTripCard: {
+  backgroundColor: 'rgba(255,255,255,0.92)',
+  padding: 18,
+  borderRadius: 18,
+  marginBottom: 20,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.1,
+  shadowRadius: 6,
+  elevation: 4,
+},
 
-  tripTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: '#3C2D30',
-  },
+savedTripHeader: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: 10,
+},
 
-  tripMeta: {
-    fontSize: 14,
-    color: '#555',
-    marginBottom: 4,
-  },
+savedTripTitle: {
+  fontSize: 16,
+  fontWeight: '700',
+  color: '#1c1c1e',
+  flexShrink: 1,
+},
 
-  tripActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 12,
-  },
+savedTripDate: {
+  fontSize: 13,
+  fontWeight: '500',
+  color: '#6e4b63',
+},
 
-  tripLink: {
-    color: '#6e4b63',
-    fontWeight: '600',
-    fontSize: 13,
-  },
+savedTripInfo: {
+  marginBottom: 14,
+},
+
+savedTripText: {
+  fontSize: 14,
+  color: '#444',
+  marginBottom: 4,
+},
+
+savedTripActions: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+},
+
+savedTripAction: {
+  fontSize: 14,
+  fontWeight: '600',
+  color: '#6e4b63',
+},
+
   // No result screen
   noResultContainer: {
     margin: 15,

@@ -11,7 +11,7 @@ import { getFirestore, getDoc, doc, updateDoc, collection, getDocs } from "fireb
 
 import '../firebase.js';
 
-const {firebaseConfig} = require('../firebase.js');
+const { firebaseConfig } = require('../firebase.js');
 
 interface SavedTrips {
     id: string,
@@ -43,10 +43,10 @@ export default function SavedTripScreen() {
     async function getSavedTrips(email: string) {
         try {
             const docRef = await getDocs(collection(db, 'users', email, 'savedTrips'));
-            
+
             const trips: SavedTrips[] = docRef.docs.map(doc => {
                 const data = doc.data();
-                
+
                 return {
                     id: doc.id,
                     name: data.name,
@@ -55,26 +55,39 @@ export default function SavedTripScreen() {
                     location: data.location
                 };
             });
-            
+
             setSavedTrips(trips);
         } catch (error) {
-          console.error('Error getting document:', error);
+            console.error('Error getting document:', error);
         }
     }
-
+    
     const renderItem = ({ item }: any) => (
-        <View style={styles.tripCard}>
-            <Text style={styles.tripTitle}>{item.name} - {item.date}</Text>
-            <Text style={styles.tripMeta}>Stops: {item.stops}</Text>
-            <Text style={styles.tripMeta}>Location: {item.location}</Text>
+        <View style={styles.savedTripCard}>
+            <View style={styles.savedTripHeader}>
+                <Text style={styles.savedTripTitle}>{item.name}</Text>
+                <Text style={styles.savedTripDate}>{item.date}</Text>
+            </View>
 
-            <View style={styles.tripActions}>
-                <TouchableOpacity onPress={() => router.push({pathname: '/itineraryView', params: { tripId: item.id }})}><Text style={styles.tripLink}>Open trip</Text></TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/home')}><Text style={styles.tripLink}>Map</Text></TouchableOpacity>
-                <TouchableOpacity ><Text style={styles.tripLink}>Remove</Text></TouchableOpacity>
+            <View style={styles.savedTripInfo}>
+                <Text style={styles.savedTripText}>🧭 Stops: {item.stops}</Text>
+                <Text style={styles.savedTripText}>📍 {item.location}</Text>
+            </View>
+
+            <View style={styles.savedTripActions}>
+                <TouchableOpacity onPress={() => router.push({ pathname: '/itineraryView', params: { tripId: item.id } })}>
+                    <Text style={styles.savedTripAction}>🗂 Open</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => router.push('/home')}>
+                    <Text style={styles.savedTripAction}>🗺 Map</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={[styles.savedTripAction, { color: '#d9534f' }]}>🗑 Remove</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
+
 
     return (
         <ImageBackground
@@ -82,15 +95,15 @@ export default function SavedTripScreen() {
             style={styles.background}
         >
             <SafeAreaView style={{ flex: 1 }}>
-            <MainLayout title="Saved Trips" showFooter={true}>
-                <FlatList
-                    data={savedTrips}
-                    renderItem={renderItem}
-                    keyExtractor={(item: { id: any; }) => item.id}
-                    contentContainerStyle={{ padding: 20 }}
-                    
-                />
-            </MainLayout>
+                <MainLayout title="Saved Trips" showFooter={true}>
+                    <FlatList
+                        data={savedTrips}
+                        renderItem={renderItem}
+                        keyExtractor={(item: { id: any; }) => item.id}
+                        contentContainerStyle={{ padding: 20 }}
+
+                    />
+                </MainLayout>
             </SafeAreaView>
         </ImageBackground>
     );
