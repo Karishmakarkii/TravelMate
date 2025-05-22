@@ -32,7 +32,8 @@ export default function SignUpScreen() {
   async function writeToDB(email: string, name: string) {
     try {
       const docRef = await setDoc(doc(db, "users", email), {
-        firstname: name
+        firstname: name,
+        account_type: "free"
       });
     } catch (e) {
       console.error("Error adding document: ", e)

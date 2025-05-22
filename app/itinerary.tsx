@@ -10,7 +10,7 @@ import { Linking } from 'react-native';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, addDoc, doc, collection, getDoc } from "firebase/firestore";
+import { getFirestore, addDoc, doc, collection, getDoc, getDocs } from "firebase/firestore";
 import * as Location from 'expo-location';
 import { Image } from 'react-native';
 
@@ -226,19 +226,36 @@ export default function ItineraryScreen() {
 
     async function writeToDB(stops: OptimizedStop[]) {
         try {
-            const today = new Date();
-            const docRef = await addDoc(collection(doc(db, "users", auth.currentUser?.email || ''), "savedTrips"), {
-                name: stops[0].vicinity + ' Trip',
-                date: today.getDate().toString() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear().toString(),
-                location: stops[0].vicinity,
-                noOfStops: stops.length,
-                stops: stops,
-                totalDistance: totalDistance,
-                totalTime: totalTime
-            });
+            const email = auth.currentUser?.email || '';
+            const doc1Ref = await getDoc(doc(db, 'users', email));
 
-            // Update state to hide the button
-            setIsSaved(true);
+            if (doc1Ref.exists()) {
+                const data = doc1Ref.data();
+
+                const snapshot = await getDocs(collection(db, 'users', email, 'savedTrips'));
+                const count = snapshot.size;
+
+                if (data.account_type === "premium" || (data.account_type === "free" && count < 2)) {
+                    const today = new Date();
+                    const doc2Ref = await addDoc(collection(doc(db, "users", email), "savedTrips"), {
+                        name: stops[0].vicinity + ' Trip',
+                        date: today.getDate().toString() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear().toString(),
+                        location: stops[0].vicinity,
+                        noOfStops: stops.length,
+                        stops: stops,
+                        totalDistance: totalDistance,
+                        totalTime: totalTime
+                    });
+
+                    // Update state to hide the button
+                    setIsSaved(true);
+                    // Update state to show Modal
+                    setTripSaved(true); 
+                }
+                else {
+                    alert("Free accounts are limited to 2 saved trips");
+                }
+            }
         } catch (e) {
             console.error("Error adding document: ", e)
         }
@@ -305,7 +322,7 @@ export default function ItineraryScreen() {
                                 </TouchableOpacity>
                                 {!isSaved && (
                                     <TouchableOpacity
-                                        onPress={() => { setTripSaved(true); saveTripRecord(); }}
+                                        onPress={() => saveTripRecord()}
                                         style={styles.itinerarySaveButton}                                 
                                     >
                                         <Text style={styles.saveText}>Save Trip</Text>

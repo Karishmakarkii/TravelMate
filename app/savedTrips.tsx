@@ -37,13 +37,12 @@ export default function SavedTripScreen() {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setEmail(user.email || '');
+                getSavedTrips(user.email || '');
             }
         });
-
-        getSavedTrips();
     }, []);
 
-    async function getSavedTrips() {
+    async function getSavedTrips(email: string) {
         try {
             const docRef = await getDocs(collection(db, 'users', email, 'savedTrips'));
 
@@ -69,7 +68,7 @@ export default function SavedTripScreen() {
         try {
             deleteDoc(doc(db, 'users', email, 'savedTrips', id)).then(() => {
                 alert("Trip deleted successfully");
-                getSavedTrips();
+                getSavedTrips(email);
             });
         } catch (error) {
             console.error('Error getting document:', error);
