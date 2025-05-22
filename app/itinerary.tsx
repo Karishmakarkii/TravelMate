@@ -48,8 +48,8 @@ export default function ItineraryScreen() {
     const [totalDistance, setTotalDistance] = useState<string>('0 km');
     const [totalTime, setTotalTime] = useState<string>('0 mins');
     const [tripSaved, setTripSaved] = useState(false);
-    const { id } = useLocalSearchParams();
     const [locationName, setLocationName] = useState<string>('your area'); // default fallback
+    const [isSaved, setIsSaved] = useState(false);
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
@@ -236,8 +236,9 @@ export default function ItineraryScreen() {
                 totalDistance: totalDistance,
                 totalTime: totalTime
             });
-            //alert("Trip successfully saved");
-            //router.push('/home');
+
+            // Update state to hide the button
+            setIsSaved(true);
         } catch (e) {
             console.error("Error adding document: ", e)
         }
@@ -302,13 +303,14 @@ export default function ItineraryScreen() {
                                         <Text style={styles.mapCardButtonText}>Open in Maps</Text>
                                     </View>
                                 </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    onPress={() => { setTripSaved(true); saveTripRecord(); }}
-                                    style={styles.itinerarySaveButton}
-                                >
-                                    <Text style={styles.saveText}>Save Trip</Text>
-                                </TouchableOpacity>
+                                {!isSaved && (
+                                    <TouchableOpacity
+                                        onPress={() => { setTripSaved(true); saveTripRecord(); }}
+                                        style={styles.itinerarySaveButton}                                 
+                                    >
+                                        <Text style={styles.saveText}>Save Trip</Text>
+                                    </TouchableOpacity>
+                                )}
                             </View>
                         }
                     />
