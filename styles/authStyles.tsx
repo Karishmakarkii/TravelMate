@@ -720,16 +720,46 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
 
-  savedTripActions: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
   savedTripAction: {
     fontSize: 14,
     fontWeight: '600',
     color: '#6e4b63',
   },
+
+  savedTripActions: {
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  marginTop: 12,
+},
+
+actionButton: {
+  flex: 1,
+  marginHorizontal: 4,
+  paddingVertical: 10,
+  backgroundColor: '#eee',
+  borderRadius: 8,
+  alignItems: 'center',
+},
+
+actionText: {
+  color: '#333',
+  fontWeight: '600',
+},
+
+deleteButton: {
+  backgroundColor: '#f2f2f2',
+},
+
+deleteText: {
+  color: '#a00',
+  fontWeight: '600',
+},
+
+buttonHover: {
+  backgroundColor: '#d0d0d0',
+},
+
+
 
   // No result screen
   noResultContainer: {
