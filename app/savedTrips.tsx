@@ -7,7 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getFirestore, getDoc, doc, updateDoc, collection, getDocs } from "firebase/firestore";
+import { getFirestore, getDoc, doc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
 
 import '../firebase.js';
 
@@ -25,6 +25,7 @@ interface SavedTrips {
 export default function SavedTripScreen() {
     const router = useRouter();
     const [savedTrips, setSavedTrips] = useState<SavedTrips[]>([]);
+    const [email, setEmail] = useState('');
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
@@ -35,12 +36,14 @@ export default function SavedTripScreen() {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
-                getSavedTrips(user.email || '');
+                setEmail(user.email || '');
             }
         });
+
+        getSavedTrips();
     }, []);
 
-    async function getSavedTrips(email: string) {
+    async function getSavedTrips() {
         try {
             const docRef = await getDocs(collection(db, 'users', email, 'savedTrips'));
 
@@ -57,6 +60,17 @@ export default function SavedTripScreen() {
             });
 
             setSavedTrips(trips);
+        } catch (error) {
+            console.error('Error getting document:', error);
+        }
+    }
+
+    async function removeTrip(id: string) {
+        try {
+            deleteDoc(doc(db, 'users', email, 'savedTrips', id)).then(() => {
+                alert("Trip deleted successfully");
+                getSavedTrips();
+            });
         } catch (error) {
             console.error('Error getting document:', error);
         }
@@ -81,7 +95,7 @@ export default function SavedTripScreen() {
                 <TouchableOpacity onPress={() => router.push('/home')}>
                     <Text style={styles.savedTripAction}>🗺 Map</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => removeTrip(item.id)}>
                     <Text style={[styles.savedTripAction, { color: '#d9534f' }]}>🗑 Remove</Text>
                 </TouchableOpacity>
             </View>
