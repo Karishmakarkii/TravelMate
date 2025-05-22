@@ -281,125 +281,150 @@ const styles = StyleSheet.create({
   },
 
   // Attractionlist screen
-  attractionContainer: {
-    margin: 15,
+
+  topInfoCard: {
+    backgroundColor: 'rgba(245, 240, 235, 0.85)',
+    backdropFilter: 'blur(6px)',
+    paddingVertical: 20,
+    paddingHorizontal: 24,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    borderRadius: 28, // Slightly softer pill look
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+
+    // Shadow (iOS + Android)
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  topInfoTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.dustyPurple,
+    marginBottom: 4,
+  },
+  topInfoSubtitle: {
+    fontSize: 14,
+    lineHeight: 24,             
+    textAlign: 'center',         
+    marginTop: 4,
+  },
+  icon: {
+  fontSize: 18, // adjust based on visual balance
+  marginHorizontal: 4,
+},
+  attractionHeader: {
     padding: 20,
     backgroundColor: Colors.lightCreamTransparent,
-    borderTopLeftRadius: 40,
-    borderBottomRightRadius: 40,
-    borderTopRightRadius: 0,
-    borderBottomLeftRadius: 0,
+    borderRadius: 12,
+    margin: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.05,
     shadowRadius: 4,
-    elevation: 3,
-    maxHeight: '90%', //prevent it from stretching to full screen
-    maxWidth: '100%',
+    elevation: 2,
   },
-
-
   attractionTitle: {
-    fontSize: scale(20),
-    fontWeight: '700',
-    color: '#3b2e2e',
-    marginBottom: verticalScale(10),
-    marginTop: scale(8),
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#333',
+  },
+  attractionSubtitle: {
+    fontSize: 14,
+    color: '#555',
+    marginTop: 6,
+    lineHeight: 20,
   },
 
-  attractionSubtitle: {
-    fontSize: scale(12),
-    color: '#3b2e2e',
-    marginBottom: verticalScale(20),
-
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)', 
   },
 
   attractionListContainer: {
-    paddingBottom: verticalScale(20),
+    paddingHorizontal: 16,
+    paddingBottom: 100,
   },
-
   attractionCard: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 14,
+    marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: moderateScale(20),
-    paddingVertical: verticalScale(12),
-    paddingHorizontal: scale(16),
-    marginBottom: verticalScale(12),
+    justifyContent: 'space-between',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 3,
   },
-
   attractionInfo: {
     flex: 1,
+    marginRight: 10,
   },
-
   attractionName: {
-    fontSize: scale(15),
-    fontWeight: '600',
-    color: '#3b2e2e',
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#222',
   },
-
   attractionDetails: {
-    fontSize: scale(12),
+    fontSize: 13,
     color: '#777',
-    marginTop: verticalScale(2),
+    marginTop: 4,
   },
-
+  attractionVicinity: {
+    fontSize: 12,
+    color: '#999',
+    marginTop: 2,
+  },
   attractionRating: {
-    flexDirection: 'row',
     alignItems: 'center',
-    marginRight: scale(12),
+    marginRight: 8,
   },
-
   attractionRatingText: {
-    fontSize: scale(14),
-    marginRight: scale(4),
-    color: '#333',
-  },
-
-  attractionCheckbox: {
-    height: moderateScale(20),
-    width: moderateScale(20),
-    borderRadius: 4,
-  },
-
-  attractionButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginTop: verticalScale(20),
-  },
-
-  createItineraryButtonText: {
-    color: Colors.deepBrown,
+    fontSize: 14,
     fontWeight: '600',
-    marginRight: scale(20)
-
+    color: '#444',
+  },
+  attractionCheckbox: {
+    height: 20,
+    width: 20,
+  },
+  footerButtons: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    flexDirection: 'column',
+    alignItems: 'center',
+    borderTopWidth: 0.5,
+    borderColor: '#ccc',
+  },
+  attractionCancelText: {
+    color: '#6e4b63',
+    fontSize: 14,
+    marginBottom: 10,
   },
   createItineraryButton: {
-    backgroundColor: Colors.lightCream,
-    paddingVertical: verticalScale(14),
-    borderRadius: moderateScale(30),
+    backgroundColor: '#6e4b63',
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    borderRadius: 8,
     alignItems: 'center',
-    alignSelf: 'center',
-    marginBottom: verticalScale(15),
-    width: wp('60%'),
+    width: '100%',
+  },
+  createItineraryButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   disabledButton: {
-    backgroundColor: Colors.paleGrey,
-    opacity: 0.6,
-  },
-
-
-  attractionCancelText: {
-    color: Colors.deepBrown,
-    fontWeight: '600',
-    marginRight: scale(20),
-    marginBottom: scale(10),
-    textAlign: 'center',
+    backgroundColor: '#ccc',
   },
 
   //itinerary screen
@@ -470,80 +495,242 @@ const styles = StyleSheet.create({
     paddingBottom: 100, // Leave space above Footer
   },
 
+  // model dialog box
   dialogOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    paddingHorizontal: 20,
   },
+
   dialogBox: {
-    backgroundColor: '#fff',
-    padding: 20,
+    backgroundColor: 'rgba(255,255,255,0.95)',
+    width: '100%',
     borderRadius: 20,
-    width: '80%',
+    paddingVertical: 28,
+    paddingHorizontal: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+
+  dialogTitle: {
+    fontSize: 22,
+    fontWeight: '700',
+    textAlign: 'center',
+    color: '#1c1c1e',
+    marginBottom: 12,
+  },
+
+  dialogMessage: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: '#444',
+    lineHeight: 22,
+    marginBottom: 24,
+  },
+
+  dialogButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+
+  dialogButton: {
+    flex: 1,
+    backgroundColor: '#f1f1f1',
+    paddingVertical: 12,
+    borderRadius: 10,
     alignItems: 'center',
   },
-  dialogTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: Colors.deepBrown,
+
+  dialogButtonText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#4b4453',
   },
-  dialogMessage: {
-    fontSize: 14,
-    color: Colors.deepBrown,
-    textAlign: 'center',
+
+  dialogButtonPrimary: {
+    flex: 1,
+    backgroundColor: '#6e4b63',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+
+  dialogButtonTextPrimary: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#fff',
+  },
+
+  tripSummaryCard: {
+    backgroundColor: Colors.whiteTransparent,
+    marginHorizontal: 20,
+    padding: 20,
+    borderRadius: 18,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
+    elevation: 2,
+    alignItems: 'center',
     marginBottom: 20,
+    marginTop: 20,
   },
-  dialogActions: {
+
+  tripSummaryImage: {
+    width: '100%',
+    height: 200,
+    aspectRatio: 1, // maintains image proportions
+    resizeMode: 'cover',
+    marginBottom: 0,
+    padding: 0,
+  },
+
+  tripSummaryTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: Colors.deepBrown,
+    marginTop: 0,
+  },
+
+  divider: {
+    height: 1,
+    backgroundColor: '#e0e0e0',
+    marginVertical: 12,
+    width: '100%',
+  },
+
+  tripSummaryItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    margin: 10,
-  },
-  dialogLink: {
-    color: Colors.Lavender,
-    fontWeight: 'bold',
-    marginHorizontal: 20,
+    marginVertical: 4,
   },
 
-  //saved trips
-  tripCard: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
+  label: {
+    fontSize: 16,
+    color: '#666',
+    fontWeight: '400',
+  },
+
+  value: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1c1c1e',
+  },
+
+  itinerarytripCard: {
+    backgroundColor: 'white',
+    borderRadius: 16,
     padding: 16,
-    marginBottom: 16,
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.08,
     shadowRadius: 4,
-    elevation: 3,
+    elevation: 2,
   },
 
-  tripTitle: {
+  tripCardTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+
+  tripCardTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    color: '#3C2D30',
+    fontWeight: '600',
+    color: '#1c1c1e',
+    flex: 1,
+    paddingRight: 12,
   },
 
-  tripMeta: {
+  tripCardRating: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+
+  tripCardRatingText: {
     fontSize: 14,
-    color: '#555',
+    fontWeight: '500',
+    color: '#444',
+  },
+
+  tripCardMeta: {
+    fontSize: 13,
+    color: '#666',
+    marginTop: 4,
+  },
+
+  tripCardAddress: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#2e2e2e',
+    marginTop: 4,
+  },
+
+
+  //saved trips
+  savedTripCard: {
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    padding: 18,
+    borderRadius: 18,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 4,
+  },
+
+  savedTripHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+
+  savedTripTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1c1c1e',
+    flexShrink: 1,
+  },
+
+  savedTripDate: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#6e4b63',
+  },
+
+  savedTripInfo: {
+    marginBottom: 14,
+  },
+
+  savedTripText: {
+    fontSize: 14,
+    color: '#444',
     marginBottom: 4,
   },
 
-  tripActions: {
+  savedTripActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 12,
   },
 
-  tripLink: {
-    color: '#6e4b63',
+  savedTripAction: {
+    fontSize: 14,
     fontWeight: '600',
-    fontSize: 13,
+    color: '#6e4b63',
   },
+
   // No result screen
   noResultContainer: {
     margin: 15,
@@ -814,7 +1001,79 @@ const styles = StyleSheet.create({
     color: Colors.deepBrown,
     fontWeight: '600',
   },
+
+  FlatListContainer: {
+    backgroundColor: Colors.lightCreamTransparent,
+  },
+
+  // Map card
+  mapCardContainer: {
+    width: '90%',
+    backgroundColor: '#fff',
+    borderRadius: 16,
+    overflow: 'hidden',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    marginBottom: 20,
+  },
+
+  mapCardImageWrapper: {
+    position: 'relative',
+    width: '100%',
+    height: 180,
+  },
+
+  mapCardImage: {
+    width: '100%',
+    height: '100%',
+  },
+
+  mapPin: {
+    position: 'absolute',
+    top: 60,
+    left: '50%',
+    marginLeft: -12,
+    width: 24,
+    height: 24,
+  },
+
+  mapLabel: {
+    position: 'absolute',
+    top: 90,
+    left: '50%',
+    transform: [{ translateX: -50 }],
+    backgroundColor: '#fff',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    elevation: 2,
+  },
+
+  mapLabelText: {
+    fontSize: 12,
+    color: '#333',
+    textAlign: 'center',
+  },
+
+  mapCardButton: {
+    backgroundColor: '#6e4b63',
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+
+  mapCardButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+
 });
+
+
 
 
 

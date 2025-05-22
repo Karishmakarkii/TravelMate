@@ -6,13 +6,19 @@ import styles from '../styles/authStyles';
 import DropDownPicker from 'react-native-dropdown-picker';
 import MainLayout from '../components/mainLayout';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
+import '../firebase.js';
+
+const { firebaseConfig } = require('../firebase.js');
 
 export default function HomeScreen() {
   const router = useRouter();
 
   const [radiusOpen, setRadiusOpen] = useState(false);
-  const [radiusValue, setRadiusValue] = useState(null);
+  const [radiusValue, setRadiusValue] = useState<string | null>(null);
   const [radiusItems, setRadiusItems] = useState([
     { label: '5 km', value: '5' },
     { label: '10 km', value: '10' },
@@ -29,6 +35,36 @@ export default function HomeScreen() {
     { label: 'Bicycle', value: 'bicycle' },
   ]);
 
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Get user's default radius when component mounts
+        getUserDefaultRadius(user.email || '');
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  // Get user's default radius from Firestore
+  const getUserDefaultRadius = async (userEmail: string) => {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', userEmail));
+      if (userDoc.exists()) {
+        const defaultRadius = userDoc.get('defaultRadius');
+        if (defaultRadius) {
+          setRadiusValue(defaultRadius.toString());
+        }
+      }
+    } catch (error) {
+      console.error('Error getting default radius:', error);
+    }
+  };
 
   useEffect(() => {
     if (radiusOpen) setTransportOpen(false);

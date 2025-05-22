@@ -32,6 +32,8 @@ export default function AttractionListScreen() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [attractions, setAttractions] = useState<Place[]>([]);
   const [loading, setLoading] = useState(true);
+  const [locationName, setLocationName] = useState<string>('your area'); // default fallback
+
 
   // Function to calculate travel time based on distance and transport mode
   const calculateTravelTime = (distanceInKm: number, mode: string): string => {
@@ -176,6 +178,18 @@ export default function AttractionListScreen() {
         const location = await Location.getCurrentPositionAsync({});
         setLocation(location);
 
+        // To add current location to heading 
+        const geocode = await Location.reverseGeocodeAsync({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+
+        if (geocode && geocode.length > 0) {
+          const city = geocode[0].city || geocode[0].district || geocode[0].region || 'your area';
+          setLocationName(city);
+        }
+
+
         const places = await fetchNearbyPlaces(
           location.coords.latitude,
           location.coords.longitude,
@@ -220,7 +234,7 @@ export default function AttractionListScreen() {
                 : 'star-outline'
           }
           size={18}
-          color="#FFB733"
+          color="#FDB813"
         />
       </View>
 
@@ -238,7 +252,7 @@ export default function AttractionListScreen() {
       <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
         <SafeAreaView style={{ flex: 1 }}>
           <MainLayout title="Nearby Attractions">
-            <View style={[styles.attractionContainer, { flex: 1 }]}>
+            <View style={[styles.centeredContainer, { flex: 1 }]}>
               <Text style={styles.attractionTitle}>Loading nearby attractions...</Text>
             </View>
           </MainLayout>
@@ -251,7 +265,7 @@ export default function AttractionListScreen() {
     return (
       <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
         <SafeAreaView style={{ flex: 1 }}>
-          <View style={[styles.attractionContainer, { flex: 1 }]}>
+          <View style={[styles.centeredContainer, { flex: 1 }]}>
             <Text style={styles.attractionTitle}>Error</Text>
             <Text style={styles.attractionSubtitle}>{errorMsg}</Text>
           </View>
@@ -260,58 +274,57 @@ export default function AttractionListScreen() {
     );
   }
 
+
   return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <SafeAreaView style={{ flex: 1 }}>
         <MainLayout title="Nearby Attractions">
-          <View style={styles.scrollWrapper}>
-            <ScrollView nestedScrollEnabled={true} contentContainerStyle={styles.scrollContent}>
-              <View style={[styles.attractionContainer, { flex: 1 }]}>
-                <Text style={styles.attractionTitle}>Nearby Attractions</Text>
-                <Text style={styles.attractionSubtitle}>
-                  Hey you are in luck!{"\n"}
-                  There are {attractions.length} tourist places within {radius}km. Check from list to add to itinerary.
-                </Text>
 
-                <FlatList
-                  data={attractions}
-                  renderItem={renderItem}
-                  keyExtractor={item => item.id}
-                  contentContainerStyle={styles.attractionListContainer}
-                  showsVerticalScrollIndicator={false}
-                  style={{ flex: 1 }}
-                />
+          <View style={styles.topInfoCard}>
+            <Text style={styles.topInfoTitle}>Travel in {locationName}</Text>
+            <Text style={styles.topInfoSubtitle}>
+              There are {attractions.length} tourist places within {radius}km {'\n'}
+              <Text style={styles.icon}>🏔️ 🗻 ⛰️</Text>
+            </Text>
+          </View>
 
-                <View style={styles.attractionButtonContainer}>
-                  <TouchableOpacity onPress={() => router.back()} >
-                    <Text style={styles.attractionCancelText}>Cancel</Text>
-                  </TouchableOpacity>
-                </View>
 
-              </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    // Pass selected attractions to the itinerary screen
-                    const selectedAttractions = attractions.filter(a => selected.includes(a.id));
-                    router.push({
-                      pathname: '/itinerary',
-                      params: {
-                        attractions: JSON.stringify(selectedAttractions),
-                        transportMode
-                      }
-                    });
-                  }}
-                  disabled={selected.length === 0}
-                  style={[
-                    styles.createItineraryButton,
-                    selected.length === 0 && styles.disabledButton
-                  ]}
-                >
-                  <Text style={styles.createItineraryButtonText}>
-                    Create Itinerary ({selected.length} selected)
-                  </Text>
-                </TouchableOpacity>
-            </ScrollView>
+
+          <FlatList
+            data={attractions}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            contentContainerStyle={styles.attractionListContainer}
+            showsVerticalScrollIndicator={false}
+            style={{ flex: 1 }}
+          />
+
+          <View style={styles.footerButtons}>
+            <TouchableOpacity onPress={() => router.back()}>
+              <Text style={styles.attractionCancelText}>Cancel</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                const selectedAttractions = attractions.filter(a => selected.includes(a.id));
+                router.push({
+                  pathname: '/itinerary',
+                  params: {
+                    attractions: JSON.stringify(selectedAttractions),
+                    transportMode
+                  }
+                });
+              }}
+              disabled={selected.length === 0}
+              style={[
+                styles.createItineraryButton,
+                selected.length === 0 && styles.disabledButton
+              ]}
+            >
+              <Text style={styles.createItineraryButtonText}>
+                Create Itinerary ({selected.length} selected)
+              </Text>
+            </TouchableOpacity>
           </View>
         </MainLayout>
       </SafeAreaView>
