@@ -72,13 +72,6 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     
     // Remove "km" if user typed it
     const cleanValue = value.replace(/\s*km/i, '').trim();
-    
-    // Validate if the value is one of the allowed values
-    const allowedValues = ['5', '10', '30', '50'];
-    if (!allowedValues.includes(cleanValue)) {
-      alert('Please select from the available radius options: 5km, 10km, 30km, or 50km');
-      return;
-    }
 
     // Check if it's already in the list
     const exists = radiusItems.some(item => item.value === cleanValue);
