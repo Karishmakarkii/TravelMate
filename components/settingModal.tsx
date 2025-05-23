@@ -8,8 +8,9 @@ import styles from '@/styles/authStyles';
 import { Colors } from '@/styles/colors';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
+import PasswordPromptModal from './passwordPromptModal';
 
 import '../firebase.js';
 
@@ -33,6 +34,8 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     { label: '50 km', value: '50' }
   ]);
   const [email, setEmail] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
@@ -69,7 +72,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
   // Called when user selects or types in a radius
   const handleRadiusChange = async (value: string | null) => {
     if (!value) return;
-    
+
     // Remove "km" if user typed it
     const cleanValue = value.replace(/\s*km/i, '').trim();
 
@@ -92,6 +95,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     }
   };
 
+  // function for logout
   function logout() {
     // Firebase function to sign out user
     signOut(auth)
@@ -102,6 +106,37 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
         alert("Signout unsuccessful");
       });
   }
+
+  // Function to delete user account with reauthemtication with password
+  async function deleteAccountWithReauth(email: string, password: string) {
+    const user = auth.currentUser;
+
+    if (!user || !email) {
+      alert("No user is currently signed in.");
+      return;
+    }
+
+    const credential = EmailAuthProvider.credential(email, password);
+
+    try {
+      await reauthenticateWithCredential(user, credential);
+      await deleteUser(user);
+      alert("Account deleted successfully");
+      onClose();
+      router.push('/login');
+    } catch (error: any) {
+      console.error("Delete error:", error);
+      if (error.code === 'auth/wrong-password') {
+        alert("Incorrect password.");
+      } else if (error.code === 'auth/requires-recent-login') {
+        alert("Please log in again and try deleting your account.");
+      } else {
+        alert("Could not delete account. Please try again.");
+      }
+    }
+  }
+
+
 
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.settingBottomModal}>
@@ -158,16 +193,6 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
             />
           </View>
 
-          <View style={styles.settingToggleRow}>
-            <Text style={styles.settingPreferenceLabel}>Dark mode</Text>
-            <Switch
-              value={darkMode}
-              onValueChange={setDarkMode}
-              trackColor={{ false: Colors.paleGrey, true: Colors.dustyPurple }}
-              thumbColor={darkMode ? Colors.lightCream : '#fff'}
-            />
-          </View>
-
           {/* Subscription */}
           <Text style={styles.settingSectionTitle}>SUBSCRIPTION</Text>
           <Text style={styles.settingPreferenceLabel}>Current plan</Text>
@@ -186,6 +211,22 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
           <TouchableOpacity onPress={() => { onClose(); logout() }}>
             <Text style={styles.settingLinkText}>Log out</Text>
           </TouchableOpacity>
+
+          {/* DeleteAccount */}
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Text style={styles.settingLinkText}>Delete Account</Text>
+          </TouchableOpacity>
+
+          <PasswordPromptModal
+            visible={modalVisible}
+            onCancel={() => setModalVisible(false)}
+            onSubmit={async (password) => {
+              await deleteAccountWithReauth(email, password);
+              setModalVisible(false);
+            }}
+          />
+
+
         </ScrollView>
       </View>
     </Modal>
