@@ -9,7 +9,7 @@ import { Colors } from '@/styles/colors';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
-import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, updateDoc, getDoc, deleteDoc } from "firebase/firestore";
 import PasswordPromptModal from './passwordPromptModal';
 
 import '../firebase.js';
@@ -128,6 +128,8 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     try {
       await reauthenticateWithCredential(user, credential);
       await deleteUser(user);
+      console.log("email:", email);
+      deleteDoc(doc(db, 'users', email)); // Delete firestore record when user is deleted
       alert("Account deleted successfully");
       onClose();
       router.push('/login');
