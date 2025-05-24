@@ -52,7 +52,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [isVisible]);
 
   // Get user's default radius from Firestore
   const getUserDefaultRadius = async (userEmail: string) => {
@@ -61,7 +61,15 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
       if (userDoc.exists()) {
         const defaultRadius = userDoc.get('defaultRadius');
         if (defaultRadius) {
-          setRadiusValue(defaultRadius.toString());
+          const radiusStr = defaultRadius.toString();
+          setRadiusValue(radiusStr);
+          
+          // Check if this value exists in radiusItems
+          const exists = radiusItems.some(item => item.value === radiusStr);
+          if (!exists) {
+            // Add the stored value to the dropdown options
+            setRadiusItems(prev => [...prev, { label: `${radiusStr} km`, value: radiusStr }]);
+          }
         }
       }
     } catch (error) {
@@ -73,21 +81,34 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
   const handleRadiusChange = async (value: string | null) => {
     if (!value) return;
 
-    // Remove "km" if user typed it
-    const cleanValue = value.replace(/\s*km/i, '').trim();
+    // Remove any non-numeric characters except decimal points
+    const cleanValue = value.replace(/[^\d.]/g, '');
+    
+    // Validate the input
+    const numericValue = parseFloat(cleanValue);
+    if (isNaN(numericValue) || numericValue <= 0) {
+      alert('Please enter a valid positive number for the radius');
+      return;
+    }
+
+    // Round to 1 decimal place
+    const roundedValue = Math.round(numericValue * 10) / 10;
+    const finalValue = roundedValue.toString();
 
     // Check if it's already in the list
-    const exists = radiusItems.some(item => item.value === cleanValue);
+    const exists = radiusItems.some(item => item.value === finalValue);
 
     if (!exists) {
-      setRadiusItems(prev => [...prev, { label: `${cleanValue} km`, value: cleanValue }]);
+      // Add the new value to the dropdown list
+      setRadiusItems(prev => [...prev, { label: `${finalValue} km`, value: finalValue }]);
     }
-    setRadiusValue(cleanValue);
+    
+    setRadiusValue(finalValue);
 
     // Save to Firestore
     try {
       await updateDoc(doc(db, 'users', email), {
-        defaultRadius: cleanValue
+        defaultRadius: finalValue
       });
     } catch (error) {
       console.error('Error saving default radius:', error);
