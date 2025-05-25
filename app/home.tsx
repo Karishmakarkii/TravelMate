@@ -40,17 +40,6 @@ export default function HomeScreen() {
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        // Get user's default radius when component mounts
-        getUserDefaultRadius(user.email || '');
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
   // Get user's default radius from Firestore
   const getUserDefaultRadius = async (userEmail: string) => {
     try {
@@ -58,7 +47,15 @@ export default function HomeScreen() {
       if (userDoc.exists()) {
         const defaultRadius = userDoc.get('defaultRadius');
         if (defaultRadius) {
-          setRadiusValue(defaultRadius.toString());
+          const radiusStr = defaultRadius.toString();
+          setRadiusValue(radiusStr);
+          
+          // Check if this value exists in radiusItems
+          const exists = radiusItems.some(item => item.value === radiusStr);
+          if (!exists) {
+            // Add the stored value to the dropdown options
+            setRadiusItems(prev => [...prev, { label: `${radiusStr} km`, value: radiusStr }]);
+          }
         }
       }
     } catch (error) {
@@ -66,6 +63,19 @@ export default function HomeScreen() {
     }
   };
 
+  // Fetch default radius whenever the component mounts or auth state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Get user's default radius when component mounts or user changes
+        getUserDefaultRadius(user.email || '');
+      }
+    });
+
+    return () => unsubscribe();
+  }, []); // Keep empty dependency array as we only want this on mount and auth changes
+
+  // Handle dropdown open states
   useEffect(() => {
     if (radiusOpen) setTransportOpen(false);
     if (transportOpen) setRadiusOpen(false);
