@@ -8,7 +8,9 @@ import styles from '@/styles/authStyles';
 import { Colors } from '@/styles/colors';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
+import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
+import PasswordPromptModal from './passwordPromptModal';
 
 import '../firebase.js';
 
@@ -29,42 +31,92 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
     { label: '5 km', value: '5' },
     { label: '10 km', value: '10' },
     { label: '30 km', value: '30' },
+    { label: '50 km', value: '50' }
   ]);
   const [email, setEmail] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setEmail(user.email || '');
+        // Get user's default radius when component mounts
+        getUserDefaultRadius(user.email || '');
       }
     });
-  }, []);
-  
 
-  // Called when user selects or types in a radius
-  // Let me know if i need to do this, this is for default radius select or type
-  const handleRadiusChange = (value: string | null) => {
-    if (!value) return;
-    // Remove "km" if user typed it
-    const cleanValue = value.replace(/\s*km/i, '').trim();
-    // Check if it's already in the list
-    const exists = radiusItems.some(item => item.value === cleanValue);
+    return () => unsubscribe();
+  }, [isVisible]);
 
-    if (!exists) {
-      setRadiusItems(prev => [...prev, { label: `${cleanValue} km`, value: cleanValue }]);
+  // Get user's default radius from Firestore
+  const getUserDefaultRadius = async (userEmail: string) => {
+    try {
+      const userDoc = await getDoc(doc(db, 'users', userEmail));
+      if (userDoc.exists()) {
+        const defaultRadius = userDoc.get('defaultRadius');
+        if (defaultRadius) {
+          const radiusStr = defaultRadius.toString();
+          setRadiusValue(radiusStr);
+          
+          // Check if this value exists in radiusItems
+          const exists = radiusItems.some(item => item.value === radiusStr);
+          if (!exists) {
+            // Add the stored value to the dropdown options
+            setRadiusItems(prev => [...prev, { label: `${radiusStr} km`, value: radiusStr }]);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error getting default radius:', error);
     }
-    setRadiusValue(cleanValue);
-
-    //Firestore developer: Save `defaultRadius = cleanValue` under user document @Adia
   };
 
+  // Called when user selects or types in a radius
+  const handleRadiusChange = async (value: string | null) => {
+    if (!value) return;
 
+    // Remove any non-numeric characters except decimal points
+    const cleanValue = value.replace(/[^\d.]/g, '');
+    
+    // Validate the input
+    const numericValue = parseFloat(cleanValue);
+    if (isNaN(numericValue) || numericValue <= 0) {
+      alert('Please enter a valid positive number for the radius');
+      return;
+    }
 
+    // Round to 1 decimal place
+    const roundedValue = Math.round(numericValue * 10) / 10;
+    const finalValue = roundedValue.toString();
 
+    // Check if it's already in the list
+    const exists = radiusItems.some(item => item.value === finalValue);
+
+    if (!exists) {
+      // Add the new value to the dropdown list
+      setRadiusItems(prev => [...prev, { label: `${finalValue} km`, value: finalValue }]);
+    }
+    
+    setRadiusValue(finalValue);
+
+    // Save to Firestore
+    try {
+      await updateDoc(doc(db, 'users', email), {
+        defaultRadius: finalValue
+      });
+    } catch (error) {
+      console.error('Error saving default radius:', error);
+      alert('Failed to save default radius');
+    }
+  };
+
+  // function for logout
   function logout() {
     // Firebase function to sign out user
     signOut(auth)
@@ -75,6 +127,37 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
         alert("Signout unsuccessful");
       });
   }
+
+  // Function to delete user account with reauthemtication with password
+  async function deleteAccountWithReauth(email: string, password: string) {
+    const user = auth.currentUser;
+
+    if (!user || !email) {
+      alert("No user is currently signed in.");
+      return;
+    }
+
+    const credential = EmailAuthProvider.credential(email, password);
+
+    try {
+      await reauthenticateWithCredential(user, credential);
+      await deleteUser(user);
+      alert("Account deleted successfully");
+      onClose();
+      router.push('/login');
+    } catch (error: any) {
+      console.error("Delete error:", error);
+      if (error.code === 'auth/wrong-password') {
+        alert("Incorrect password.");
+      } else if (error.code === 'auth/requires-recent-login') {
+        alert("Please log in again and try deleting your account.");
+      } else {
+        alert("Could not delete account. Please try again.");
+      }
+    }
+  }
+
+
 
   return (
     <Modal isVisible={isVisible} onBackdropPress={onClose} style={styles.settingBottomModal}>
@@ -131,16 +214,6 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
             />
           </View>
 
-          <View style={styles.settingToggleRow}>
-            <Text style={styles.settingPreferenceLabel}>Dark mode</Text>
-            <Switch
-              value={darkMode}
-              onValueChange={setDarkMode}
-              trackColor={{ false: Colors.paleGrey, true: Colors.dustyPurple }}
-              thumbColor={darkMode ? Colors.lightCream : '#fff'}
-            />
-          </View>
-
           {/* Subscription */}
           <Text style={styles.settingSectionTitle}>SUBSCRIPTION</Text>
           <Text style={styles.settingPreferenceLabel}>Current plan</Text>
@@ -159,6 +232,22 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
           <TouchableOpacity onPress={() => { onClose(); logout() }}>
             <Text style={styles.settingLinkText}>Log out</Text>
           </TouchableOpacity>
+
+          {/* DeleteAccount */}
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Text style={styles.settingLinkText}>Delete Account</Text>
+          </TouchableOpacity>
+
+          <PasswordPromptModal
+            visible={modalVisible}
+            onCancel={() => setModalVisible(false)}
+            onSubmit={async (password) => {
+              await deleteAccountWithReauth(email, password);
+              setModalVisible(false);
+            }}
+          />
+
+
         </ScrollView>
       </View>
     </Modal>

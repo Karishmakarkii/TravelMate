@@ -215,37 +215,43 @@ export default function AttractionListScreen() {
 
   const renderItem = ({ item }: { item: Place }) => (
     <View style={styles.attractionCard}>
-      <View style={styles.attractionInfo}>
-        <Text style={styles.attractionName}>{item.name}</Text>
-        <Text style={styles.attractionDetails}>
-          {item.distance} • {item.time}
-        </Text>
-        <Text>{item.vicinity}</Text>
+      <View style={styles.cardTop}>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.attractionName}>{item.name}</Text>
+          <Text style={styles.attractionDetails}>
+            {item.distance} • {item.time}
+          </Text>
+          <Text style={styles.attractionVicinity}>{item.vicinity}</Text>
+        </View>
+        <View style={styles.ratingBox}>
+          <Text style={styles.attractionRatingText}>{item.rating.toFixed(1)}</Text>
+          <Ionicons
+            name={
+              item.rating >= 4.5
+                ? 'star'
+                : item.rating > 2.5
+                  ? 'star-half'
+                  : 'star-outline'
+            }
+            size={16}
+            color="#FDB813"
+          />
+        </View>
       </View>
 
-      <View style={styles.attractionRating}>
-        <Text style={styles.attractionRatingText}>{item.rating.toFixed(1)}</Text>
-        <Ionicons
-          name={
-            item.rating >= 4.5
-              ? 'star'
-              : item.rating > 2.5
-                ? 'star-half'
-                : 'star-outline'
-          }
-          size={18}
-          color="#FDB813"
+      <View style={styles.checkboxRow}>
+        <Checkbox
+          value={selected.includes(item.id)}
+          onValueChange={() => toggleSelection(item.id)}
+          color={selected.includes(item.id) ? '#6e4b63' : undefined}
         />
+        <Text style={styles.checkboxLabel}>
+          {selected.includes(item.id) ? 'Added to Itinerary' : 'Tap to Add'}
+        </Text>
       </View>
-
-      <Checkbox
-        value={selected.includes(item.id)}
-        onValueChange={() => toggleSelection(item.id)}
-        style={styles.attractionCheckbox}
-        color={selected.includes(item.id) ? '#6e4b63' : undefined}
-      />
     </View>
   );
+
 
   if (loading) {
     return (
@@ -275,18 +281,19 @@ export default function AttractionListScreen() {
   }
 
 
-return (
+  return (
     <ImageBackground source={require('../assets/images/PagesImage.jpeg')} style={styles.background}>
       <SafeAreaView style={{ flex: 1 }}>
         <MainLayout title="Nearby Attractions">
-          <View style={styles.attractionHeader}>
-            <Text style={styles.attractionTitle}>Travel in {locationName}</Text>
-            <Text style={styles.attractionSubtitle}>
-              {errorMsg
-                ? errorMsg
-                : `Hey you are in luck!\nThere are ${attractions.length} tourist places within ${radius}km.`}
+
+          <View style={styles.topInfoCard}>
+            <Ionicons name="location-outline" size={24} color="#6e4b63" style={{ marginBottom: 6 }} />
+            <Text style={styles.topInfoTitle}>Discover {locationName}</Text>
+            <Text style={styles.topInfoSubtitle}>
+              {attractions.length} tourist spots found within {radius} km
             </Text>
           </View>
+
 
           <FlatList
             data={attractions}
