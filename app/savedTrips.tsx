@@ -9,6 +9,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore, getDoc, doc, updateDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
 import { Pressable } from 'react-native';
+import { Linking } from 'react-native';
 
 import '../firebase.js';
 
@@ -19,7 +20,15 @@ interface SavedTrips {
     name: string,
     date: string,
     stops: string,
-    location: string
+    location: string,
+    stops_data?: {
+        geometry: {
+            location: {
+                lat: number;
+                lng: number;
+            }
+        }
+    }[]
 }
 
 
@@ -55,7 +64,8 @@ export default function SavedTripScreen() {
                     name: data.name,
                     date: data.date,
                     stops: data.noOfStops,
-                    location: data.location
+                    location: data.location,
+                    stops_data: data.stops
                 };
             });
 
@@ -76,6 +86,25 @@ export default function SavedTripScreen() {
         }
     }
 
+    const handleOpenMaps = async (trip: SavedTrips) => {
+        if (!trip.stops_data || trip.stops_data.length === 0) return;
+
+        // Get all stops except the last one for waypoints
+        const waypointStops = trip.stops_data.slice(0, -1);
+        const destination = trip.stops_data[trip.stops_data.length - 1];
+
+        const waypoints = waypointStops
+            .map(stop => `${stop.geometry.location.lat},${stop.geometry.location.lng}`)
+            .join('|');
+
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+            destination.geometry.location.lat + ',' +
+            destination.geometry.location.lng
+        )}&waypoints=${encodeURIComponent(waypoints)}&travelmode=driving`;
+
+        Linking.openURL(url);
+    };
+
     const renderItem = ({ item }: any) => (
   <View style={styles.savedTripCard}>
     <View style={styles.savedTripHeader}>
@@ -95,7 +124,7 @@ export default function SavedTripScreen() {
           if (label === 'Open') {
             router.push({ pathname: '/itineraryView', params: { tripId: item.id } });
           } else if (label === 'Map') {
-            router.push('/home');
+            handleOpenMaps(item);
           } else {
             removeTrip(item.id);
           }
