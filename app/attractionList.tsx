@@ -244,6 +244,9 @@ export default function AttractionListScreen() {
           value={selected.includes(item.id)}
           onValueChange={() => toggleSelection(item.id)}
           color={selected.includes(item.id) ? '#6e4b63' : undefined}
+          testID={`checkbox-${item.id}`}
+          accessible={true}
+          accessibilityLabel={`checkbox-${item.id}`}
         />
         <Text style={styles.checkboxLabel}>
           {selected.includes(item.id) ? 'Added to Itinerary' : 'Tap to Add'}
@@ -302,14 +305,21 @@ export default function AttractionListScreen() {
             contentContainerStyle={styles.attractionListContainer}
             showsVerticalScrollIndicator={false}
             style={{ flex: 1 }}
+            testID="attractionList"
+            accessible={true}
+            accessibilityLabel="attractionList"
           />
 
           <View style={styles.footerButtons}>
-            <TouchableOpacity onPress={() => router.back()}>
+            <TouchableOpacity onPress={() => router.back()} testID="cancelButton" accessible={true}
+              accessibilityLabel="cancelButton">
               <Text style={styles.attractionCancelText}>Cancel</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
+              testID="createItineraryButton"
+              accessible={true}
+              accessibilityLabel="createItineraryButton"
               onPress={() => {
                 const selectedAttractions = attractions.filter(a => selected.includes(a.id));
                 router.push({

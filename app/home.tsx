@@ -49,7 +49,7 @@ export default function HomeScreen() {
         if (defaultRadius) {
           const radiusStr = defaultRadius.toString();
           setRadiusValue(radiusStr);
-          
+
           // Check if this value exists in radiusItems
           const exists = radiusItems.some(item => item.value === radiusStr);
           if (!exists) {
@@ -92,7 +92,7 @@ export default function HomeScreen() {
             <View style={[styles.homeContainer, { paddingBottom: 30 }]}>
 
               {/* Radius Dropdown */}
-              <View style={{ zIndex: 3000, marginBottom: 20 }}>
+              <View style={{ zIndex: 3000, marginBottom: 20 }} testID="radiusDropdown" accessibilityLabel="radiusDropdown" accessible={true}>
                 <Text style={styles.homeTitle}>Set search radius</Text>
                 <DropDownPicker
                   open={radiusOpen}
@@ -109,7 +109,7 @@ export default function HomeScreen() {
               </View>
 
               {/* Transport Dropdown */}
-              <View style={{ zIndex: 2000, marginBottom: 20 }}>
+              <View style={{ zIndex: 2000, marginBottom: 20 }} testID="transportDropdown" accessibilityLabel="transportDropdown" accessible={true}>
                 <Text style={styles.homeTitle}>Select transport mode</Text>
                 <DropDownPicker
                   open={transportOpen}
@@ -122,6 +122,7 @@ export default function HomeScreen() {
                   placeholderStyle={styles.placeholderStyle}
                   style={styles.dropdown}
                   dropDownContainerStyle={styles.dropdownContainer}
+
                 />
               </View>
 
@@ -138,6 +139,9 @@ export default function HomeScreen() {
                     },
                   })
                 }
+                testID="findPlacesButton"
+                accessible={true}
+                accessibilityLabel="findPlacesButton"
               >
                 <Text style={styles.homeButtonText}>Find Places</Text>
               </TouchableOpacity>
