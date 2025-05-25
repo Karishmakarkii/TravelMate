@@ -110,7 +110,7 @@ export default function SignUpScreen() {
               <Text style={styles.errorText}>{cpasswordErrorMessage}</Text>
             )}
 
-            <TouchableOpacity style={styles.signupButton} onPress={create}>
+            <TouchableOpacity style={styles.signupButton} onPress={create} testID="signup-button">
               <Text style={styles.signupButtonText}>Sign Up</Text>
             </TouchableOpacity>
 
