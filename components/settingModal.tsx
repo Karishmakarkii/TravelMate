@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Switch, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Switch, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Modal from 'react-native-modal';
@@ -11,6 +11,9 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signOut, deleteUser, EmailAuthProvider, reauthenticateWithCredential } from "firebase/auth";
 import { getFirestore, doc, updateDoc, getDoc, deleteDoc } from "firebase/firestore";
 import PasswordPromptModal from './passwordPromptModal';
+import { router } from 'expo-router';
+
+
 
 import '../firebase.js';
 
@@ -35,6 +38,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
   ]);
   const [email, setEmail] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
   // Initialize Firebase
@@ -63,7 +67,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
         if (defaultRadius) {
           const radiusStr = defaultRadius.toString();
           setRadiusValue(radiusStr);
-          
+
           // Check if this value exists in radiusItems
           const exists = radiusItems.some(item => item.value === radiusStr);
           if (!exists) {
@@ -83,7 +87,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
 
     // Remove any non-numeric characters except decimal points
     const cleanValue = value.replace(/[^\d.]/g, '');
-    
+
     // Validate the input
     const numericValue = parseFloat(cleanValue);
     if (isNaN(numericValue) || numericValue <= 0) {
@@ -102,7 +106,7 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
       // Add the new value to the dropdown list
       setRadiusItems(prev => [...prev, { label: `${finalValue} km`, value: finalValue }]);
     }
-    
+
     setRadiusValue(finalValue);
 
     // Save to Firestore
@@ -141,12 +145,14 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
 
     try {
       await reauthenticateWithCredential(user, credential);
+
+      //Delete Firestore user document
+      await deleteDoc(doc(db, "users", email.toLowerCase()));
+
+      //Delete Firebase Auth account
       await deleteUser(user);
-      console.log("email:", email);
-      deleteDoc(doc(db, 'users', email)); // Delete firestore record when user is deleted
+
       alert("Account deleted successfully");
-      onClose();
-      router.push('/login');
     } catch (error: any) {
       console.error("Delete error:", error);
       if (error.code === 'auth/wrong-password') {
@@ -156,9 +162,9 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
       } else {
         alert("Could not delete account. Please try again.");
       }
+      throw error; // Let caller handle navigation, modal, etc.
     }
   }
-
 
 
   return (
@@ -236,7 +242,18 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
           </TouchableOpacity>
 
           {/* DeleteAccount */}
-          <TouchableOpacity onPress={() => setModalVisible(true)}>
+          <TouchableOpacity
+            onPress={() =>
+              Alert.alert(
+                "Delete Account",
+                "Are you sure you want to delete your account? This cannot be undone.",
+                [
+                  { text: "Cancel", style: "cancel" },
+                  { text: "Continue", onPress: () => setModalVisible(true) },
+                ]
+              )
+            }
+          >
             <Text style={styles.settingLinkText}>Delete Account</Text>
           </TouchableOpacity>
 
@@ -244,10 +261,26 @@ export default function SettingsModal({ isVisible, onClose, onOpenProfile }: Set
             visible={modalVisible}
             onCancel={() => setModalVisible(false)}
             onSubmit={async (password) => {
-              await deleteAccountWithReauth(email, password);
-              setModalVisible(false);
+              if (!email) {
+                alert("Email is required");
+                return;
+              }
+
+              try {
+                setLoading(true);
+                await deleteAccountWithReauth(email, password);
+                setModalVisible(false);
+                router.replace('/login'); // ✅ Redirect after deletion
+              } catch (error) {
+                // Already handled inside deleteAccountWithReauth
+                console.error("Delete error:", error);
+              } finally {
+                setLoading(false);
+              }
             }}
           />
+
+
 
 
         </ScrollView>
