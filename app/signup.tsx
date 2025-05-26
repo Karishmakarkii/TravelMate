@@ -55,13 +55,14 @@ export default function SignUpScreen() {
       createUserWithEmailAndPassword(auth, email, pword)
         .then((userCredential) => {
           // Store additional user data in database and reset form
-          writeToDB(email, name);
+          const user = userCredential.user;
+          writeToDB(user.email || '', name);
           setName('');
           setEmail('');
           setPword('');
           setCPword('');
           alert("User successfully created!");
-          router.push('/home')
+          router.push('/login')
         })
         .catch((error) => {
           // Handle specific Firebase authentication errors
