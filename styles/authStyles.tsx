@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Colors } from './colors';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';     // Adjust size elements to screen size
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';                            // Adjust elemet screen resolution
@@ -600,19 +600,35 @@ shadowStyle: {
   color: '#fff',
 },
 
-  tripSummaryCard: {
+//   tripSummaryCard: {
+//   backgroundColor: Colors.whiteTransparent,
+//   marginHorizontal: 20,
+//   padding: 20,
+//   borderRadius: 18,
+//   shadowColor: '#000',
+//   shadowOffset: { width: 0, height: 2 },
+//   shadowOpacity: 0.08,
+//   shadowRadius: 4,
+//   elevation: 2,
+//   alignItems: 'center',
+//   marginBottom: 20,
+//   marginTop: 20,
+// },
+
+tripSummaryCard: {
   backgroundColor: Colors.whiteTransparent,
   marginHorizontal: 20,
   padding: 20,
   borderRadius: 18,
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.08,
+  shadowOpacity: Platform.OS === 'android' ? 0.05 : 0.08,
   shadowRadius: 4,
-  elevation: 2,
+  elevation: Platform.OS === 'android' ? 1 : 2, // lighter
   alignItems: 'center',
   marginBottom: 20,
   marginTop: 20,
+  alignSelf: 'center', // ✅ Added
 },
 
   tripSummaryImage: {
@@ -1070,18 +1086,32 @@ shadowStyle: {
 },
 
   // Map card
-  mapCardContainer: {
+//   mapCardContainer: {
+//   width: '90%',
+//   backgroundColor: '#fff',
+//   borderRadius: 16,
+//   overflow: 'hidden',
+//   elevation: 4,
+//   shadowColor: '#000',
+//   shadowOffset: { width: 0, height: 2 },
+//   shadowOpacity: 0.1,
+//   shadowRadius: 6,
+//   marginBottom: 20,
+// },
+mapCardContainer: {
   width: '90%',
   backgroundColor: '#fff',
   borderRadius: 16,
   overflow: 'hidden',
-  elevation: 4,
+  elevation: Platform.OS === 'android' ? 2 : 4,  // reduce on Android
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.1,
-  shadowRadius: 6,
+  shadowOpacity: Platform.OS === 'android' ? 0.05 : 0.1,  // lighter shadow on Android
+  shadowRadius: 4,
   marginBottom: 20,
+  alignSelf: 'center', // ✅ Fixes off-center container on Android
 },
+
 
   mapCardImageWrapper: {
   position: 'relative',

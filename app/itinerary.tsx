@@ -168,7 +168,12 @@ export default function ItineraryScreen() {
 
 
     const renderItem = ({ item, index }: { item: OptimizedStop; index: number }) => (
-        <View style={styles.itinerarytripCard}>
+        <View
+            style={styles.itinerarytripCard}
+            testID={`stop-${index}`}
+            accessible={true}
+            accessibilityLabel={`stop-${index}`}
+        >
             <View style={styles.tripCardTop}>
                 <Text style={styles.tripCardTitle}>Stop {index + 1}: {item.name}</Text>
                 <View style={styles.tripCardRating}>
@@ -250,7 +255,7 @@ export default function ItineraryScreen() {
                     // Update state to hide the button
                     setIsSaved(true);
                     // Update state to show Modal
-                    setTripSaved(true); 
+                    setTripSaved(true);
                 }
                 else {
                     alert("Free accounts are limited to 2 saved trips");
@@ -308,7 +313,12 @@ export default function ItineraryScreen() {
                         // CTA map card + save button
                         ListFooterComponent={
                             <View style={{ alignItems: 'center', marginTop: 30, marginBottom: 40 }}>
-                                <TouchableOpacity style={styles.mapCardContainer} onPress={handleOpenMaps}>
+                                <TouchableOpacity
+                                    testID="openInMapsButton"
+                                    accessible={true}
+                                    accessibilityLabel="openInMapsButton"
+                                    style={styles.mapCardContainer}
+                                    onPress={handleOpenMaps}>
                                     <View style={styles.mapCardImageWrapper}>
                                         <Image source={require('../assets/images/mapBackground.webp')} style={styles.mapCardImage} resizeMode="cover" />
                                         <Image source={require('../assets/images/mapicon2.png')} style={styles.mapPin} />
@@ -322,8 +332,11 @@ export default function ItineraryScreen() {
                                 </TouchableOpacity>
                                 {!isSaved && (
                                     <TouchableOpacity
+                                        testID="saveTripButton"
+                                        accessible={true}
+                                        accessibilityLabel="saveTripButton"
                                         onPress={() => saveTripRecord()}
-                                        style={styles.itinerarySaveButton}                                 
+                                        style={styles.itinerarySaveButton}
                                     >
                                         <Text style={styles.saveText}>Save Trip</Text>
                                     </TouchableOpacity>
@@ -342,10 +355,19 @@ export default function ItineraryScreen() {
                                     {'\n'}You can view it below.
                                 </Text>
                                 <View style={styles.dialogButtons}>
-                                    <TouchableOpacity onPress={() => setTripSaved(false)} style={styles.dialogButton}>
+                                    <TouchableOpacity
+                                        testID="modalBackButton"
+                                        accessible={true}
+                                        accessibilityLabel="modalBackButton"
+                                        onPress={() => setTripSaved(false)}
+                                        style={styles.dialogButton}>
                                         <Text style={styles.dialogButtonText}>Back</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity onPress={() => { setTripSaved(false); router.push('/savedTrips'); }} style={styles.dialogButtonPrimary}>
+                                    <TouchableOpacity
+                                        testID="modalViewTripButton"
+                                        accessible={true}
+                                        accessibilityLabel="modalViewTripButton"
+                                        onPress={() => { setTripSaved(false); router.push('/savedTrips'); }} style={styles.dialogButtonPrimary}>
                                         <Text style={styles.dialogButtonTextPrimary}>View Trip</Text>
                                     </TouchableOpacity>
                                 </View>
