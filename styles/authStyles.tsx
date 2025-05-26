@@ -600,21 +600,6 @@ shadowStyle: {
   color: '#fff',
 },
 
-//   tripSummaryCard: {
-//   backgroundColor: Colors.whiteTransparent,
-//   marginHorizontal: 20,
-//   padding: 20,
-//   borderRadius: 18,
-//   shadowColor: '#000',
-//   shadowOffset: { width: 0, height: 2 },
-//   shadowOpacity: 0.08,
-//   shadowRadius: 4,
-//   elevation: 2,
-//   alignItems: 'center',
-//   marginBottom: 20,
-//   marginTop: 20,
-// },
-
 tripSummaryCard: {
   backgroundColor: Colors.whiteTransparent,
   marginHorizontal: 20,
@@ -1085,19 +1070,7 @@ tripSummaryCard: {
   backgroundColor: Colors.lightCreamTransparent,
 },
 
-  // Map card
-//   mapCardContainer: {
-//   width: '90%',
-//   backgroundColor: '#fff',
-//   borderRadius: 16,
-//   overflow: 'hidden',
-//   elevation: 4,
-//   shadowColor: '#000',
-//   shadowOffset: { width: 0, height: 2 },
-//   shadowOpacity: 0.1,
-//   shadowRadius: 6,
-//   marginBottom: 20,
-// },
+// Map card
 mapCardContainer: {
   width: '90%',
   backgroundColor: '#fff',

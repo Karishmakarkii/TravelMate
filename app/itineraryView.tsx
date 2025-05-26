@@ -77,7 +77,7 @@ export default function ItineraryView() {
         </Text>
         <Text>{item.vicinity}</Text>
       </View>
-      <View style={styles.attractionRating}>
+      <View>
         <Text style={styles.attractionRatingText}>{item.rating.toFixed(1)}</Text>
         <Ionicons
           name={item.rating >= 4.5 ? 'star' : item.rating > 2.5 ? 'star-half' : 'star-outline'}
